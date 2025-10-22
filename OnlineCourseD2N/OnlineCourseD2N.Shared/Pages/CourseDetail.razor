@@ -1,0 +1,56 @@
+﻿@page "/courses/{id:int}"
+@inject CourseService CourseService
+@inject NavigationManager Nav
+@using OnlineCourseD2N.Shared.Models
+@using OnlineCourseD2N.Shared.Services
+
+
+<button class="btn btn-secondary mb-3" @onclick="GoBack">← Kembali</button>
+
+<h3>Detail Course</h3>
+
+@if (course == null)
+{
+    <p><em>Memuat data...</em></p>
+}
+else
+{
+    <div class="card mb-3">
+        <div class="card-body">
+            <h4>@course.Title</h4>
+            <p><strong>Description:</strong> @course.Description</p>
+            <p><strong>Category:</strong> @course.Category</p>
+            <p><strong>Duration:</strong> @course.Duration jam</p>
+            <p><strong>Level:</strong> @course.Level</p>
+
+            @if (course.Trainer != null)
+            {
+                <hr />
+                <h5>Trainer</h5>
+                <p><strong>Nama:</strong> @course.Trainer.Name</p>
+                <p><strong>Email:</strong> @course.Trainer.Email</p>
+                <p><strong>Expertise:</strong> @course.Trainer.Expertise</p>
+                <p><strong>Bio:</strong> @course.Trainer.Bio</p>
+            }
+            else
+            {
+                <p><em>Tidak ada trainer yang terkait.</em></p>
+            }
+        </div>
+    </div>
+}
+
+@code {
+    [Parameter] public int id { get; set; }
+    private Course? course;
+
+    protected override async Task OnInitializedAsync()
+    {
+        course = await CourseService.GetByIdAsync(id);
+    }
+
+    private void GoBack()
+    {
+        Nav.NavigateTo("/courses");
+    }
+}

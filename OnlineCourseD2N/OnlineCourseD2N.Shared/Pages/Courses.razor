@@ -1,0 +1,288 @@
+﻿@page "/courses"
+@inject CourseService CourseService
+@inject TrainerService TrainerService
+@using OnlineCourseD2N.Shared.Models
+@using OnlineCourseD2N.Shared.Services
+
+
+<h3 class="mb-3">Manajemen Courses</h3>
+
+@if (courses == null || trainers == null)
+{
+    <p><em>Memuat data...</em></p>
+}
+else
+{
+    @if (!string.IsNullOrEmpty(alertMessage))
+    {
+        <div class="alert alert-@alertType fade show position-fixed top-0 start-50 translate-middle-x mt-3 shadow"
+             role="alert" style="z-index: 1050; min-width: 300px;">
+            @alertMessage
+        </div>
+    }
+
+    <div class="mb-3">
+        <input class="form-control"
+               placeholder="Cari trainer..."
+               @bind="SearchTerm"
+               @bind:event="oninput" />
+    </div>
+
+    <button class="btn btn-primary mb-3" @onclick="ShowAddForm">Tambah Course</button>
+
+    @if (isFormVisible)
+    {
+        <EditForm Model="currentCourse" OnValidSubmit="HandleSubmit">
+            <DataAnnotationsValidator />
+            <ValidationSummary />
+
+            <div class="mb-2">
+                <label>Title:</label>
+                <InputText class="form-control" @bind-Value="currentCourse.Title" />
+            </div>
+
+            <div class="mb-2">
+                <label>Description:</label>
+                <InputTextArea class="form-control" @bind-Value="currentCourse.Description" />
+            </div>
+
+            <div class="mb-2">
+                <label>Category:</label>
+                <InputText class="form-control" @bind-Value="currentCourse.Category" />
+            </div>
+
+            <div class="mb-2">
+                <label>Duration:</label>
+                <InputNumber class="form-control" @bind-Value="currentCourse.Duration" />
+            </div>
+
+            <div class="mb-2">
+                <label>Level:</label>
+                <InputText class="form-control" @bind-Value="currentCourse.Level" />
+            </div>
+
+            <div class="mb-2">
+                <label>Trainer:</label>
+                <InputSelect class="form-select" @bind-Value="currentCourse.TrainerId">
+                    <option value="0">-- Pilih Trainer --</option>
+                    @foreach (var t in trainers)
+                    {
+                        <option value="@t.TrainerId">@t.Name</option>
+                    }
+                </InputSelect>
+            </div>
+
+            <button class="btn btn-success me-2" type="submit">
+                @(currentCourse.CourseId == 0 ? "Tambah" : "Simpan")
+            </button>
+            <button class="btn btn-secondary" type="button" @onclick="CancelForm">Batal</button>
+        </EditForm>
+        <hr />
+    }
+
+    <table class="table table-striped">
+        <thead>
+            <tr>
+                <th>Title</th>
+                <th>Description</th>
+                <th>Trainer</th>
+                <th>Aksi</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var c in filteredCourses ?? [])
+            {
+                <tr>
+                    <td>@c.Title</td>
+                    <td>@c.Description</td>
+                    <td>@c.Trainer?.Name</td>
+                    <td>
+                        <button class="btn btn-sm btn-info me-2" @onclick="() => ViewDetail(c.CourseId)">Detail</button>
+                        <button class="btn btn-sm btn-warning me-2" @onclick="() => EditCourse(c)">Edit</button>
+                        <button class="btn btn-sm btn-danger" @onclick="() => AskDeleteCourse(c)">Hapus</button>
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+
+    <!-- Modal Konfirmasi Hapus -->
+    @if (CourseToDelete != null)
+    {
+        <div class="modal fade show d-block" tabindex="-1" style="background-color: rgba(0,0,0,0.5);">
+            <div class="modal-dialog modal-dialog-centered">
+                <div class="modal-content">
+                    <div class="modal-header bg-danger text-white">
+                        <h5 class="modal-title">Konfirmasi Hapus</h5>
+                    </div>
+                    <div class="modal-body">
+                        <p>Apakah Anda yakin ingin menghapus course <strong>@CourseToDelete.Title</strong>?</p>
+                    </div>
+                    <div class="modal-footer">
+                        <button class="btn btn-secondary" @onclick="CancelDelete">Batal</button>
+                        <button class="btn btn-danger" @onclick="ConfirmDelete">Hapus</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    }
+}
+
+@code {
+    private string searchTerm = string.Empty;
+    private List<Course>? filteredCourses;
+
+    private Course? CourseToDelete;
+
+    private string? alertMessage;
+    private string? alertType;
+    private System.Timers.Timer? alertTimer;
+
+    private List<Course>? courses;
+    private List<Trainer>? trainers;
+    private Course currentCourse = new();
+    private bool isFormVisible = false;
+    [Inject] private NavigationManager Nav { get; set; } = default!;
+
+    private void ShowAlert(string message, string type = "success", int durationMs = 3000)
+    {
+        alertMessage = message;
+        alertType = type;
+
+        alertTimer?.Stop();
+        alertTimer = new System.Timers.Timer(durationMs);
+        alertTimer.Elapsed += (s, e) =>
+        {
+            alertMessage = null;
+            alertTimer?.Stop();
+            InvokeAsync(StateHasChanged);
+        };
+        alertTimer.Start();
+
+        StateHasChanged();
+    }
+
+    protected override async Task OnInitializedAsync()
+    {
+        await LoadData();
+    }
+
+    private string SearchTerm
+    {
+        get => searchTerm;
+        set
+        {
+            searchTerm = value;
+            ApplySearch();
+        }
+    }
+
+    private void ApplySearch()
+    {
+        if (string.IsNullOrWhiteSpace(searchTerm))
+            filteredCourses = courses;
+        else
+            filteredCourses = courses?
+                .Where(t => t.Title.Contains(searchTerm, StringComparison.OrdinalIgnoreCase)
+                         || t.Description.Contains(searchTerm, StringComparison.OrdinalIgnoreCase))
+                .ToList();
+    }
+
+    private async Task LoadData()
+    {
+        courses = await CourseService.GetAllAsync();
+        trainers = await TrainerService.GetAllAsync();
+        ApplySearch();
+    }
+
+    private void ViewDetail(int id)
+    {
+        Nav.NavigateTo($"/courses/{id}");
+    }
+
+    private void ShowAddForm()
+    {
+        currentCourse = new Course();
+        isFormVisible = true;
+    }
+
+    private void EditCourse(Course c)
+    {
+        currentCourse = new Course
+        {
+            CourseId = c.CourseId,
+            Title = c.Title,
+            Description = c.Description,
+            Category = c.Category,
+            Duration = c.Duration,
+            Level = c.Level,
+            TrainerId = c.TrainerId
+        };
+        isFormVisible = true;
+    }
+
+    private void CancelForm()
+    {
+        isFormVisible = false;
+        currentCourse = new();
+    }
+
+    private async Task HandleSubmit()
+    {
+        try
+        {
+            bool success;
+            if (currentCourse.CourseId == 0)
+                success = await CourseService.AddAsync(currentCourse);
+            else
+                success = await CourseService.UpdateAsync(currentCourse.CourseId, currentCourse);
+
+            if (success)
+            {
+                ShowAlert(currentCourse.CourseId == 0
+                    ? "Course berhasil ditambahkan!"
+                    : "Course berhasil diperbarui!", "success");
+
+                await LoadData();
+                CancelForm();
+            }
+            else
+            {
+                ShowAlert("Gagal menyimpan course.", "danger");
+            }
+        }
+        catch (Exception ex)
+        {
+            ShowAlert($"Terjadi kesalahan: {ex.Message}", "danger");
+        }
+    }
+
+    private void AskDeleteCourse(Course c)
+    {
+        CourseToDelete = c;
+    }
+
+    private void CancelDelete()
+    {
+        CourseToDelete = null;
+    }
+
+    private async Task ConfirmDelete()
+    {
+        if (CourseToDelete != null)
+        {
+            bool success = await CourseService.DeleteAsync(CourseToDelete.CourseId);
+            if (success)
+            {
+                ShowAlert($"Course '{CourseToDelete.Title}' berhasil dihapus.", "success");
+                await LoadData();
+            }
+            else
+            {
+                ShowAlert($"Gagal menghapus course '{CourseToDelete.Title}'.", "danger");
+            }
+
+            CourseToDelete = null;
+        }
+    }
+}

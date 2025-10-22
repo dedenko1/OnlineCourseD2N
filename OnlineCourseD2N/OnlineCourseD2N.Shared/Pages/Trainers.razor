@@ -1,0 +1,272 @@
+﻿@page "/trainers"
+@inject TrainerService TrainerService
+@using OnlineCourseD2N.Shared.Services
+@using OnlineCourseD2N.Shared.Models
+
+
+<h3 class="mb-3">Manajemen Trainer</h3>
+
+@if (trainers == null)
+{
+    <p><em>Memuat data...</em></p>
+}
+else
+{
+    @if (!string.IsNullOrEmpty(alertMessage))
+    {
+        <div class="alert alert-@alertType fade show position-fixed top-0 start-50 translate-middle-x mt-3 shadow"
+             role="alert" style="z-index: 1050; min-width: 300px;">
+            @alertMessage
+        </div>
+    }
+
+    <div class="mb-3">
+        <input class="form-control"
+               placeholder="Cari trainer..."
+               @bind="SearchTerm"
+               @bind:event="oninput" />
+    </div>
+
+
+    <button class="btn btn-primary mb-3" @onclick="ShowAddForm">Tambah Trainer</button>
+
+    @if (isFormVisible)
+    {
+        <EditForm Model="currentTrainer" OnValidSubmit="HandleSubmit">
+            <DataAnnotationsValidator />
+            <ValidationSummary />
+
+            <div class="mb-2">
+                <label>Name:</label>
+                <InputText class="form-control" @bind-Value="currentTrainer.Name" />
+            </div>
+            
+            <div class="mb-2">
+                <label>Expertise:</label>
+                <InputText class="form-control" @bind-Value="currentTrainer.Expertise" />
+            </div>
+
+            <div class="mb-2">
+                <label>Email:</label>
+                <InputText class="form-control" @bind-Value="currentTrainer.Email" />
+            </div>
+
+            <div class="mb-2">
+                <label>Bio:</label>
+                <InputTextArea class="form-control" @bind-Value="currentTrainer.Bio" />
+            </div>
+
+            <button class="btn btn-success me-2" type="submit">
+                @(currentTrainer.TrainerId == 0 ? "Tambah" : "Simpan")
+            </button>
+            <button class="btn btn-secondary" type="button" @onclick="CancelForm">Batal</button>
+        </EditForm>
+        <hr />
+    }
+
+    <table class="table table-striped">
+        <thead>
+            <tr>
+                <th>Name</th>
+                <th>Email</th>
+                <th>Expertise</th>
+                <th>Aksi</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var t in filteredTrainers ?? [])
+            {
+                <tr>
+                    <td>@t.Name</td>
+                    <td>@t.Email</td>
+                    <td>@t.Expertise</td>
+                    <td>
+                        <button class="btn btn-sm btn-info me-2" @onclick="() => ViewDetail(t.TrainerId)">Detail</button>
+                        <button class="btn btn-sm btn-warning me-2" @onclick="() => EditTrainer(t)">Edit</button>
+                        <button class="btn btn-sm btn-danger" @onclick="() => AskDeleteTrainer(t)">Hapus</button>
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+
+    <!-- Modal Konfirmasi Hapus -->
+    @if (trainerToDelete != null)
+    {
+        <div class="modal fade show d-block" tabindex="-1" style="background-color: rgba(0,0,0,0.5);">
+            <div class="modal-dialog modal-dialog-centered">
+                <div class="modal-content">
+                    <div class="modal-header bg-danger text-white">
+                        <h5 class="modal-title">Konfirmasi Hapus</h5>
+                    </div>
+                    <div class="modal-body">
+                        <p>Apakah Anda yakin ingin menghapus trainer <strong>@trainerToDelete.Name</strong>?</p>
+                    </div>
+                    <div class="modal-footer">
+                        <button class="btn btn-secondary" @onclick="CancelDelete">Batal</button>
+                        <button class="btn btn-danger" @onclick="ConfirmDelete">Hapus</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    }
+
+}
+
+@code {
+    private string searchTerm = string.Empty;
+    private List<Trainer>? filteredTrainers;
+
+    private Trainer? trainerToDelete;
+
+    private string? alertMessage;
+    private string? alertType;
+    private System.Timers.Timer? alertTimer;
+
+    private List<Trainer>? trainers;
+    private Trainer currentTrainer = new();
+    private bool isFormVisible = false;
+    [Inject] private NavigationManager Nav { get; set; } = default!;
+
+
+    private void ShowAlert(string message, string type = "success", int durationMs = 3000)
+    {
+        alertMessage = message;
+        alertType = type;
+
+        alertTimer?.Stop();
+        alertTimer = new System.Timers.Timer(durationMs);
+        alertTimer.Elapsed += (s, e) =>
+        {
+            alertMessage = null;
+            alertTimer?.Stop();
+            InvokeAsync(StateHasChanged);
+        };
+        alertTimer.Start();
+
+        StateHasChanged();
+    }
+
+    protected override async Task OnInitializedAsync()
+    {
+        await LoadData();
+    }
+
+    private string SearchTerm
+    {
+        get => searchTerm;
+        set
+        {
+            searchTerm = value;
+            ApplySearch();
+        }
+    }
+
+    private void ApplySearch()
+    {
+        if (string.IsNullOrWhiteSpace(searchTerm))
+            filteredTrainers = trainers;
+        else
+            filteredTrainers = trainers?
+                .Where(t => t.Name.Contains(searchTerm, StringComparison.OrdinalIgnoreCase)
+                         || t.Expertise.Contains(searchTerm, StringComparison.OrdinalIgnoreCase))
+                .ToList();
+    }
+
+    private async Task LoadData()
+    {
+        trainers = await TrainerService.GetAllAsync();
+        ApplySearch();
+    }
+
+    private void ViewDetail(int id)
+    {
+        Nav.NavigateTo($"/trainers/{id}");
+    }
+
+    private void ShowAddForm()
+    {
+        currentTrainer = new Trainer();
+        isFormVisible = true;
+    }
+
+    private void EditTrainer(Trainer t)
+    {
+        currentTrainer = new Trainer
+        {
+            TrainerId = t.TrainerId,
+            Name = t.Name,
+            Expertise = t.Expertise,
+            Email = t.Email,
+            Bio = t.Bio
+        };
+        isFormVisible = true;
+    }
+
+    private void CancelForm()
+    {
+        isFormVisible = false;
+        currentTrainer = new Trainer();
+    }
+
+    private async Task HandleSubmit()
+    {
+        try
+        {
+            bool success;
+            if (currentTrainer.TrainerId == 0)
+                success = await TrainerService.AddAsync(currentTrainer);
+            else
+                success = await TrainerService.UpdateAsync(currentTrainer.TrainerId, currentTrainer);
+
+            if (success)
+            {
+                ShowAlert(currentTrainer.TrainerId == 0
+                    ? "Trainer berhasil ditambahkan!"
+                    : "Trainer berhasil diperbarui!", "success");
+
+                await LoadData();
+                CancelForm();
+            }
+            else
+            {
+                ShowAlert("Gagal menyimpan trainer.", "danger");
+            }
+        }
+        catch (Exception ex)
+        {
+            ShowAlert($"Terjadi error: {ex.Message}", "danger");
+        }
+    }
+
+    private void AskDeleteTrainer(Trainer t)
+    {
+        trainerToDelete = t;
+    }
+
+    // 🔹 Jika user menekan "Batal"
+    private void CancelDelete()
+    {
+        trainerToDelete = null;
+    }
+
+    // 🔹 Jika user menekan "Hapus"
+    private async Task ConfirmDelete()
+    {
+        if (trainerToDelete != null)
+        {
+            bool success = await TrainerService.DeleteAsync(trainerToDelete.TrainerId);
+            if (success)
+            {
+                ShowAlert($"Trainer '{trainerToDelete.Name}' berhasil dihapus.", "success");
+                await LoadData();
+            }
+            else
+            {
+                ShowAlert($"Gagal menghapus trainer '{trainerToDelete.Name}'.", "danger");
+            }
+
+            trainerToDelete = null;
+        }
+    }
+}
