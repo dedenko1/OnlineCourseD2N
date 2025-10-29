@@ -21,7 +21,6 @@ C:\Users\Lenovo\Documents\SEMESTER 5\PM\OnlineCourseD2N\OnlineCourseD2N\OnlineCo
 C:\Users\Lenovo\Documents\SEMESTER 5\PM\OnlineCourseD2N\OnlineCourseD2N\OnlineCourseD2N\obj\Debug\net9.0-android\scopedcss\bundle\OnlineCourseD2N.styles.css
 C:\Users\Lenovo\Documents\SEMESTER 5\PM\OnlineCourseD2N\OnlineCourseD2N\OnlineCourseD2N\obj\Debug\net9.0-android\compressed\9jwofunx4z-obgb1x923p.gz
 C:\Users\Lenovo\Documents\SEMESTER 5\PM\OnlineCourseD2N\OnlineCourseD2N\OnlineCourseD2N\obj\Debug\net9.0-android\compressed\ohnj9tgqn5-uch3extoll.gz
-C:\Users\Lenovo\Documents\SEMESTER 5\PM\OnlineCourseD2N\OnlineCourseD2N\OnlineCourseD2N\obj\Debug\net9.0-android\compressed\61m9q6lnwp-8ajiuoci3x.gz
 C:\Users\Lenovo\Documents\SEMESTER 5\PM\OnlineCourseD2N\OnlineCourseD2N\OnlineCourseD2N\obj\Debug\net9.0-android\staticwebassets.build.json
 C:\Users\Lenovo\Documents\SEMESTER 5\PM\OnlineCourseD2N\OnlineCourseD2N\OnlineCourseD2N\obj\Debug\net9.0-android\staticwebassets.build.json.cache
 C:\Users\Lenovo\Documents\SEMESTER 5\PM\OnlineCourseD2N\OnlineCourseD2N\OnlineCourseD2N\obj\Debug\net9.0-android\staticwebassets.development.json
@@ -34,7 +33,6 @@ C:\Users\Lenovo\Documents\SEMESTER 5\PM\OnlineCourseD2N\OnlineCourseD2N\OnlineCo
 C:\Users\Lenovo\Documents\SEMESTER 5\PM\OnlineCourseD2N\OnlineCourseD2N\OnlineCourseD2N\obj\Debug\net9.0-android\staticwebassets.pack.json
 C:\Users\Lenovo\Documents\SEMESTER 5\PM\OnlineCourseD2N\OnlineCourseD2N\OnlineCourseD2N\obj\Debug\net9.0-android\compressed\publish\9jwofunx4z-obgb1x923p.br
 C:\Users\Lenovo\Documents\SEMESTER 5\PM\OnlineCourseD2N\OnlineCourseD2N\OnlineCourseD2N\obj\Debug\net9.0-android\compressed\publish\ohnj9tgqn5-uch3extoll.br
-C:\Users\Lenovo\Documents\SEMESTER 5\PM\OnlineCourseD2N\OnlineCourseD2N\OnlineCourseD2N\obj\Debug\net9.0-android\compressed\publish\61m9q6lnwp-8ajiuoci3x.br
 C:\Users\Lenovo\Documents\SEMESTER 5\PM\OnlineCourseD2N\OnlineCourseD2N\OnlineCourseD2N\obj\Debug\net9.0-android\staticwebassets.publish.json
 C:\Users\Lenovo\Documents\SEMESTER 5\PM\OnlineCourseD2N\OnlineCourseD2N\OnlineCourseD2N\obj\Debug\net9.0-android\staticwebassets.publish.endpoints.json
 C:\Users\Lenovo\Documents\SEMESTER 5\PM\OnlineCourseD2N\OnlineCourseD2N\OnlineCourseD2N\obj\Debug\net9.0-android\_CompileBindingJava.FileList.txt
@@ -1403,14 +1401,11 @@ C:\Users\Lenovo\Documents\SEMESTER 5\PM\OnlineCourseD2N\OnlineCourseD2N\OnlineCo
 C:\Users\Lenovo\Documents\SEMESTER 5\PM\OnlineCourseD2N\OnlineCourseD2N\OnlineCourseD2N\obj\Debug\net9.0-android\android\src\mono\MonoPackageManager_Resources.java
 C:\Users\Lenovo\Documents\SEMESTER 5\PM\OnlineCourseD2N\OnlineCourseD2N\OnlineCourseD2N\obj\Debug\net9.0-android\assets\AboutAssets.txt
 C:\Users\Lenovo\Documents\SEMESTER 5\PM\OnlineCourseD2N\OnlineCourseD2N\OnlineCourseD2N\obj\Debug\net9.0-android\assets\wwwroot\_content\OnlineCourseD2N.Shared\bootstrap\bootstrap.min.css.br
-C:\Users\Lenovo\Documents\SEMESTER 5\PM\OnlineCourseD2N\OnlineCourseD2N\OnlineCourseD2N\obj\Debug\net9.0-android\assets\wwwroot\_content\OnlineCourseD2N.Shared\OnlineCourseD2N.Shared.fcy24wdys5.bundle.scp.css.br
 C:\Users\Lenovo\Documents\SEMESTER 5\PM\OnlineCourseD2N\OnlineCourseD2N\OnlineCourseD2N\obj\Debug\net9.0-android\assets\wwwroot\_content\OnlineCourseD2N.Shared\app.css.br
 C:\Users\Lenovo\Documents\SEMESTER 5\PM\OnlineCourseD2N\OnlineCourseD2N\OnlineCourseD2N\obj\Debug\net9.0-android\assets\wwwroot\_content\OnlineCourseD2N.Shared\bootstrap\bootstrap.min.css.map.br
 C:\Users\Lenovo\Documents\SEMESTER 5\PM\OnlineCourseD2N\OnlineCourseD2N\OnlineCourseD2N\obj\Debug\net9.0-android\assets\wwwroot\_content\OnlineCourseD2N.Shared\bootstrap\bootstrap.min.css.gz
-C:\Users\Lenovo\Documents\SEMESTER 5\PM\OnlineCourseD2N\OnlineCourseD2N\OnlineCourseD2N\obj\Debug\net9.0-android\assets\wwwroot\_content\OnlineCourseD2N.Shared\OnlineCourseD2N.Shared.fcy24wdys5.bundle.scp.css.gz
 C:\Users\Lenovo\Documents\SEMESTER 5\PM\OnlineCourseD2N\OnlineCourseD2N\OnlineCourseD2N\obj\Debug\net9.0-android\assets\wwwroot\_content\OnlineCourseD2N.Shared\app.css.gz
 C:\Users\Lenovo\Documents\SEMESTER 5\PM\OnlineCourseD2N\OnlineCourseD2N\OnlineCourseD2N\obj\Debug\net9.0-android\assets\wwwroot\_content\OnlineCourseD2N.Shared\bootstrap\bootstrap.min.css.map.gz
-C:\Users\Lenovo\Documents\SEMESTER 5\PM\OnlineCourseD2N\OnlineCourseD2N\OnlineCourseD2N\obj\Debug\net9.0-android\assets\wwwroot\_content\OnlineCourseD2N.Shared\OnlineCourseD2N.Shared.fcy24wdys5.bundle.scp.css
 C:\Users\Lenovo\Documents\SEMESTER 5\PM\OnlineCourseD2N\OnlineCourseD2N\OnlineCourseD2N\obj\Debug\net9.0-android\assets\wwwroot\_content\OnlineCourseD2N.Shared\app.css
 C:\Users\Lenovo\Documents\SEMESTER 5\PM\OnlineCourseD2N\OnlineCourseD2N\OnlineCourseD2N\obj\Debug\net9.0-android\assets\wwwroot\_content\OnlineCourseD2N.Shared\bootstrap\bootstrap.min.css
 C:\Users\Lenovo\Documents\SEMESTER 5\PM\OnlineCourseD2N\OnlineCourseD2N\OnlineCourseD2N\obj\Debug\net9.0-android\assets\wwwroot\_content\OnlineCourseD2N.Shared\bootstrap\bootstrap.min.css.map
@@ -1452,3 +1447,10 @@ C:\Users\Lenovo\Documents\SEMESTER 5\PM\OnlineCourseD2N\OnlineCourseD2N\OnlineCo
 C:\Users\Lenovo\Documents\SEMESTER 5\PM\OnlineCourseD2N\OnlineCourseD2N\OnlineCourseD2N\obj\Debug\net9.0-android\stamp\_GenerateJavaStubs.stamp
 C:\Users\Lenovo\Documents\SEMESTER 5\PM\OnlineCourseD2N\OnlineCourseD2N\OnlineCourseD2N\obj\Debug\net9.0-android\stamp\_GeneratePackageManagerJava.stamp
 C:\Users\Lenovo\Documents\SEMESTER 5\PM\OnlineCourseD2N\OnlineCourseD2N\OnlineCourseD2N\obj\Debug\net9.0-android\stamp\_ResolveLibraryProjectImports.stamp
+C:\Users\Lenovo\Documents\SEMESTER 5\PM\OnlineCourseD2N\OnlineCourseD2N\OnlineCourseD2N\obj\Debug\net9.0-android\compressed\61m9q6lnwp-ibt7721kfj.gz
+C:\Users\Lenovo\Documents\SEMESTER 5\PM\OnlineCourseD2N\OnlineCourseD2N\OnlineCourseD2N\obj\Debug\net9.0-android\staticwebassets.upToDateCheck.txt
+C:\Users\Lenovo\Documents\SEMESTER 5\PM\OnlineCourseD2N\OnlineCourseD2N\OnlineCourseD2N\obj\Debug\net9.0-android\compressed\publish\61m9q6lnwp-ibt7721kfj.br
+C:\Users\Lenovo\Documents\SEMESTER 5\PM\OnlineCourseD2N\OnlineCourseD2N\OnlineCourseD2N\obj\Debug\net9.0-android\OnlineCourseD2N.sourcelink.json
+C:\Users\Lenovo\Documents\SEMESTER 5\PM\OnlineCourseD2N\OnlineCourseD2N\OnlineCourseD2N\obj\Debug\net9.0-android\assets\wwwroot\_content\OnlineCourseD2N.Shared\OnlineCourseD2N.Shared.vwcudcwen9.bundle.scp.css.br
+C:\Users\Lenovo\Documents\SEMESTER 5\PM\OnlineCourseD2N\OnlineCourseD2N\OnlineCourseD2N\obj\Debug\net9.0-android\assets\wwwroot\_content\OnlineCourseD2N.Shared\OnlineCourseD2N.Shared.vwcudcwen9.bundle.scp.css.gz
+C:\Users\Lenovo\Documents\SEMESTER 5\PM\OnlineCourseD2N\OnlineCourseD2N\OnlineCourseD2N\obj\Debug\net9.0-android\assets\wwwroot\_content\OnlineCourseD2N.Shared\OnlineCourseD2N.Shared.vwcudcwen9.bundle.scp.css

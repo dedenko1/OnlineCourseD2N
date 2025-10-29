@@ -37,7 +37,7 @@
       <CopyToOutputDirectory>Never</CopyToOutputDirectory>
       <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
       <FileLength>794</FileLength>
-      <LastWriteTime>Wed, 22 Oct 2025 06:40:25 GMT</LastWriteTime>
+      <LastWriteTime>Wed, 22 Oct 2025 13:01:39 GMT</LastWriteTime>
       <OriginalItemSpec>$([System.IO.Path]::GetFullPath('$(MSBuildThisFileDirectory)..\staticwebassets\index.html'))</OriginalItemSpec>
     </StaticWebAsset>
     <StaticWebAsset Include="$([System.IO.Path]::GetFullPath('$(MSBuildThisFileDirectory)..\staticwebassets\OnlineCourseD2N.styles.css'))">
@@ -52,12 +52,12 @@
       <RelatedAsset></RelatedAsset>
       <AssetTraitName>ScopedCss</AssetTraitName>
       <AssetTraitValue>ApplicationBundle</AssetTraitValue>
-      <Fingerprint>8ajiuoci3x</Fingerprint>
-      <Integrity>4E9W4OIkzBL/xNNkjH0JsppBx8d5Ysqu0xpromkk5NQ=</Integrity>
+      <Fingerprint>ibt7721kfj</Fingerprint>
+      <Integrity>0rDqLHaekcilM+a4//wa5lW8j6iZ6HqLQnznBppQFaA=</Integrity>
       <CopyToOutputDirectory>Never</CopyToOutputDirectory>
       <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
       <FileLength>95</FileLength>
-      <LastWriteTime>Wed, 22 Oct 2025 08:14:04 GMT</LastWriteTime>
+      <LastWriteTime>Wed, 29 Oct 2025 01:02:04 GMT</LastWriteTime>
       <OriginalItemSpec>$([System.IO.Path]::GetFullPath('$(MSBuildThisFileDirectory)..\staticwebassets\OnlineCourseD2N.styles.css'))</OriginalItemSpec>
     </StaticWebAsset>
   </ItemGroup>

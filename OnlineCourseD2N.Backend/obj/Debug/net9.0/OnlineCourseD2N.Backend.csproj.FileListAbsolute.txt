@@ -155,3 +155,4 @@ C:\Users\Lenovo\Documents\SEMESTER 5\PM\OnlineCourseD2N\OnlineCourseD2N.Backend\
 C:\Users\Lenovo\Documents\SEMESTER 5\PM\OnlineCourseD2N\OnlineCourseD2N.Backend\obj\Debug\net9.0\OnlineCourseD2N.Backend.pdb
 C:\Users\Lenovo\Documents\SEMESTER 5\PM\OnlineCourseD2N\OnlineCourseD2N.Backend\obj\Debug\net9.0\OnlineCourseD2N.Backend.genruntimeconfig.cache
 C:\Users\Lenovo\Documents\SEMESTER 5\PM\OnlineCourseD2N\OnlineCourseD2N.Backend\obj\Debug\net9.0\ref\OnlineCourseD2N.Backend.dll
+C:\Users\Lenovo\Documents\SEMESTER 5\PM\OnlineCourseD2N\OnlineCourseD2N.Backend\obj\Debug\net9.0\OnlineCourseD2N.Backend.sourcelink.json

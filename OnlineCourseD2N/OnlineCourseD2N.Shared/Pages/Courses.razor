@@ -1,9 +1,10 @@
 ﻿@page "/courses"
 @inject CourseService CourseService
 @inject TrainerService TrainerService
+@inject NavigationManager Nav
+
 @using OnlineCourseD2N.Shared.Models
 @using OnlineCourseD2N.Shared.Services
-
 
 <h3 class="mb-3">Manajemen Courses</h3>
 
@@ -21,64 +22,14 @@ else
         </div>
     }
 
-    <div class="mb-3">
-        <input class="form-control"
-               placeholder="Cari trainer..."
+    <div class="mb-3 d-flex justify-content-between align-items-center">
+        <input class="form-control w-50"
+               placeholder="Cari course..."
                @bind="SearchTerm"
                @bind:event="oninput" />
+        <button class="btn btn-primary mb-3" @onclick="ShowAddModal">Tambah Course</button>
     </div>
 
-    <button class="btn btn-primary mb-3" @onclick="ShowAddForm">Tambah Course</button>
-
-    @if (isFormVisible)
-    {
-        <EditForm Model="currentCourse" OnValidSubmit="HandleSubmit">
-            <DataAnnotationsValidator />
-            <ValidationSummary />
-
-            <div class="mb-2">
-                <label>Title:</label>
-                <InputText class="form-control" @bind-Value="currentCourse.Title" />
-            </div>
-
-            <div class="mb-2">
-                <label>Description:</label>
-                <InputTextArea class="form-control" @bind-Value="currentCourse.Description" />
-            </div>
-
-            <div class="mb-2">
-                <label>Category:</label>
-                <InputText class="form-control" @bind-Value="currentCourse.Category" />
-            </div>
-
-            <div class="mb-2">
-                <label>Duration:</label>
-                <InputNumber class="form-control" @bind-Value="currentCourse.Duration" />
-            </div>
-
-            <div class="mb-2">
-                <label>Level:</label>
-                <InputText class="form-control" @bind-Value="currentCourse.Level" />
-            </div>
-
-            <div class="mb-2">
-                <label>Trainer:</label>
-                <InputSelect class="form-select" @bind-Value="currentCourse.TrainerId">
-                    <option value="0">-- Pilih Trainer --</option>
-                    @foreach (var t in trainers)
-                    {
-                        <option value="@t.TrainerId">@t.Name</option>
-                    }
-                </InputSelect>
-            </div>
-
-            <button class="btn btn-success me-2" type="submit">
-                @(currentCourse.CourseId == 0 ? "Tambah" : "Simpan")
-            </button>
-            <button class="btn btn-secondary" type="button" @onclick="CancelForm">Batal</button>
-        </EditForm>
-        <hr />
-    }
 
     <table class="table table-striped">
         <thead>
@@ -98,13 +49,81 @@ else
                     <td>@c.Trainer?.Name</td>
                     <td>
                         <button class="btn btn-sm btn-info me-2" @onclick="() => ViewDetail(c.CourseId)">Detail</button>
-                        <button class="btn btn-sm btn-warning me-2" @onclick="() => EditCourse(c)">Edit</button>
+                        <button class="btn btn-sm btn-warning me-2" @onclick="() => ShowEditModal(c)">Edit</button>
                         <button class="btn btn-sm btn-danger" @onclick="() => AskDeleteCourse(c)">Hapus</button>
                     </td>
                 </tr>
             }
         </tbody>
     </table>
+
+    <!-- Modal Tambah / Edit -->
+    @if (isModalVisible)
+    {
+        <div class="modal fade show d-block" tabindex="-1" style="background-color: rgba(0,0,0,0.5);">
+            <div class="modal-dialog modal-lg modal-dialog-centered">
+                <div class="modal-content">
+                    <div class="modal-header bg-primary text-white">
+                        <h5 class="modal-title">
+                            @(currentCourse.CourseId == 0 ? "Tambah Course" : "Edit Course")
+                        </h5>
+                        <button type="button" class="btn-close" @onclick="CloseModal"></button>
+                    </div>
+                    <div class="modal-body">
+                        <EditForm Model="currentCourse" OnValidSubmit="HandleSubmit">
+                            <DataAnnotationsValidator />
+                            <ValidationSummary />
+
+                            <div class="row g-3">
+                                <div class="col-md-6">
+                                    <label>Title:</label>
+                                    <InputText class="form-control" @bind-Value="currentCourse.Title" />
+                                </div>
+
+                                <div class="col-md-6">
+                                    <label>Category:</label>
+                                    <InputText class="form-control" @bind-Value="currentCourse.Category" />
+                                </div>
+
+                                <div class="col-md-12">
+                                    <label>Description:</label>
+                                    <InputTextArea class="form-control" @bind-Value="currentCourse.Description" />
+                                </div>
+
+                                <div class="col-md-4">
+                                    <label>Duration (jam):</label>
+                                    <InputNumber class="form-control" @bind-Value="currentCourse.Duration" min="0"/>
+                                </div>
+
+                                <div class="col-md-4">
+                                    <label>Level:</label>
+                                    <InputText class="form-control" @bind-Value="currentCourse.Level" />
+                                </div>
+
+                                <div class="col-md-4">
+                                    <label>Trainer:</label>
+                                    <InputSelect class="form-select" @bind-Value="currentCourse.TrainerId">
+                                        <option value="0">-- Pilih Trainer --</option>
+                                        @foreach (var t in trainers)
+                                        {
+                                            <option value="@t.TrainerId">@t.Name</option>
+                                        }
+                                    </InputSelect>
+                                </div>
+                            </div>
+
+                            <div class="mt-4 text-end">
+                                <button class="btn btn-success me-2" type="submit">
+                                    @(currentCourse.CourseId == 0 ? "Tambah" : "Simpan Perubahan")
+                                </button>
+                                <button class="btn btn-secondary" type="button" @onclick="CloseModal">Batal</button>
+                            </div>
+                        </EditForm>
+                    </div>
+                </div>
+            </div>
+        </div>
+    }
 
     <!-- Modal Konfirmasi Hapus -->
     @if (CourseToDelete != null)
@@ -131,41 +150,16 @@ else
 @code {
     private string searchTerm = string.Empty;
     private List<Course>? filteredCourses;
+    private List<Course>? courses;
+    private List<Trainer>? trainers;
 
     private Course? CourseToDelete;
+    private Course currentCourse = new();
+    private bool isModalVisible = false;
 
     private string? alertMessage;
     private string? alertType;
     private System.Timers.Timer? alertTimer;
-
-    private List<Course>? courses;
-    private List<Trainer>? trainers;
-    private Course currentCourse = new();
-    private bool isFormVisible = false;
-    [Inject] private NavigationManager Nav { get; set; } = default!;
-
-    private void ShowAlert(string message, string type = "success", int durationMs = 3000)
-    {
-        alertMessage = message;
-        alertType = type;
-
-        alertTimer?.Stop();
-        alertTimer = new System.Timers.Timer(durationMs);
-        alertTimer.Elapsed += (s, e) =>
-        {
-            alertMessage = null;
-            alertTimer?.Stop();
-            InvokeAsync(StateHasChanged);
-        };
-        alertTimer.Start();
-
-        StateHasChanged();
-    }
-
-    protected override async Task OnInitializedAsync()
-    {
-        await LoadData();
-    }
 
     private string SearchTerm
     {
@@ -175,6 +169,18 @@ else
             searchTerm = value;
             ApplySearch();
         }
+    }
+
+    protected override async Task OnInitializedAsync()
+    {
+        await LoadData();
+    }
+
+    private async Task LoadData()
+    {
+        courses = await CourseService.GetAllAsync();
+        trainers = await TrainerService.GetAllAsync();
+        ApplySearch();
     }
 
     private void ApplySearch()
@@ -188,25 +194,18 @@ else
                 .ToList();
     }
 
-    private async Task LoadData()
-    {
-        courses = await CourseService.GetAllAsync();
-        trainers = await TrainerService.GetAllAsync();
-        ApplySearch();
-    }
-
     private void ViewDetail(int id)
     {
         Nav.NavigateTo($"/courses/{id}");
     }
 
-    private void ShowAddForm()
+    private void ShowAddModal()
     {
-        currentCourse = new Course();
-        isFormVisible = true;
+        currentCourse = new();
+        isModalVisible = true;
     }
 
-    private void EditCourse(Course c)
+    private void ShowEditModal(Course c)
     {
         currentCourse = new Course
         {
@@ -218,12 +217,12 @@ else
             Level = c.Level,
             TrainerId = c.TrainerId
         };
-        isFormVisible = true;
+        isModalVisible = true;
     }
 
-    private void CancelForm()
+    private void CloseModal()
     {
-        isFormVisible = false;
+        isModalVisible = false;
         currentCourse = new();
     }
 
@@ -244,7 +243,7 @@ else
                     : "Course berhasil diperbarui!", "success");
 
                 await LoadData();
-                CancelForm();
+                CloseModal();
             }
             else
             {
@@ -257,15 +256,8 @@ else
         }
     }
 
-    private void AskDeleteCourse(Course c)
-    {
-        CourseToDelete = c;
-    }
-
-    private void CancelDelete()
-    {
-        CourseToDelete = null;
-    }
+    private void AskDeleteCourse(Course c) => CourseToDelete = c;
+    private void CancelDelete() => CourseToDelete = null;
 
     private async Task ConfirmDelete()
     {
@@ -284,5 +276,23 @@ else
 
             CourseToDelete = null;
         }
+    }
+
+    private void ShowAlert(string message, string type = "success", int durationMs = 3000)
+    {
+        alertMessage = message;
+        alertType = type;
+
+        alertTimer?.Stop();
+        alertTimer = new System.Timers.Timer(durationMs);
+        alertTimer.Elapsed += (s, e) =>
+        {
+            alertMessage = null;
+            alertTimer?.Stop();
+            InvokeAsync(StateHasChanged);
+        };
+        alertTimer.Start();
+
+        StateHasChanged();
     }
 }

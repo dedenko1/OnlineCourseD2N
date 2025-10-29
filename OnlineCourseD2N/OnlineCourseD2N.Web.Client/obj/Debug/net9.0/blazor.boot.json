@@ -1,7 +1,7 @@
 {
   "mainAssemblyName": "OnlineCourseD2N.Web.Client",
   "resources": {
-    "hash": "sha256-Qq/Y3E+RkTtV5x/yWtKpVwrEJx+AAr3nI/ulPumA8GI=",
+    "hash": "sha256-ZmYWSoV1qQwOq+xLXpnuOsplwaMFwYZAyQZLk0WqLmg=",
     "fingerprinting": {
       "Microsoft.AspNetCore.Authorization.tnyc7xpluy.wasm": "Microsoft.AspNetCore.Authorization.wasm",
       "Microsoft.AspNetCore.Components.t32damlu4o.wasm": "Microsoft.AspNetCore.Components.wasm",
@@ -201,10 +201,10 @@
       "icudt_CJK.tjcz0u77k5.dat": "icudt_CJK.dat",
       "icudt_EFIGS.tptq2av103.dat": "icudt_EFIGS.dat",
       "icudt_no_CJK.lfu7j35m59.dat": "icudt_no_CJK.dat",
-      "OnlineCourseD2N.Shared.mg3e5cqkpk.wasm": "OnlineCourseD2N.Shared.wasm",
-      "OnlineCourseD2N.Shared.e6pz143k6y.pdb": "OnlineCourseD2N.Shared.pdb",
-      "OnlineCourseD2N.Web.Client.8ax07t6df4.wasm": "OnlineCourseD2N.Web.Client.wasm",
-      "OnlineCourseD2N.Web.Client.vdctjzh5fk.pdb": "OnlineCourseD2N.Web.Client.pdb"
+      "OnlineCourseD2N.Shared.2sthzn4rd0.wasm": "OnlineCourseD2N.Shared.wasm",
+      "OnlineCourseD2N.Shared.3f1g463j4w.pdb": "OnlineCourseD2N.Shared.pdb",
+      "OnlineCourseD2N.Web.Client.knbm5uex9a.wasm": "OnlineCourseD2N.Web.Client.wasm",
+      "OnlineCourseD2N.Web.Client.c7tqnw9wje.pdb": "OnlineCourseD2N.Web.Client.pdb"
     },
     "jsModuleNative": {
       "dotnet.native.l4ptthxatg.js": "sha256-ddUN4+taa/Qv7Mr8mLpunJO+0Xw3ViOqBvedhe57/hA="
@@ -414,12 +414,12 @@
       "WindowsBase.ahs9krftg4.wasm": "sha256-bgi2FHdT0ABsUP1yKQQ2AP8qfo1V/bS/4cJFE4OUHX8=",
       "mscorlib.k5iaovx9v7.wasm": "sha256-mEFLDERlY1HMNQHzh68xOPawXvI48O1fHW9PbfXugb4=",
       "netstandard.6sr1qvn64m.wasm": "sha256-Gpf+qEqCYaCB6zqI5sNPIurnfpwRtfcWksgf3CW6mHE=",
-      "OnlineCourseD2N.Shared.mg3e5cqkpk.wasm": "sha256-Bn6HhYdy68dJW0BllpeoeABVYADPuaKeaNoXegStuFc=",
-      "OnlineCourseD2N.Web.Client.8ax07t6df4.wasm": "sha256-gLwEJPxetrquGiwnMrsgLh5qJ6zIQoxL6KUGoFZlcaM="
+      "OnlineCourseD2N.Shared.2sthzn4rd0.wasm": "sha256-AnD8hx++mHom1l+2sSRBBLermf70swPEdgjguLdfLbE=",
+      "OnlineCourseD2N.Web.Client.knbm5uex9a.wasm": "sha256-gGHZ7l0nHrE/jG5iUELXN50zWFVOg5DKDo29IRQ4nDY="
     },
     "pdb": {
-      "OnlineCourseD2N.Shared.e6pz143k6y.pdb": "sha256-NstVcPRGb/stp3EakBF+8RE5D5DisF5vBcu9wLW9bTY=",
-      "OnlineCourseD2N.Web.Client.vdctjzh5fk.pdb": "sha256-85KGQHyNf9k70iYTYaokcS9qPyDSD5N6I8EKVaoYAbA="
+      "OnlineCourseD2N.Shared.3f1g463j4w.pdb": "sha256-0UgORrZHBICXBa+NEd+o95SxaKwew32riSzvjt8QUW8=",
+      "OnlineCourseD2N.Web.Client.c7tqnw9wje.pdb": "sha256-WJ2vgayflidQQhsXcex9D5eCXTkiXt4883D05vKV25k="
     }
   },
   "cacheBootResources": true,

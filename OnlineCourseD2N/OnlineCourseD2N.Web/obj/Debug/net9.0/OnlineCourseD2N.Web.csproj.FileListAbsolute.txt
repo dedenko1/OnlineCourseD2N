@@ -72,3 +72,4 @@ C:\Users\Lenovo\Documents\SEMESTER 5\PM\OnlineCourseD2N\OnlineCourseD2N\OnlineCo
 C:\Users\Lenovo\Documents\SEMESTER 5\PM\OnlineCourseD2N\OnlineCourseD2N\OnlineCourseD2N.Web\obj\Debug\net9.0\ref\OnlineCourseD2N.Web.dll
 C:\Users\Lenovo\Documents\SEMESTER 5\PM\OnlineCourseD2N\OnlineCourseD2N\OnlineCourseD2N.Web\obj\Debug\net9.0\staticwebassets.upToDateCheck.txt
 C:\Users\Lenovo\Documents\SEMESTER 5\PM\OnlineCourseD2N\OnlineCourseD2N\OnlineCourseD2N.Web\obj\Debug\net9.0\compressed\zxr6ok4uvm-ibt7721kfj.gz
+C:\Users\Lenovo\Documents\SEMESTER 5\PM\OnlineCourseD2N\OnlineCourseD2N\OnlineCourseD2N.Web\obj\Debug\net9.0\OnlineCourseD2N.Web.sourcelink.json
