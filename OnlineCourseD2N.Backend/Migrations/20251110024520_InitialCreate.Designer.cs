@@ -10,7 +10,7 @@ using OnlineCourseD2N.Backend.Data;
 namespace OnlineCourseD2N.Backend.Migrations
 {
     [DbContext(typeof(AppDbContext))]
-    [Migration("20251022081707_InitialCreate")]
+    [Migration("20251110024520_InitialCreate")]
     partial class InitialCreate
     {
         /// <inheritdoc />
@@ -28,6 +28,10 @@ namespace OnlineCourseD2N.Backend.Migrations
                     b.Property<string>("Category")
                         .IsRequired()
                         .HasMaxLength(50)
+                        .HasColumnType("TEXT");
+
+                    b.Property<string>("CoverImage")
+                        .IsRequired()
                         .HasColumnType("TEXT");
 
                     b.Property<string>("Description")

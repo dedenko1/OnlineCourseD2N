@@ -14,14 +14,13 @@ namespace OnlineCourseD2N.Shared.Models
 
         [Required, MaxLength(150)]
         public string Title { get; set; } = string.Empty;
-
         public string Description { get; set; } = String.Empty;
 
         [MaxLength(50)]
         public string Category { get; set; } = String.Empty;
-
         public int Duration { get; set; } // jam
         public string Level { get; set; } = String.Empty;
+        public string CoverImage { get; set; } = String.Empty;
 
         // Relasi ke Trainer
         [ForeignKey("Trainer")]

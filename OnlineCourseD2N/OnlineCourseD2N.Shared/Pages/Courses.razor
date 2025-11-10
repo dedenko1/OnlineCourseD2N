@@ -1,10 +1,9 @@
 ﻿@page "/courses"
-@inject CourseService CourseService
-@inject TrainerService TrainerService
 @inject NavigationManager Nav
-
 @using OnlineCourseD2N.Shared.Models
 @using OnlineCourseD2N.Shared.Services
+@inject CourseService CourseService
+@inject TrainerService TrainerService
 
 <h3 class="mb-3">Manajemen Courses</h3>
 
@@ -34,6 +33,7 @@ else
     <table class="table table-striped">
         <thead>
             <tr>
+                <th>Cover</th>
                 <th>Title</th>
                 <th>Description</th>
                 <th>Trainer</th>
@@ -44,7 +44,8 @@ else
             @foreach (var c in filteredCourses ?? [])
             {
                 <tr>
-                    <td>@c.Title</td>
+                    <td><img src="http://localhost:5034/uploads/@c.CoverImage" alt="@c.CoverImage" width="200" class="rounded shadow" /></td>
+                    <td>@c.Title</td> 
                     <td>@c.Description</td>
                     <td>@c.Trainer?.Name</td>
                     <td>
@@ -83,7 +84,7 @@ else
                                 <div class="col-md-6">
                                     <label>Category:</label>
                                     <InputText class="form-control" @bind-Value="currentCourse.Category" />
-                                </div>
+                                </div> 
 
                                 <div class="col-md-12">
                                     <label>Description:</label>
@@ -109,6 +110,17 @@ else
                                             <option value="@t.TrainerId">@t.Name</option>
                                         }
                                     </InputSelect>
+                                </div>
+
+                                <div class="col-md-12">
+                                <label>Cover Image</label>
+                                <InputFile OnChange="HandleFileSelected" />
+                                @if (!string.IsNullOrEmpty(currentCourse.CoverImage))
+                                {
+                                    <div class="mt-2">
+                                        <img src="@($"http://localhost:5034/uploads/{currentCourse.CoverImage}")" alt="cover" width="200" class="rounded shadow" />
+                                    </div>
+                                }
                                 </div>
                             </div>
 
@@ -186,13 +198,21 @@ else
     private void ApplySearch()
     {
         if (string.IsNullOrWhiteSpace(searchTerm))
+        {
             filteredCourses = courses;
+        }
         else
+        {
             filteredCourses = courses?
-                .Where(t => t.Title.Contains(searchTerm, StringComparison.OrdinalIgnoreCase)
-                         || t.Description.Contains(searchTerm, StringComparison.OrdinalIgnoreCase))
+                .Where(c =>
+                    (c.Title?.Contains(searchTerm, StringComparison.OrdinalIgnoreCase) ?? false) ||
+                    (c.Description?.Contains(searchTerm, StringComparison.OrdinalIgnoreCase) ?? false) ||
+                    (c.Trainer?.Name?.Contains(searchTerm, StringComparison.OrdinalIgnoreCase) ?? false)
+                )
                 .ToList();
+        }
     }
+
 
     private void ViewDetail(int id)
     {
@@ -253,6 +273,16 @@ else
         catch (Exception ex)
         {
             ShowAlert($"Terjadi kesalahan: {ex.Message}", "danger");
+        }
+    }
+
+    private async Task HandleFileSelected(InputFileChangeEventArgs e)
+    {
+        var file = e.File;
+        var fileName = await CourseService.UploadCoverAsync(file);
+        if (!string.IsNullOrEmpty(fileName))
+        {
+            currentCourse.CoverImage = fileName;
         }
     }
 

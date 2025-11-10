@@ -37,6 +37,7 @@ namespace OnlineCourseD2N.Backend.Migrations
                     Category = table.Column<string>(type: "TEXT", maxLength: 50, nullable: false),
                     Duration = table.Column<int>(type: "INTEGER", nullable: false),
                     Level = table.Column<string>(type: "TEXT", nullable: false),
+                    CoverImage = table.Column<string>(type: "TEXT", nullable: false),
                     TrainerId = table.Column<int>(type: "INTEGER", nullable: false)
                 },
                 constraints: table =>

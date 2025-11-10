@@ -120,3 +120,17 @@ C:\Users\Lenovo\Documents\SEMESTER 5\PM\OnlineCourseD2N\OnlineCourseD2N\OnlineCo
 C:\Users\Lenovo\Documents\SEMESTER 5\PM\OnlineCourseD2N\OnlineCourseD2N\OnlineCourseD2N.Shared\obj\Debug\net9.0\staticwebassets.build.json
 C:\Users\Lenovo\Documents\SEMESTER 5\PM\OnlineCourseD2N\OnlineCourseD2N\OnlineCourseD2N.Web.Client\obj\Debug\net9.0\staticwebassets.build.json
 C:\Users\Lenovo\Documents\SEMESTER 5\PM\OnlineCourseD2N\OnlineCourseD2N\OnlineCourseD2N.Shared\obj\Debug\net9.0\staticwebassets.build.json
+C:\Users\Lenovo\Documents\SEMESTER 5\PM\OnlineCourseD2N\OnlineCourseD2N\OnlineCourseD2N.Web.Client\obj\Debug\net9.0\staticwebassets.build.json
+C:\Users\Lenovo\Documents\SEMESTER 5\PM\OnlineCourseD2N\OnlineCourseD2N\OnlineCourseD2N.Shared\obj\Debug\net9.0\staticwebassets.build.json
+C:\Users\Lenovo\Documents\SEMESTER 5\PM\OnlineCourseD2N\OnlineCourseD2N\OnlineCourseD2N.Web.Client\obj\Debug\net9.0\staticwebassets.build.json
+C:\Users\Lenovo\Documents\SEMESTER 5\PM\OnlineCourseD2N\OnlineCourseD2N\OnlineCourseD2N.Shared\obj\Debug\net9.0\staticwebassets.build.json
+C:\Users\Lenovo\Documents\SEMESTER 5\PM\OnlineCourseD2N\OnlineCourseD2N\OnlineCourseD2N.Web.Client\obj\Debug\net9.0\staticwebassets.build.json
+C:\Users\Lenovo\Documents\SEMESTER 5\PM\OnlineCourseD2N\OnlineCourseD2N\OnlineCourseD2N.Shared\obj\Debug\net9.0\staticwebassets.build.json
+C:\Users\Lenovo\Documents\SEMESTER 5\PM\OnlineCourseD2N\OnlineCourseD2N\OnlineCourseD2N.Web.Client\obj\Debug\net9.0\staticwebassets.build.json
+C:\Users\Lenovo\Documents\SEMESTER 5\PM\OnlineCourseD2N\OnlineCourseD2N\OnlineCourseD2N.Shared\obj\Debug\net9.0\staticwebassets.build.json
+C:\Users\Lenovo\Documents\SEMESTER 5\PM\OnlineCourseD2N\OnlineCourseD2N\OnlineCourseD2N.Web.Client\obj\Debug\net9.0\staticwebassets.build.json
+C:\Users\Lenovo\Documents\SEMESTER 5\PM\OnlineCourseD2N\OnlineCourseD2N\OnlineCourseD2N.Shared\obj\Debug\net9.0\staticwebassets.build.json
+C:\Users\Lenovo\Documents\SEMESTER 5\PM\OnlineCourseD2N\OnlineCourseD2N\OnlineCourseD2N.Web.Client\obj\Debug\net9.0\staticwebassets.build.json
+C:\Users\Lenovo\Documents\SEMESTER 5\PM\OnlineCourseD2N\OnlineCourseD2N\OnlineCourseD2N.Shared\obj\Debug\net9.0\staticwebassets.build.json
+C:\Users\Lenovo\Documents\SEMESTER 5\PM\OnlineCourseD2N\OnlineCourseD2N\OnlineCourseD2N.Web.Client\obj\Debug\net9.0\staticwebassets.build.json
+C:\Users\Lenovo\Documents\SEMESTER 5\PM\OnlineCourseD2N\OnlineCourseD2N\OnlineCourseD2N.Shared\obj\Debug\net9.0\staticwebassets.build.json

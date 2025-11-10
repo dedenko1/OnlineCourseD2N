@@ -7,6 +7,30 @@
       "RelativeMoniker": "D:0:0:{002B4999-3C89-48E4-BB7E-520C89AC4191}|OnlineCourseD2N\\OnlineCourseD2N.Shared\\OnlineCourseD2N.Shared.csproj|solutionrelative:onlinecoursed2n\\onlinecoursed2n.shared\\pages\\courses.razor||{40D31677-CBC0-4297-A9EF-89D907823A98}"
     },
     {
+      "AbsoluteMoniker": "D:0:0:{4AC9A2BC-2D2F-4090-B591-F77701B88784}|OnlineCourseD2N.Backend\\OnlineCourseD2N.Backend.csproj|c:\\users\\lenovo\\documents\\semester 5\\pm\\onlinecoursed2n\\onlinecoursed2n.backend\\data\\course.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{4AC9A2BC-2D2F-4090-B591-F77701B88784}|OnlineCourseD2N.Backend\\OnlineCourseD2N.Backend.csproj|solutionrelative:onlinecoursed2n.backend\\data\\course.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{002B4999-3C89-48E4-BB7E-520C89AC4191}|OnlineCourseD2N\\OnlineCourseD2N.Shared\\OnlineCourseD2N.Shared.csproj|c:\\users\\lenovo\\documents\\semester 5\\pm\\onlinecoursed2n\\onlinecoursed2n\\onlinecoursed2n.shared\\services\\courseservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{002B4999-3C89-48E4-BB7E-520C89AC4191}|OnlineCourseD2N\\OnlineCourseD2N.Shared\\OnlineCourseD2N.Shared.csproj|solutionrelative:onlinecoursed2n\\onlinecoursed2n.shared\\services\\courseservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{4AC9A2BC-2D2F-4090-B591-F77701B88784}|OnlineCourseD2N.Backend\\OnlineCourseD2N.Backend.csproj|c:\\users\\lenovo\\documents\\semester 5\\pm\\onlinecoursed2n\\onlinecoursed2n.backend\\handler\\uploadhandler.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{4AC9A2BC-2D2F-4090-B591-F77701B88784}|OnlineCourseD2N.Backend\\OnlineCourseD2N.Backend.csproj|solutionrelative:onlinecoursed2n.backend\\handler\\uploadhandler.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{4AC9A2BC-2D2F-4090-B591-F77701B88784}|OnlineCourseD2N.Backend\\OnlineCourseD2N.Backend.csproj|c:\\users\\lenovo\\documents\\semester 5\\pm\\onlinecoursed2n\\onlinecoursed2n.backend\\controllers\\uploadscontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{4AC9A2BC-2D2F-4090-B591-F77701B88784}|OnlineCourseD2N.Backend\\OnlineCourseD2N.Backend.csproj|solutionrelative:onlinecoursed2n.backend\\controllers\\uploadscontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{002B4999-3C89-48E4-BB7E-520C89AC4191}|OnlineCourseD2N\\OnlineCourseD2N.Shared\\OnlineCourseD2N.Shared.csproj|c:\\users\\lenovo\\documents\\semester 5\\pm\\onlinecoursed2n\\onlinecoursed2n\\onlinecoursed2n.shared\\models\\course.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{002B4999-3C89-48E4-BB7E-520C89AC4191}|OnlineCourseD2N\\OnlineCourseD2N.Shared\\OnlineCourseD2N.Shared.csproj|solutionrelative:onlinecoursed2n\\onlinecoursed2n.shared\\models\\course.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{4AC9A2BC-2D2F-4090-B591-F77701B88784}|OnlineCourseD2N.Backend\\OnlineCourseD2N.Backend.csproj|c:\\users\\lenovo\\documents\\semester 5\\pm\\onlinecoursed2n\\onlinecoursed2n.backend\\controllers\\coursescontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{4AC9A2BC-2D2F-4090-B591-F77701B88784}|OnlineCourseD2N.Backend\\OnlineCourseD2N.Backend.csproj|solutionrelative:onlinecoursed2n.backend\\controllers\\coursescontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
       "AbsoluteMoniker": "D:0:0:{002B4999-3C89-48E4-BB7E-520C89AC4191}|OnlineCourseD2N\\OnlineCourseD2N.Shared\\OnlineCourseD2N.Shared.csproj|c:\\users\\lenovo\\documents\\semester 5\\pm\\onlinecoursed2n\\onlinecoursed2n\\onlinecoursed2n.shared\\pages\\trainers.razor||{40D31677-CBC0-4297-A9EF-89D907823A98}",
       "RelativeMoniker": "D:0:0:{002B4999-3C89-48E4-BB7E-520C89AC4191}|OnlineCourseD2N\\OnlineCourseD2N.Shared\\OnlineCourseD2N.Shared.csproj|solutionrelative:onlinecoursed2n\\onlinecoursed2n.shared\\pages\\trainers.razor||{40D31677-CBC0-4297-A9EF-89D907823A98}"
     }
@@ -18,8 +42,73 @@
       "DocumentGroups": [
         {
           "DockedWidth": 200,
-          "SelectedChildIndex": 0,
+          "SelectedChildIndex": 5,
           "Children": [
+            {
+              "$type": "Document",
+              "DocumentIndex": 2,
+              "Title": "CourseService.cs",
+              "DocumentMoniker": "C:\\Users\\Lenovo\\Documents\\SEMESTER 5\\PM\\OnlineCourseD2N\\OnlineCourseD2N\\OnlineCourseD2N.Shared\\Services\\CourseService.cs",
+              "RelativeDocumentMoniker": "OnlineCourseD2N\\OnlineCourseD2N.Shared\\Services\\CourseService.cs",
+              "ToolTip": "C:\\Users\\Lenovo\\Documents\\SEMESTER 5\\PM\\OnlineCourseD2N\\OnlineCourseD2N\\OnlineCourseD2N.Shared\\Services\\CourseService.cs",
+              "RelativeToolTip": "OnlineCourseD2N\\OnlineCourseD2N.Shared\\Services\\CourseService.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAABQAAABDAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-11-10T01:45:21.567Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 5,
+              "Title": "Course.cs",
+              "DocumentMoniker": "C:\\Users\\Lenovo\\Documents\\SEMESTER 5\\PM\\OnlineCourseD2N\\OnlineCourseD2N\\OnlineCourseD2N.Shared\\Models\\Course.cs",
+              "RelativeDocumentMoniker": "OnlineCourseD2N\\OnlineCourseD2N.Shared\\Models\\Course.cs",
+              "ToolTip": "C:\\Users\\Lenovo\\Documents\\SEMESTER 5\\PM\\OnlineCourseD2N\\OnlineCourseD2N\\OnlineCourseD2N.Shared\\Models\\Course.cs",
+              "RelativeToolTip": "OnlineCourseD2N\\OnlineCourseD2N.Shared\\Models\\Course.cs",
+              "ViewState": "AgIAAA8AAAAAAAAAAAAqwBYAAAA+AAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-11-10T01:27:02.416Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 1,
+              "Title": "Course.cs",
+              "DocumentMoniker": "C:\\Users\\Lenovo\\Documents\\SEMESTER 5\\PM\\OnlineCourseD2N\\OnlineCourseD2N.Backend\\Data\\Course.cs",
+              "RelativeDocumentMoniker": "OnlineCourseD2N.Backend\\Data\\Course.cs",
+              "ToolTip": "C:\\Users\\Lenovo\\Documents\\SEMESTER 5\\PM\\OnlineCourseD2N\\OnlineCourseD2N.Backend\\Data\\Course.cs",
+              "RelativeToolTip": "OnlineCourseD2N.Backend\\Data\\Course.cs",
+              "ViewState": "AgIAABMAAAAAAAAAAAAowBQAAAA+AAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-11-10T01:15:43.51Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 3,
+              "Title": "UploadHandler.cs",
+              "DocumentMoniker": "C:\\Users\\Lenovo\\Documents\\SEMESTER 5\\PM\\OnlineCourseD2N\\OnlineCourseD2N.Backend\\Handler\\UploadHandler.cs",
+              "RelativeDocumentMoniker": "OnlineCourseD2N.Backend\\Handler\\UploadHandler.cs",
+              "ToolTip": "C:\\Users\\Lenovo\\Documents\\SEMESTER 5\\PM\\OnlineCourseD2N\\OnlineCourseD2N.Backend\\Handler\\UploadHandler.cs",
+              "RelativeToolTip": "OnlineCourseD2N.Backend\\Handler\\UploadHandler.cs",
+              "ViewState": "AgIAABcAAAAAAAAAAAAswCcAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-11-10T00:59:48.405Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 4,
+              "Title": "UploadsController.cs",
+              "DocumentMoniker": "C:\\Users\\Lenovo\\Documents\\SEMESTER 5\\PM\\OnlineCourseD2N\\OnlineCourseD2N.Backend\\Controllers\\UploadsController.cs",
+              "RelativeDocumentMoniker": "OnlineCourseD2N.Backend\\Controllers\\UploadsController.cs",
+              "ToolTip": "C:\\Users\\Lenovo\\Documents\\SEMESTER 5\\PM\\OnlineCourseD2N\\OnlineCourseD2N.Backend\\Controllers\\UploadsController.cs",
+              "RelativeToolTip": "OnlineCourseD2N.Backend\\Controllers\\UploadsController.cs",
+              "ViewState": "AgIAAAIAAAAAAAAAAAAkwBAAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-11-10T00:44:04.437Z",
+              "EditorCaption": ""
+            },
             {
               "$type": "Document",
               "DocumentIndex": 0,
@@ -28,23 +117,35 @@
               "RelativeDocumentMoniker": "OnlineCourseD2N\\OnlineCourseD2N.Shared\\Pages\\Courses.razor",
               "ToolTip": "C:\\Users\\Lenovo\\Documents\\SEMESTER 5\\PM\\OnlineCourseD2N\\OnlineCourseD2N\\OnlineCourseD2N.Shared\\Pages\\Courses.razor",
               "RelativeToolTip": "OnlineCourseD2N\\OnlineCourseD2N.Shared\\Pages\\Courses.razor",
-              "ViewState": "AgIAAFYAAAAAAAAAAADwv14AAAB0AAAAAAAAAA==",
+              "ViewState": "AgIAAHAAAAAAAAAAAAAqwHoAAAAhAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000759|",
-              "WhenOpened": "2025-10-29T01:06:33.578Z",
+              "WhenOpened": "2025-10-31T08:33:51.322Z",
               "EditorCaption": ""
             },
             {
               "$type": "Document",
-              "DocumentIndex": 1,
+              "DocumentIndex": 6,
+              "Title": "CoursesController.cs",
+              "DocumentMoniker": "C:\\Users\\Lenovo\\Documents\\SEMESTER 5\\PM\\OnlineCourseD2N\\OnlineCourseD2N.Backend\\Controllers\\CoursesController.cs",
+              "RelativeDocumentMoniker": "OnlineCourseD2N.Backend\\Controllers\\CoursesController.cs",
+              "ToolTip": "C:\\Users\\Lenovo\\Documents\\SEMESTER 5\\PM\\OnlineCourseD2N\\OnlineCourseD2N.Backend\\Controllers\\CoursesController.cs",
+              "RelativeToolTip": "OnlineCourseD2N.Backend\\Controllers\\CoursesController.cs",
+              "ViewState": "AgIAAAgAAAAAAAAAAAAxwA8AAAAJAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-11-10T00:40:31.855Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 7,
               "Title": "Trainers.razor",
               "DocumentMoniker": "C:\\Users\\Lenovo\\Documents\\SEMESTER 5\\PM\\OnlineCourseD2N\\OnlineCourseD2N\\OnlineCourseD2N.Shared\\Pages\\Trainers.razor",
               "RelativeDocumentMoniker": "OnlineCourseD2N\\OnlineCourseD2N.Shared\\Pages\\Trainers.razor",
               "ToolTip": "C:\\Users\\Lenovo\\Documents\\SEMESTER 5\\PM\\OnlineCourseD2N\\OnlineCourseD2N\\OnlineCourseD2N.Shared\\Pages\\Trainers.razor",
               "RelativeToolTip": "OnlineCourseD2N\\OnlineCourseD2N.Shared\\Pages\\Trainers.razor",
-              "ViewState": "AgIAADkAAAAAAAAAAAAAAB0AAAArAAAAAAAAAA==",
+              "ViewState": "AgIAACoAAAAAAAAAAAAAAAQAAAAmAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000759|",
-              "WhenOpened": "2025-10-28T06:52:06.198Z",
-              "EditorCaption": ""
+              "WhenOpened": "2025-10-28T06:52:06.198Z"
             }
           ]
         }

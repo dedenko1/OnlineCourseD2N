@@ -18,6 +18,8 @@ namespace OnlineCourseD2N.Backend.Data
         public int Duration { get; set; } // jam
         public string Level { get; set; } = String.Empty;
 
+        public string CoverImage { get; set; } = String.Empty;
+
         // Relasi ke Trainer
         [ForeignKey("Trainer")]
         public int TrainerId { get; set; }
