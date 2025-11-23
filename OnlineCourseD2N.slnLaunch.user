@@ -1,0 +1,15 @@
+[
+  {
+    "Name": "New Profile",
+    "Projects": [
+      {
+        "Path": "OnlineCourseD2N\\OnlineCourseD2N\\OnlineCourseD2N.csproj",
+        "Action": "Start"
+      },
+      {
+        "Path": "OnlineCourseD2N.Backend\\OnlineCourseD2N.Backend.csproj",
+        "Action": "Start"
+      }
+    ]
+  }
+]
