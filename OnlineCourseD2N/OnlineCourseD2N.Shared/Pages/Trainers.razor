@@ -1,0 +1,254 @@
+﻿@page "/trainers"
+@inject TrainerService TrainerService
+@inject NavigationManager Nav
+
+@using OnlineCourseD2N.Shared.Services
+@using OnlineCourseD2N.Shared.Models
+
+<h3 class="mb-3">Manajemen Trainer</h3>
+
+@if (trainers == null)
+{
+    <p><em>Memuat data...</em></p>
+}
+else
+{
+    @if (!string.IsNullOrEmpty(alertMessage))
+    {
+        <div class="alert alert-@alertType fade show position-fixed top-0 start-50 translate-middle-x mt-3 shadow"
+             role="alert" style="z-index: 1050; min-width: 300px;">
+            @alertMessage
+        </div>
+    }
+
+    <div class="mb-3 d-flex justify-content-between align-items-center">
+        <input class="form-control w-50"
+               placeholder="Cari trainer..."
+               @bind="SearchTerm"
+               @bind:event="oninput" />
+
+        <button class="btn btn-primary mb-3" @onclick="ShowAddModal">+ Tambah Trainer</button>
+    </div>
+
+    <table class="table table-striped">
+        <thead>
+            <tr>
+                <th>Nama</th>
+                <th>Email</th>
+                <th>Expertise</th>
+                <th>Aksi</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var t in filteredTrainers ?? [])
+            {
+                <tr>
+                    <td>@t.Name</td>
+                    <td>@t.Email</td>
+                    <td>@t.Expertise</td>
+                    <td>
+                        <button class="btn btn-sm btn-info me-2" @onclick="() => ViewDetail(t.TrainerId)">Detail</button>
+                        <button class="btn btn-sm btn-warning me-2" @onclick="() => ShowEditModal(t)">Edit</button>
+                        <button class="btn btn-sm btn-danger" @onclick="() => AskDeleteTrainer(t)">Hapus</button>
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+
+    <!-- 🟢 Modal Tambah/Edit -->
+    @if (isModalVisible)
+    {
+        <div class="modal fade show d-block" tabindex="-1" style="background-color: rgba(0,0,0,0.5);">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header bg-primary text-white">
+                        <h5 class="modal-title">
+                            @(currentTrainer.TrainerId == 0 ? "Tambah Trainer" : "Edit Trainer")
+                        </h5>
+                        <button type="button" class="btn-close" @onclick="CloseModal"></button>
+                    </div>
+
+                    <EditForm Model="currentTrainer" OnValidSubmit="HandleSubmit">
+                        <DataAnnotationsValidator />
+                        <ValidationSummary />
+
+                        <div class="modal-body">
+                            <div class="mb-2">
+                                <label>Nama</label>
+                                <InputText class="form-control" @bind-Value="currentTrainer.Name" />
+                            </div>
+
+                            <div class="mb-2">
+                                <label>Expertise</label>
+                                <InputText class="form-control" @bind-Value="currentTrainer.Expertise" />
+                            </div>
+
+                            <div class="mb-2">
+                                <label>Email</label>
+                                <InputText class="form-control" @bind-Value="currentTrainer.Email" />
+                            </div>
+
+                            <div class="mb-2">
+                                <label>Bio</label>
+                                <InputTextArea class="form-control" @bind-Value="currentTrainer.Bio" />
+                            </div>
+                        </div>
+
+                        <div class="modal-footer">
+                            <button class="btn btn-secondary" type="button" @onclick="CloseModal">Batal</button>
+                            <button class="btn btn-success" type="submit">
+                                @(currentTrainer.TrainerId == 0 ? "Tambah" : "Simpan")
+                            </button>
+                        </div>
+                    </EditForm>
+                </div>
+            </div>
+        </div>
+    }
+
+    <!-- 🔴 Modal Konfirmasi Hapus -->
+    @if (trainerToDelete != null)
+    {
+        <div class="modal fade show d-block" tabindex="-1" style="background-color: rgba(0,0,0,0.5);">
+            <div class="modal-dialog modal-dialog-centered">
+                <div class="modal-content">
+                    <div class="modal-header bg-danger text-white">
+                        <h5 class="modal-title">Konfirmasi Hapus</h5>
+                    </div>
+                    <div class="modal-body">
+                        <p>Apakah Anda yakin ingin menghapus <strong>@trainerToDelete.Name</strong>?</p>
+                    </div>
+                    <div class="modal-footer">
+                        <button class="btn btn-secondary" @onclick="CancelDelete">Batal</button>
+                        <button class="btn btn-danger" @onclick="ConfirmDelete">Hapus</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    }
+}
+
+@code {
+    private List<Trainer>? trainers;
+    private List<Trainer>? filteredTrainers;
+    private Trainer currentTrainer = new();
+    private Trainer? trainerToDelete;
+
+    private bool isModalVisible = false;
+    private string searchTerm = string.Empty;
+    private string? alertMessage;
+    private string? alertType;
+    private System.Timers.Timer? alertTimer;
+
+    protected override async Task OnInitializedAsync() => await LoadData();
+
+    private string SearchTerm
+    {
+        get => searchTerm;
+        set { searchTerm = value; ApplySearch(); }
+    }
+
+    private async Task LoadData()
+    {
+        trainers = await TrainerService.GetAllAsync();
+        ApplySearch();
+    }
+
+    private void ApplySearch()
+    {
+        if (string.IsNullOrWhiteSpace(searchTerm))
+            filteredTrainers = trainers;
+        else
+            filteredTrainers = trainers?
+                .Where(t => t.Name.Contains(searchTerm, StringComparison.OrdinalIgnoreCase)
+                         || t.Expertise.Contains(searchTerm, StringComparison.OrdinalIgnoreCase))
+                .ToList();
+    }
+
+    private void ShowAddModal()
+    {
+        currentTrainer = new Trainer();
+        isModalVisible = true;
+    }
+
+    private void ShowEditModal(Trainer t)
+    {
+        currentTrainer = new Trainer
+        {
+            TrainerId = t.TrainerId,
+            Name = t.Name,
+            Expertise = t.Expertise,
+            Email = t.Email,
+            Bio = t.Bio
+        };
+        isModalVisible = true;
+    }
+
+    private void CloseModal()
+    {
+        isModalVisible = false;
+        currentTrainer = new Trainer();
+    }
+
+    private async Task HandleSubmit()
+    {
+        bool success = currentTrainer.TrainerId == 0
+            ? await TrainerService.AddAsync(currentTrainer)
+            : await TrainerService.UpdateAsync(currentTrainer.TrainerId, currentTrainer);
+
+        if (success)
+        {
+            ShowAlert(currentTrainer.TrainerId == 0
+                ? "Trainer berhasil ditambahkan!"
+                : "Trainer berhasil diperbarui!", "success");
+            await LoadData();
+            CloseModal();
+        }
+        else
+        {
+            ShowAlert("Gagal menyimpan trainer.", "danger");
+        }
+    }
+
+    private void AskDeleteTrainer(Trainer t) => trainerToDelete = t;
+
+    private void CancelDelete() => trainerToDelete = null;
+
+    private async Task ConfirmDelete()
+    {
+        if (trainerToDelete != null)
+        {
+            bool success = await TrainerService.DeleteAsync(trainerToDelete.TrainerId);
+            if (success)
+            {
+                ShowAlert($"Trainer '{trainerToDelete.Name}' berhasil dihapus.", "success");
+                await LoadData();
+            }
+            else
+            {
+                ShowAlert("Gagal menghapus trainer.", "danger");
+            }
+            trainerToDelete = null;
+        }
+    }
+
+    private void ViewDetail(int id) => Nav.NavigateTo($"/trainers/{id}");
+
+    private void ShowAlert(string message, string type = "success", int durationMs = 3000)
+    {
+        alertMessage = message;
+        alertType = type;
+
+        alertTimer?.Stop();
+        alertTimer = new System.Timers.Timer(durationMs);
+        alertTimer.Elapsed += (s, e) =>
+        {
+            alertMessage = null;
+            alertTimer?.Stop();
+            InvokeAsync(StateHasChanged);
+        };
+        alertTimer.Start();
+        StateHasChanged();
+    }
+}

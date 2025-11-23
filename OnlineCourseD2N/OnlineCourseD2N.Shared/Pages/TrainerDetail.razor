@@ -1,0 +1,74 @@
+﻿@page "/trainers/{id:int}"
+@inject TrainerService TrainerService
+@inject NavigationManager Nav
+@using OnlineCourseD2N.Shared.Models
+@using OnlineCourseD2N.Shared.Services
+
+
+<button class="btn btn-secondary mb-3" @onclick="GoBack">← Kembali</button>
+
+<h3>Detail Trainer</h3>
+
+@if (trainer == null)
+{
+    <p><em>Memuat data...</em></p>
+}
+else
+{
+    <div class="card mb-3">
+        <div class="card-body">
+            <h4>@trainer.Name</h4>
+            <p><strong>Email:</strong> @trainer.Email</p>
+            <p><strong>Expertise:</strong> @trainer.Expertise</p>
+            <p><strong>Bio:</strong> @trainer.Bio</p>
+        </div>
+    </div>
+
+    <h5>Daftar Courses</h5>
+
+    @if (trainer.Courses == null || trainer.Courses.Count == 0)
+    {
+        <p><em>Tidak ada course.</em></p>
+    }
+    else
+    {
+        <table class="table table-striped">
+            <thead>
+                <tr>
+                    <th>Title</th>
+                    <th>Description</th>
+                    <th>Category</th>
+                    <th>Duration</th>
+                    <th>Level</th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var course in trainer.Courses)
+                {
+                    <tr>
+                        <td>@course.Title</td>
+                        <td>@course.Description</td>
+                        <td>@course.Category</td>
+                        <td>@course.Duration</td>
+                        <td>@course.Level</td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    }
+}
+
+@code {
+    [Parameter] public int id { get; set; }
+    private Trainer? trainer;
+
+    protected override async Task OnInitializedAsync()
+    {
+        trainer = await TrainerService.GetByIdAsync(id);
+    }
+
+    private void GoBack()
+    {
+        Nav.NavigateTo("/trainers");
+    }
+}
