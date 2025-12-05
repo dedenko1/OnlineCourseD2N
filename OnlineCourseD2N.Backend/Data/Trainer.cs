@@ -18,6 +18,8 @@ namespace OnlineCourseD2N.Backend.Data
         [EmailAddress]
         public string Email { get; set; } = String.Empty;
 
+        public string FotoProfil { get; set; } = String.Empty;
+
         public List<Course>? Courses { get; set; }
     }
 }

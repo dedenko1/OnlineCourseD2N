@@ -279,7 +279,6 @@ C:\Users\Lenovo\Documents\SEMESTER 5\PM\OnlineCourseD2N\OnlineCourseD2N\OnlineCo
 C:\Users\Lenovo\Documents\SEMESTER 5\PM\OnlineCourseD2N\OnlineCourseD2N\OnlineCourseD2N\obj\Debug\net9.0-ios\iossimulator-x64\rjsmcshtml.dswa.cache.json
 C:\Users\Lenovo\Documents\SEMESTER 5\PM\OnlineCourseD2N\OnlineCourseD2N\OnlineCourseD2N\obj\Debug\net9.0-ios\iossimulator-x64\scopedcss\bundle\OnlineCourseD2N.styles.css
 C:\Users\Lenovo\Documents\SEMESTER 5\PM\OnlineCourseD2N\OnlineCourseD2N\OnlineCourseD2N\obj\Debug\net9.0-ios\iossimulator-x64\compressed\9jwofunx4z-obgb1x923p.gz
-C:\Users\Lenovo\Documents\SEMESTER 5\PM\OnlineCourseD2N\OnlineCourseD2N\OnlineCourseD2N\obj\Debug\net9.0-ios\iossimulator-x64\compressed\ohnj9tgqn5-uch3extoll.gz
 C:\Users\Lenovo\Documents\SEMESTER 5\PM\OnlineCourseD2N\OnlineCourseD2N\OnlineCourseD2N\obj\Debug\net9.0-ios\iossimulator-x64\staticwebassets.build.json
 C:\Users\Lenovo\Documents\SEMESTER 5\PM\OnlineCourseD2N\OnlineCourseD2N\OnlineCourseD2N\obj\Debug\net9.0-ios\iossimulator-x64\staticwebassets.build.json.cache
 C:\Users\Lenovo\Documents\SEMESTER 5\PM\OnlineCourseD2N\OnlineCourseD2N\OnlineCourseD2N\obj\Debug\net9.0-ios\iossimulator-x64\staticwebassets.development.json
@@ -291,7 +290,6 @@ C:\Users\Lenovo\Documents\SEMESTER 5\PM\OnlineCourseD2N\OnlineCourseD2N\OnlineCo
 C:\Users\Lenovo\Documents\SEMESTER 5\PM\OnlineCourseD2N\OnlineCourseD2N\OnlineCourseD2N\obj\Debug\net9.0-ios\iossimulator-x64\staticwebassets\msbuild.buildTransitive.OnlineCourseD2N.props
 C:\Users\Lenovo\Documents\SEMESTER 5\PM\OnlineCourseD2N\OnlineCourseD2N\OnlineCourseD2N\obj\Debug\net9.0-ios\iossimulator-x64\staticwebassets.pack.json
 C:\Users\Lenovo\Documents\SEMESTER 5\PM\OnlineCourseD2N\OnlineCourseD2N\OnlineCourseD2N\obj\Debug\net9.0-ios\iossimulator-x64\compressed\publish\9jwofunx4z-obgb1x923p.br
-C:\Users\Lenovo\Documents\SEMESTER 5\PM\OnlineCourseD2N\OnlineCourseD2N\OnlineCourseD2N\obj\Debug\net9.0-ios\iossimulator-x64\compressed\publish\ohnj9tgqn5-uch3extoll.br
 C:\Users\Lenovo\Documents\SEMESTER 5\PM\OnlineCourseD2N\OnlineCourseD2N\OnlineCourseD2N\obj\Debug\net9.0-ios\iossimulator-x64\staticwebassets.publish.json
 C:\Users\Lenovo\Documents\SEMESTER 5\PM\OnlineCourseD2N\OnlineCourseD2N\OnlineCourseD2N\obj\Debug\net9.0-ios\iossimulator-x64\staticwebassets.publish.endpoints.json
 C:\Users\Lenovo\Documents\SEMESTER 5\PM\OnlineCourseD2N\OnlineCourseD2N\OnlineCourseD2N\obj\Debug\net9.0-ios\iossimulator-x64\mauiimage.inputs
@@ -349,6 +347,11 @@ C:\Users\Lenovo\Documents\SEMESTER 5\PM\OnlineCourseD2N\OnlineCourseD2N\OnlineCo
 C:\Users\Lenovo\Documents\SEMESTER 5\PM\OnlineCourseD2N\OnlineCourseD2N\OnlineCourseD2N\obj\Debug\net9.0-ios\iossimulator-x64\ref\OnlineCourseD2N.dll
 C:\Users\Lenovo\Documents\SEMESTER 5\PM\OnlineCourseD2N\OnlineCourseD2N\OnlineCourseD2N\obj\Debug\net9.0-ios\iossimulator-x64\staticwebassets.upToDateCheck.txt
 C:\Users\Lenovo\Documents\SEMESTER 5\PM\OnlineCourseD2N\OnlineCourseD2N\OnlineCourseD2N\obj\Debug\net9.0-ios\iossimulator-x64\OnlineCourseD2N.sourcelink.json
-C:\Users\Lenovo\Documents\SEMESTER 5\PM\OnlineCourseD2N\OnlineCourseD2N\OnlineCourseD2N\bin\Debug\net9.0-ios\iossimulator-x64\CommunityToolkit.Maui.MediaElement.dll
-C:\Users\Lenovo\Documents\SEMESTER 5\PM\OnlineCourseD2N\OnlineCourseD2N\OnlineCourseD2N\obj\Debug\net9.0-ios\iossimulator-x64\compressed\v5qe36tssl-lecrbgd0gs.gz
-C:\Users\Lenovo\Documents\SEMESTER 5\PM\OnlineCourseD2N\OnlineCourseD2N\OnlineCourseD2N\obj\Debug\net9.0-ios\iossimulator-x64\compressed\publish\v5qe36tssl-lecrbgd0gs.br
+C:\Users\Lenovo\Documents\SEMESTER 5\PM\OnlineCourseD2N\OnlineCourseD2N\OnlineCourseD2N\bin\Debug\net9.0-ios\iossimulator-x64\Microsoft.Maui.Controls.HotReload.Forms.dll
+C:\Users\Lenovo\Documents\SEMESTER 5\PM\OnlineCourseD2N\OnlineCourseD2N\OnlineCourseD2N\bin\Debug\net9.0-ios\iossimulator-x64\Microsoft.VisualStudio.DesignTools.MobileTapContracts.dll
+C:\Users\Lenovo\Documents\SEMESTER 5\PM\OnlineCourseD2N\OnlineCourseD2N\OnlineCourseD2N\bin\Debug\net9.0-ios\iossimulator-x64\Microsoft.VisualStudio.DesignTools.TapContract.dll
+C:\Users\Lenovo\Documents\SEMESTER 5\PM\OnlineCourseD2N\OnlineCourseD2N\OnlineCourseD2N\bin\Debug\net9.0-ios\iossimulator-x64\Microsoft.VisualStudio.DesignTools.XamlTapContract.dll
+C:\Users\Lenovo\Documents\SEMESTER 5\PM\OnlineCourseD2N\OnlineCourseD2N\OnlineCourseD2N\obj\Debug\net9.0-ios\iossimulator-x64\compressed\ohnj9tgqn5-3d2h1tyz0f.gz
+C:\Users\Lenovo\Documents\SEMESTER 5\PM\OnlineCourseD2N\OnlineCourseD2N\OnlineCourseD2N\obj\Debug\net9.0-ios\iossimulator-x64\compressed\61m9q6lnwp-ibt7721kfj.gz
+C:\Users\Lenovo\Documents\SEMESTER 5\PM\OnlineCourseD2N\OnlineCourseD2N\OnlineCourseD2N\obj\Debug\net9.0-ios\iossimulator-x64\compressed\publish\ohnj9tgqn5-3d2h1tyz0f.br
+C:\Users\Lenovo\Documents\SEMESTER 5\PM\OnlineCourseD2N\OnlineCourseD2N\OnlineCourseD2N\obj\Debug\net9.0-ios\iossimulator-x64\compressed\publish\61m9q6lnwp-ibt7721kfj.br

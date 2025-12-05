@@ -1,16 +1,16 @@
 {
   "Files": [
     {
+      "Id": "C:\\Users\\Lenovo\\Documents\\SEMESTER 5\\PM\\OnlineCourseD2N\\OnlineCourseD2N\\OnlineCourseD2N\\obj\\Debug\\net9.0-ios\\iossimulator-x64\\scopedcss\\bundle\\OnlineCourseD2N.styles.css",
+      "PackagePath": "staticwebassets\\OnlineCourseD2N.styles.css"
+    },
+    {
       "Id": "C:\\Users\\Lenovo\\Documents\\SEMESTER 5\\PM\\OnlineCourseD2N\\OnlineCourseD2N\\OnlineCourseD2N\\wwwroot\\app.css",
       "PackagePath": "staticwebassets\\app.css"
     },
     {
       "Id": "C:\\Users\\Lenovo\\Documents\\SEMESTER 5\\PM\\OnlineCourseD2N\\OnlineCourseD2N\\OnlineCourseD2N\\wwwroot\\index.html",
       "PackagePath": "staticwebassets\\index.html"
-    },
-    {
-      "Id": "C:\\Users\\Lenovo\\Documents\\SEMESTER 5\\PM\\OnlineCourseD2N\\OnlineCourseD2N\\OnlineCourseD2N\\wwwroot\\js\\camera.js",
-      "PackagePath": "staticwebassets\\js\\camera.js"
     },
     {
       "Id": "obj\\Debug\\net9.0-ios\\iossimulator-x64\\staticwebassets\\msbuild.OnlineCourseD2N.Microsoft.AspNetCore.StaticWebAssetEndpoints.props",

@@ -33,6 +33,7 @@ else
     <table class="table table-striped">
         <thead>
             <tr>
+                <th>Foto Profil</th>
                 <th>Nama</th>
                 <th>Email</th>
                 <th>Expertise</th>
@@ -43,6 +44,13 @@ else
             @foreach (var t in filteredTrainers ?? [])
             {
                 <tr>
+                    <td>
+                        @if (!string.IsNullOrEmpty(t.FotoProfil))
+                        {
+                            Console.WriteLine(t.FotoProfil);
+                            <img src="@($"http://localhost:5034/uploads/{t.FotoProfil}")" alt="@t.FotoProfil" width="200" class="rounded shadow" />
+                        }
+                    </td>
                     <td>@t.Name</td>
                     <td>@t.Email</td>
                     <td>@t.Expertise</td>
@@ -93,6 +101,17 @@ else
                                 <label>Bio</label>
                                 <InputTextArea class="form-control" @bind-Value="currentTrainer.Bio" />
                             </div>
+                            <div class="col-md-12">
+                                <label>Foto Profil</label>
+                                <button type="button" class="btn btn-secondary me-2" @onclick="() => isCameraOpen = true">Ambil Foto</button>
+                                <InputFile OnChange="HandleFileSelected" accept="image/*" />
+                                @if (!string.IsNullOrEmpty(currentTrainer.FotoProfil))
+                                {
+                                    <div class="mt-2">
+                                        <img src="@($"http://localhost:5034/uploads/{currentTrainer.FotoProfil}")" alt="cover" width="200" class="rounded shadow" />
+                                    </div>
+                                }
+                            </div>
                         </div>
 
                         <div class="modal-footer">
@@ -127,6 +146,23 @@ else
             </div>
         </div>
     }
+
+    @if (isCameraOpen)
+    {
+        <div class="modal fade show d-block" style="background-color: rgba(0,0,0,0.6);">
+            <div class="modal-dialog modal-dialog-centered">
+                <div class="modal-content p-2">
+                    <div class="modal-header">
+                        <h5 class="modal-title">Ambil Foto</h5>
+                        <button class="btn-close" @onclick="CancelCamera"></button>
+                    </div>
+                    <div class="modal-body">
+                        <CameraPreview OnPhotoCaptured="HandleCameraPhoto" OnCaptureCancelled="CancelCamera" />
+                    </div>
+                </div>
+            </div>
+        </div>
+    }
 }
 
 @code {
@@ -136,6 +172,8 @@ else
     private Trainer? trainerToDelete;
 
     private bool isModalVisible = false;
+    private bool isCameraOpen = false;
+
     private string searchTerm = string.Empty;
     private string? alertMessage;
     private string? alertType;
@@ -180,7 +218,8 @@ else
             Name = t.Name,
             Expertise = t.Expertise,
             Email = t.Email,
-            Bio = t.Bio
+            Bio = t.Bio,
+            FotoProfil = t.FotoProfil,
         };
         isModalVisible = true;
     }
@@ -211,6 +250,17 @@ else
         }
     }
 
+    private async Task HandleFileSelected(InputFileChangeEventArgs e)
+    {
+        var file = e.File;
+        var oldFileName = currentTrainer.FotoProfil;
+        var fileName = await TrainerService.UploadCoverAsync(file, oldFileName);
+        if (!string.IsNullOrEmpty(fileName))
+        {
+            currentTrainer.FotoProfil = fileName;
+        }
+    }
+
     private void AskDeleteTrainer(Trainer t) => trainerToDelete = t;
 
     private void CancelDelete() => trainerToDelete = null;
@@ -235,6 +285,29 @@ else
 
     private void ViewDetail(int id) => Nav.NavigateTo($"/trainers/{id}");
 
+    private async Task HandleCameraPhoto(string base64)
+    {
+        if (string.IsNullOrEmpty(base64)) return;
+
+        // Ubah Base64 menjadi file di server
+        var bytes = Convert.FromBase64String(base64.Split(',')[1]);
+        using var stream = new MemoryStream(bytes);
+        var fileName = await TrainerService.UploadStreamAsync(stream, currentTrainer.FotoProfil);
+        currentTrainer.FotoProfil = fileName;
+
+        ShowAlert("Foto berhasil diambil!", "success");
+
+        isCameraOpen = false;
+        StateHasChanged();
+    }
+
+    private void CancelCamera()
+    {
+        isCameraOpen = false;
+        ShowAlert("Pengambilan foto dibatalkan.", "warning");
+        StateHasChanged();
+    }
+
     private void ShowAlert(string message, string type = "success", int durationMs = 3000)
     {
         alertMessage = message;
@@ -249,6 +322,12 @@ else
             InvokeAsync(StateHasChanged);
         };
         alertTimer.Start();
+
         StateHasChanged();
+    }
+
+    public void Dispose()
+    {
+        alertTimer?.Dispose();
     }
 }

@@ -33,14 +33,11 @@ else
 
 app.UseHttpsRedirection();
 
-// --- Penting: Static files dan MapStaticAssets SEBELUM MapRazorComponents ---
 app.UseStaticFiles();
-app.MapStaticAssets();     // <- ini yang menghilangkan warning
-// ---------------------------------------------------------------------------
+app.MapStaticAssets();
 
 app.UseAntiforgery();
 
-// Razor Components + WebAssembly Render Mode HARUS setelah MapStaticAssets
 app.MapRazorComponents<App>()
     .AddInteractiveServerRenderMode()
     .AddInteractiveWebAssemblyRenderMode()

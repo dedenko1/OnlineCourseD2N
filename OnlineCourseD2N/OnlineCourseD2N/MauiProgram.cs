@@ -19,6 +19,11 @@ namespace OnlineCourseD2N
             builder.Services.AddSingleton<IFormFactor, FormFactor>();
             builder.Services.AddMauiBlazorWebView();
             builder.Services.AddSingleton<ICameraService, CameraService>();
+            builder.Services.AddSingleton<IGeolocationService, GeolocationService>();
+            builder.Services.AddSingleton<IConnectivityService, ConnectivityService>();
+            builder.Services.AddSingleton<ITextToSpeechService, TextToSpeechService>();
+            builder.Services.AddSingleton<IMapService, MapService>();
+            builder.Services.AddSingleton<IShareService, ShareService>();
 #if DEBUG
             builder.Services.AddBlazorWebViewDeveloperTools();
             builder.Logging.AddDebug();

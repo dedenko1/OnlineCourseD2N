@@ -20,6 +20,10 @@ namespace OnlineCourseD2N.Backend.Data
 
         public string CoverImage { get; set; } = String.Empty;
 
+        public double? Latitude { get; set; }
+        public double? Longitude { get; set; }
+        public string? LocationAddress { get; set; }
+
         // Relasi ke Trainer
         [ForeignKey("Trainer")]
         public int TrainerId { get; set; }

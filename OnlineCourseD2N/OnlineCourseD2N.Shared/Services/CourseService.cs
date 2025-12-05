@@ -46,24 +46,38 @@ namespace OnlineCourseD2N.Shared.Services
         {
             try
             {
+                if (fileStream == null || fileStream.Length == 0)
+                    return null;
+
+                // Buat konten multipart untuk dikirim ke API
                 using var content = new MultipartFormDataContent();
 
+                // Generate nama file unik (gunakan .png karena kamera.js output PNG)
+                string fileName = $"{Guid.NewGuid()}.png";
+
                 var streamContent = new StreamContent(fileStream);
-                streamContent.Headers.ContentType = new System.Net.Http.Headers.MediaTypeHeaderValue("image/jpeg");
+                streamContent.Headers.ContentType = new System.Net.Http.Headers.MediaTypeHeaderValue("image/png");
 
-                content.Add(streamContent, "file", $"{Guid.NewGuid()}.png");
+                content.Add(streamContent, "file", fileName);
 
+                // Sertakan nama file lama jika ingin dihapus di server
                 if (!string.IsNullOrEmpty(oldFileName))
                 {
                     content.Add(new StringContent(oldFileName), "oldFileName");
                 }
 
+                // Kirim ke endpoint upload server
                 var response = await _http.PostAsync("api/uploads/uploadfile", content);
 
                 if (!response.IsSuccessStatusCode)
+                {
+                    Console.WriteLine($"Upload failed: {response.StatusCode}");
                     return null;
+                }
 
-                return await response.Content.ReadAsStringAsync();
+                // Server mengembalikan nama file yang disimpan
+                string uploadedFileName = await response.Content.ReadAsStringAsync();
+                return uploadedFileName;
             }
             catch (Exception ex)
             {
@@ -71,7 +85,6 @@ namespace OnlineCourseD2N.Shared.Services
                 return null;
             }
         }
-
 
 
         public async Task<List<Course>> GetAllAsync()

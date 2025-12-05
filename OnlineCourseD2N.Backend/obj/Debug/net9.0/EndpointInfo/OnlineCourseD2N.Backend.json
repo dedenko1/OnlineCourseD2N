@@ -624,6 +624,10 @@
             "format": "email",
             "nullable": true
           },
+          "fotoProfil": {
+            "type": "string",
+            "nullable": true
+          },
           "courses": {
             "type": "array",
             "items": {

@@ -1,2 +1,2 @@
-AdbTarget=
+AdbTarget=-s 0542625058023121
 AdbOptions=

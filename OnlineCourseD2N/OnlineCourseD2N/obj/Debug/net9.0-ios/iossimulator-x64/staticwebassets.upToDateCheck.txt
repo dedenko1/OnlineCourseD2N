@@ -1,6 +1,4 @@
 wwwroot\app.css
 wwwroot\index.html
-wwwroot\js\camera.js
 C:\Users\Lenovo\Documents\SEMESTER 5\PM\OnlineCourseD2N\OnlineCourseD2N\OnlineCourseD2N\wwwroot\app.css
-C:\Users\Lenovo\Documents\SEMESTER 5\PM\OnlineCourseD2N\OnlineCourseD2N\OnlineCourseD2N\wwwroot\js\camera.js
 C:\Users\Lenovo\Documents\SEMESTER 5\PM\OnlineCourseD2N\OnlineCourseD2N\OnlineCourseD2N\wwwroot\index.html

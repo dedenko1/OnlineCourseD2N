@@ -72,12 +72,12 @@
       <RelatedAsset></RelatedAsset>
       <AssetTraitName></AssetTraitName>
       <AssetTraitValue></AssetTraitValue>
-      <Fingerprint>0hvzvcn99v</Fingerprint>
-      <Integrity>FGlTyXlbyqwlgJJEc1QUAVtEhMpBErm+XIFnNTE4tsE=</Integrity>
+      <Fingerprint>6p04tedzx8</Fingerprint>
+      <Integrity>iqF2KUk51+sDosgbP6jvUCN3WjEDiyXtWHO1w4I0msc=</Integrity>
       <CopyToOutputDirectory>Never</CopyToOutputDirectory>
       <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
-      <FileLength>903</FileLength>
-      <LastWriteTime>Sun, 23 Nov 2025 01:41:08 GMT</LastWriteTime>
+      <FileLength>2292</FileLength>
+      <LastWriteTime>Thu, 27 Nov 2025 00:04:02 GMT</LastWriteTime>
       <OriginalItemSpec>$([System.IO.Path]::GetFullPath('$(MSBuildThisFileDirectory)..\staticwebassets\camera.js'))</OriginalItemSpec>
     </StaticWebAsset>
     <StaticWebAsset Include="$([System.IO.Path]::GetFullPath('$(MSBuildThisFileDirectory)..\staticwebassets\favicon.png'))">

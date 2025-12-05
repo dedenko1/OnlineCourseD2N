@@ -1,11 +1,15 @@
 ﻿@page "/courses"
 @inject NavigationManager Nav
-@using OnlineCourseD2N.Shared.Models 
+@using OnlineCourseD2N.Shared.Models
 @using OnlineCourseD2N.Shared.Services
-@inject CourseService CourseService 
-@inject TrainerService TrainerService
-@inject ICameraService CameraService
+@inject CourseService CourseService
+@inject TrainerService TrainerService 
 @inject IJSRuntime JS
+@inject IGeolocationService GeoService
+@inject IConnectivityService ConnectivityService
+@inject ITextToSpeechService TTSService
+@inject IMapService MapService
+@inject IShareService ShareService
 
 <h3 class="mb-3">Manajemen Courses</h3>
 
@@ -18,8 +22,13 @@ else
     @if (!string.IsNullOrEmpty(alertMessage))
     {
         <div class="alert alert-@alertType fade show position-fixed top-0 start-50 translate-middle-x mt-3 shadow"
-             role="alert" style="z-index: 1050; min-width: 300px;">
-            @alertMessage
+             role="alert"
+             style="z-index: 9999; min-width: 300px;">
+
+            <div class="d-flex justify-content-between align-items-center">
+                <span>@alertMessage</span>
+                <button type="button" class="btn-close ms-2" @onclick="() => alertMessage = null"></button>
+            </div>
         </div>
     }
 
@@ -31,13 +40,13 @@ else
         <button class="btn btn-primary mb-3" @onclick="ShowAddModal">Tambah Course</button>
     </div>
 
-
     <table class="table table-striped">
         <thead>
             <tr>
                 <th>Cover</th>
                 <th>Title</th>
                 <th>Description</th>
+                <th>Lokasi Map</th>
                 <th>Trainer</th>
                 <th>Aksi</th>
             </tr>
@@ -46,14 +55,56 @@ else
             @foreach (var c in filteredCourses ?? [])
             {
                 <tr>
-                    <td><img src="http://localhost:5034/uploads/@c.CoverImage" alt="@c.CoverImage" width="200" class="rounded shadow" /></td>
-                    <td>@c.Title</td> 
+                    <td>
+                        @if (!string.IsNullOrEmpty(c.CoverImage))
+                        {
+                            <img src="@($"http://localhost:5034/uploads/{c.CoverImage}")" alt="@c.CoverImage" width="200" class="rounded shadow" />
+                        }
+                    </td>
+                    <td>
+                        <div class="d-flex align-items-center">
+                            <span class="me-2">@c.Title</span>
+
+                            <button class="btn btn-sm btn-outline-secondary rounded-circle"
+                                    title="Bacakan Deskripsi"
+                                    @onclick="() => ReadCourseDescription(c)">
+                                🔊
+                            </button>
+                        </div>
+                    </td>
                     <td>@c.Description</td>
+                    <td>
+                        @if (c.Latitude != null && c.Longitude != null)
+                        {
+                            <div class="d-flex flex-column align-items-start">
+                                <small class="text-muted mb-1">
+                                    @c.Latitude.Value.ToString("0.##"), @c.Longitude.Value.ToString("0.##")
+                                </small>
+
+                                <button class="btn btn-sm btn-outline-primary"
+                                        @onclick="() => OpenMap(c)">
+                                    🗺️ Lihat Peta
+                                </button>
+                            </div>
+                        }
+                        else
+                        {
+                            <span class="text-muted">-</span>
+                        }
+                    </td>
                     <td>@c.Trainer?.Name</td>
                     <td>
-                        <button class="btn btn-sm btn-info me-2" @onclick="() => ViewDetail(c.CourseId)">Detail</button>
-                        <button class="btn btn-sm btn-warning me-2" @onclick="() => ShowEditModal(c)">Edit</button>
-                        <button class="btn btn-sm btn-danger" @onclick="() => AskDeleteCourse(c)">Hapus</button>
+                        <div class="btn-group" role="group">
+                            <button class="btn btn-sm btn-outline-success"
+                                    title="Bagikan ke Teman"
+                                    @onclick="() => ShareCourse(c)">
+                                📤
+                            </button>
+
+                            <button class="btn btn-sm btn-info" @onclick="() => ViewDetail(c.CourseId)">Detail</button>
+                            <button class="btn btn-sm btn-warning" @onclick="() => ShowEditModal(c)">Edit</button>
+                            <button class="btn btn-sm btn-danger" @onclick="() => AskDeleteCourse(c)">Hapus</button>
+                        </div>
                     </td>
                 </tr>
             }
@@ -86,7 +137,7 @@ else
                                 <div class="col-md-6">
                                     <label>Category:</label>
                                     <InputText class="form-control" @bind-Value="currentCourse.Category" />
-                                </div> 
+                                </div>
 
                                 <div class="col-md-12">
                                     <label>Description:</label>
@@ -95,7 +146,7 @@ else
 
                                 <div class="col-md-4">
                                     <label>Duration (jam):</label>
-                                    <InputNumber class="form-control" @bind-Value="currentCourse.Duration" min="0"/>
+                                    <InputNumber class="form-control" @bind-Value="currentCourse.Duration" min="0" />
                                 </div>
 
                                 <div class="col-md-4">
@@ -115,16 +166,39 @@ else
                                 </div>
 
                                 <div class="col-md-12">
-                                <label>Cover Image</label>
-                                <button type="button" class="btn btn-secondary" @onclick="OpenCamera">Ambil Foto</button>
-                                <InputFile OnChange="HandleFileSelected" accept="image/*" capture="camera" />
-                                @if (!string.IsNullOrEmpty(currentCourse.CoverImage))
-                                {
-                                    <div class="mt-2">
-                                        <img src="@($"http://localhost:5034/uploads/{currentCourse.CoverImage}")" alt="cover" width="200" class="rounded shadow" />
-                                    </div>
-                                }
+                                    <label>Cover Image</label>
+                                    <button type="button" class="btn btn-secondary me-2" @onclick="() => isCameraOpen = true">Ambil Foto</button>
+                                    <InputFile OnChange="HandleFileSelected" accept="image/*" />
+                                    @if (!string.IsNullOrEmpty(currentCourse.CoverImage))
+                                    {
+                                        <div class="mt-2">
+                                            <img src="@($"http://localhost:5034/uploads/{currentCourse.CoverImage}")" alt="cover" width="200" class="rounded shadow" />
+                                        </div>
+                                    }
                                 </div>
+                            </div>
+
+                            <div class="col-md-12">
+                                <label class="form-label fw-bold">Lokasi Venue (Workshop Offline)</label>
+                                <div class="input-group mb-2">
+                                    <span class="input-group-text">Lat</span>
+                                    <InputNumber class="form-control" @bind-Value="currentCourse.Latitude" placeholder="-7.795..." />
+                                    <span class="input-group-text">Long</span>
+                                    <InputNumber class="form-control" @bind-Value="currentCourse.Longitude" placeholder="110.369..." />
+
+                                    <button type="button" class="btn btn-outline-primary" @onclick="GetCurrentLocation" disabled="@isLoadingLocation">
+                                        @if (isLoadingLocation)
+                                        {
+                                            <span class="spinner-border spinner-border-sm"></span>
+                                        }
+                                        else
+                                        {
+                                            <span>📍 Ambil Lokasi Saya</span>
+                                        }
+                                    </button>
+                                </div>
+                                <InputText class="form-control" @bind-Value="currentCourse.LocationAddress" placeholder="Nama Gedung / Alamat Manual" />
+                                <small class="text-muted">Pastikan GPS aktif untuk mengambil lokasi otomatis.</small>
                             </div>
 
                             <div class="mt-4 text-end">
@@ -160,21 +234,105 @@ else
             </div>
         </div>
     }
+
+    <!-- Modal Kamera -->
+    @if (isCameraOpen) 
+    {
+        <div class="modal fade show d-block" style="background-color: rgba(0,0,0,0.6);">
+            <div class="modal-dialog modal-dialog-centered">
+                <div class="modal-content p-2">
+                    <div class="modal-header">
+                        <h5 class="modal-title">Ambil Foto</h5>
+                        <button class="btn-close" @onclick="CancelCamera"></button>
+                    </div>
+                    <div class="modal-body"> 
+                        <CameraPreview OnPhotoCaptured="HandleCameraPhoto" OnCaptureCancelled="CancelCamera" />
+                    </div>
+                </div>
+            </div>
+        </div>
+    }
 }
 
 @code {
-    private string searchTerm = string.Empty;
-    private List<Course>? filteredCourses;
     private List<Course>? courses;
+    private List<Course>? filteredCourses;
     private List<Trainer>? trainers;
-
-    private Course? CourseToDelete;
     private Course currentCourse = new();
+    private Course? CourseToDelete;
     private bool isModalVisible = false;
+    private bool isCameraOpen = false;
 
+    private string searchTerm = string.Empty;
     private string? alertMessage;
     private string? alertType;
     private System.Timers.Timer? alertTimer;
+
+    private async Task ShareCourse(Course c)
+    {
+        // 1. Siapkan pesan promosi
+        string title = $"Belajar {c.Title} di RuangLes!";
+        string message = $"Halo! Cek course keren ini: '{c.Title}'. Deskripsi: {c.Description}. Diajar oleh: {c.Trainer?.Name}.";
+
+        // 2. Simulasi Link (karena masih localhost, kita buat pura-pura)
+        // Nanti kalau sudah online, ganti jadi domain aslimu
+        string url = $"https://ruangles.com/course/{c.CourseId}";
+
+        // 3. Panggil Share Sheet
+        await ShareService.ShareTextAsync(title, message, url);
+    }
+
+    private async Task OpenMap(Course c)
+    {
+        if (c.Latitude != null && c.Longitude != null)
+        {
+            // Panggil service native
+            await MapService.OpenMapAsync(c.Latitude.Value, c.Longitude.Value, c.Title);
+        }
+        else
+        {
+            ShowAlert("Lokasi belum diset untuk course ini.", "warning");
+        }
+    }
+
+    private async Task ReadCourseDescription(Course c)
+    {
+        string textToRead = $"Course: {c.Title}. Oleh Trainer: {c.Trainer?.Name ?? "Tidak diketahui"}. Deskripsi: {c.Description}";
+
+        await TTSService.SpeakAsync(textToRead);
+
+        Console.WriteLine($"Sedang membaca: {c.Title}");
+    }
+
+    private bool isLoadingLocation = false;
+
+    private async Task GetCurrentLocation()
+    {
+        isLoadingLocation = true;
+        try
+        {
+            var location = await GeoService.GetCurrentLocationAsync();
+
+            if (location != null)
+            {
+                currentCourse.Latitude = location.Value.Latitude;
+                currentCourse.Longitude = location.Value.Longitude;
+                ShowAlert("Lokasi berhasil ditemukan!", "success");
+            }
+            else
+            {
+                ShowAlert("Gagal mendapatkan lokasi. Pastikan GPS aktif dan izin diberikan.", "warning");
+            }
+        }
+        catch (Exception ex)
+        {
+            ShowAlert($"Error System: {ex.Message}", "danger");
+        }
+        finally
+        {
+            isLoadingLocation = false;
+        }
+    }
 
     private string SearchTerm
     {
@@ -185,22 +343,6 @@ else
             ApplySearch();
         }
     }
-
-    private async Task OpenCamera()
-    {
-        var stream = await CameraService.TakePhotoAsync();
-
-        if (stream == null)
-        {
-            await JS.InvokeVoidAsync("alert", "Kamera tidak tersedia. Gunakan upload file.");
-            return;
-        }
-
-        var fileName = await CourseService.UploadStreamAsync(stream, currentCourse.CoverImage);
-        currentCourse.CoverImage = fileName;
-    }
-
-
 
     protected override async Task OnInitializedAsync()
     {
@@ -217,11 +359,8 @@ else
     private void ApplySearch()
     {
         if (string.IsNullOrWhiteSpace(searchTerm))
-        {
             filteredCourses = courses;
-        }
         else
-        {
             filteredCourses = courses?
                 .Where(c =>
                     (c.Title?.Contains(searchTerm, StringComparison.OrdinalIgnoreCase) ?? false) ||
@@ -229,13 +368,6 @@ else
                     (c.Trainer?.Name?.Contains(searchTerm, StringComparison.OrdinalIgnoreCase) ?? false)
                 )
                 .ToList();
-        }
-    }
-
-
-    private void ViewDetail(int id)
-    {
-        Nav.NavigateTo($"/courses/{id}");
     }
 
     private void ShowAddModal()
@@ -255,6 +387,9 @@ else
             Duration = c.Duration,
             Level = c.Level,
             CoverImage = c.CoverImage,
+            Latitude = c.Latitude,
+            Longitude = c.Longitude,
+            LocationAddress = c.LocationAddress,
             TrainerId = c.TrainerId
         };
         isModalVisible = true;
@@ -268,13 +403,16 @@ else
 
     private async Task HandleSubmit()
     {
+        if (!ConnectivityService.IsConnected())
+        {
+            ShowAlert("Anda sedang OFFLINE. Periksa koneksi internet Anda.", "danger");
+            return; // Stop, jangan lanjut simpan
+        }
         try
         {
-            bool success;
-            if (currentCourse.CourseId == 0)
-                success = await CourseService.AddAsync(currentCourse);
-            else
-                success = await CourseService.UpdateAsync(currentCourse.CourseId, currentCourse);
+            bool success = currentCourse.CourseId == 0
+                ? await CourseService.AddAsync(currentCourse)
+                : await CourseService.UpdateAsync(currentCourse.CourseId, currentCourse);
 
             if (success)
             {
@@ -298,6 +436,11 @@ else
 
     private async Task HandleFileSelected(InputFileChangeEventArgs e)
     {
+        if (!ConnectivityService.IsConnected())
+        {
+            ShowAlert("Gagal upload: Tidak ada koneksi internet.", "danger");
+            return;
+        }
         var file = e.File;
         var oldFileName = currentCourse.CoverImage;
         var fileName = await CourseService.UploadCoverAsync(file, oldFileName);
@@ -312,6 +455,12 @@ else
 
     private async Task ConfirmDelete()
     {
+        if (!ConnectivityService.IsConnected())
+        {
+            ShowAlert("Gagal menghapus: Tidak ada koneksi internet.", "danger");
+            CancelDelete(); // Tutup modal hapus
+            return;
+        }
         if (CourseToDelete != null)
         {
             bool success = await CourseService.DeleteAsync(CourseToDelete.CourseId);
@@ -327,6 +476,72 @@ else
 
             CourseToDelete = null;
         }
+    }
+
+    private void ViewDetail(int id)
+    {
+        Nav.NavigateTo($"/courses/{id}");
+    }
+
+    private async Task HandleCameraPhoto(string base64)
+    {
+        // 1. Matikan kamera PENTING!
+        // Panggil fungsi stopCamera milik objek cameraInterop
+        try
+        {
+            await JS.InvokeVoidAsync("cameraInterop.stopCamera");
+        }
+        catch (Exception ex)
+        {
+            // Abaikan error jika JS belum siap, yang penting lanjut proses simpan
+            Console.WriteLine($"Warning stop camera: {ex.Message}");
+        }
+
+        if (string.IsNullOrEmpty(base64))
+        {
+            isCameraOpen = false;
+            StateHasChanged();
+            return;
+        }
+
+        if (!ConnectivityService.IsConnected())
+        {
+            ShowAlert("Foto diambil, tapi gagal upload karena OFFLINE.", "danger");
+            isCameraOpen = false;
+            StateHasChanged();
+            return;
+        }
+
+        // 2. Proses Simpan Foto
+        var bytes = Convert.FromBase64String(base64.Split(',')[1]);
+        using var stream = new MemoryStream(bytes);
+
+        var fileName = await CourseService.UploadStreamAsync(stream, currentCourse.CoverImage);
+        currentCourse.CoverImage = fileName;
+
+        ShowAlert("Foto berhasil diambil!", "success");
+
+        // 3. Tutup Modal
+        isCameraOpen = false;
+        StateHasChanged();
+    }
+
+    private async Task CancelCamera()
+    {
+        // 1. Matikan kamera PENTING!
+        try
+        {
+            await JS.InvokeVoidAsync("cameraInterop.stopCamera");
+        }
+        catch (Exception ex)
+        {
+            Console.WriteLine($"Warning stop camera: {ex.Message}");
+        }
+
+        // 2. Tutup Modal
+        isCameraOpen = false;
+        ShowAlert("Pengambilan foto dibatalkan.", "warning");
+        StateHasChanged();
     }
 
     private void ShowAlert(string message, string type = "success", int durationMs = 3000)
@@ -345,5 +560,10 @@ else
         alertTimer.Start();
 
         StateHasChanged();
+    }
+
+    public void Dispose()
+    {
+        alertTimer?.Dispose();
     }
 }

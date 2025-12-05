@@ -21,6 +21,8 @@ namespace OnlineCourseD2N.Shared.Models
 
         [EmailAddress]
         public string Email { get; set; } = String.Empty;
+        public string FotoProfil { get; set; } = String.Empty;
+
 
         public List<Course>? Courses { get; set; }
     }

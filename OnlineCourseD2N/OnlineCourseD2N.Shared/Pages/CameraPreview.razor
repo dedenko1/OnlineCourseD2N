@@ -1,0 +1,75 @@
+﻿@inject IJSRuntime JS
+
+<div class="camera-container text-center">
+    <video id="cameraVideoElement" autoplay playsinline style="width:100%; max-width:400px; border-radius:10px;"></video>
+
+    <div class="mt-3">
+        <button class="btn btn-primary me-2" @onclick="CapturePhotoAsync">Capture</button>
+        <button class="btn btn-danger" @onclick="StopCameraAsync">Stop</button>
+    </div>
+</div>
+
+
+@code {
+    [Parameter]
+    public EventCallback<string> OnPhotoCaptured { get; set; }
+
+    [Parameter]
+    public EventCallback OnCaptureCancelled { get; set; }
+
+    private DotNetObjectReference<CameraPreview>? dotNetRef;
+
+    protected override async Task OnAfterRenderAsync(bool firstRender)
+    {
+        if (firstRender)
+        {
+            dotNetRef = DotNetObjectReference.Create(this);
+
+            // Mulai kamera
+            bool started = await JS.InvokeAsync<bool>("cameraInterop.startCapture", dotNetRef);
+            if (!started)
+            {
+                await OnCaptureCancelled.InvokeAsync();
+            }
+        }
+    }
+
+    private async Task CapturePhotoAsync()
+    {
+        await JS.InvokeVoidAsync("cameraInterop.capturePhoto");
+    }
+
+    private async Task StopCameraAsync()
+    {
+        await JS.InvokeVoidAsync("cameraInterop.stopCamera");
+        await OnCaptureCancelled.InvokeAsync();
+    }
+
+    [JSInvokable]
+    public async Task PhotoCaptured(string base64)
+    {
+        if (OnPhotoCaptured.HasDelegate){
+            await OnPhotoCaptured.InvokeAsync(base64);
+        }
+    }
+
+
+    [JSInvokable]
+    public async Task CaptureCancelled()
+    {
+        if (OnCaptureCancelled.HasDelegate)
+        {
+            await OnCaptureCancelled.InvokeAsync();
+        }
+    }
+
+    public void Dispose()
+    {
+        if (dotNetRef != null)
+        {
+            dotNetRef.Dispose();
+        }
+
+        Task.Run(async () => await JS.InvokeVoidAsync("cameraInterop.stopCamera"));
+    }
+}

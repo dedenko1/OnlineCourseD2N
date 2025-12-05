@@ -38,9 +38,18 @@ namespace OnlineCourseD2N.Backend.Migrations
                     b.Property<int>("Duration")
                         .HasColumnType("INTEGER");
 
+                    b.Property<double?>("Latitude")
+                        .HasColumnType("REAL");
+
                     b.Property<string>("Level")
                         .IsRequired()
                         .HasColumnType("TEXT");
+
+                    b.Property<string>("LocationAddress")
+                        .HasColumnType("TEXT");
+
+                    b.Property<double?>("Longitude")
+                        .HasColumnType("REAL");
 
                     b.Property<string>("Title")
                         .IsRequired()
@@ -74,6 +83,10 @@ namespace OnlineCourseD2N.Backend.Migrations
                     b.Property<string>("Expertise")
                         .IsRequired()
                         .HasMaxLength(100)
+                        .HasColumnType("TEXT");
+
+                    b.Property<string>("FotoProfil")
+                        .IsRequired()
                         .HasColumnType("TEXT");
 
                     b.Property<string>("Name")

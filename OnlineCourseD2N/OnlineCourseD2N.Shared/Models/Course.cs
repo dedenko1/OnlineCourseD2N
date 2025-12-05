@@ -21,6 +21,9 @@ namespace OnlineCourseD2N.Shared.Models
         public int Duration { get; set; } // jam
         public string Level { get; set; } = String.Empty;
         public string CoverImage { get; set; } = String.Empty;
+        public double? Latitude { get; set; }
+        public double? Longitude { get; set; }
+        public string? LocationAddress { get; set; }
 
         // Relasi ke Trainer
         [ForeignKey("Trainer")]
