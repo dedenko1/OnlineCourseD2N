@@ -274,8 +274,6 @@ else
         string title = $"Belajar {c.Title} di RuangLes!";
         string message = $"Halo! Cek course keren ini: '{c.Title}'. Deskripsi: {c.Description}. Diajar oleh: {c.Trainer?.Name}.";
 
-        // 2. Simulasi Link (karena masih localhost, kita buat pura-pura)
-        // Nanti kalau sudah online, ganti jadi domain aslimu
         string url = $"https://ruangles.com/course/{c.CourseId}";
 
         // 3. Panggil Share Sheet

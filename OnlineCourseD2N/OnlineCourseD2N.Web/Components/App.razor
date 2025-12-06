@@ -13,10 +13,106 @@
 </head>
 
 <body>
-    <script src="_content/OnlineCourseD2N.Shared/camera.js"></script>
-
     <Routes @rendermode="InteractiveAuto" />
     <script src="_framework/blazor.web.js"></script>
+
+    <script src="_content/OnlineCourseD2N.Shared/camera.js"></script>
+    <script>
+        window.geolocationInterop = {
+            getCurrentPosition: function () {
+                return new Promise((resolve, reject) => {
+                    // Cek apakah browser support
+                    if (!navigator.geolocation) {
+                        resolve(null);
+                        return;
+                    }
+
+                    navigator.geolocation.getCurrentPosition(
+                        (position) => {
+                            // Sukses: Kirim Lat/Long balik ke C#
+                            resolve({
+                                latitude: position.coords.latitude,
+                                longitude: position.coords.longitude
+                            });
+                        },
+                        (error) => {
+                            // Gagal/Ditolak User
+                            console.error("Geolocation error:", error.message);
+                            resolve(null);
+                        },
+                        {
+                            enableHighAccuracy: true, // Minta GPS akurat
+                            timeout: 20000,            // Waktu tunggu 5 detik
+                            maximumAge: 0
+                        }
+                    );
+                });
+            }
+        };
+    </script>
+
+    <script>
+        window.ttsInterop = {
+            speak: function (text) {
+                // 1. Cek apakah browser support
+                if (!('speechSynthesis' in window)) {
+                    console.warn("Browser ini tidak mendukung Text-to-Speech");
+                    return;
+                }
+
+                // 2. Stop suara sebelumnya (biar gak numpuk/tabrakan)
+                window.speechSynthesis.cancel();
+
+                // 3. Buat objek ucapan
+                const utterance = new SpeechSynthesisUtterance(text);
+
+                // 4. Atur Bahasa (Opsional, biar logatnya Indonesia)
+                // Kalau browser punya suara Indo, dia bakal pakai. Kalau enggak, fallback ke default.
+                utterance.lang = 'id-ID';
+                utterance.rate = 1.0; // Kecepatan bicara (1.0 normal)
+                utterance.pitch = 1.0; // Nada bicara
+
+                // 5. Mulai bicara
+                window.speechSynthesis.speak(utterance);
+            },
+
+            cancel: function () {
+                if ('speechSynthesis' in window) {
+                    window.speechSynthesis.cancel();
+                }
+            }
+        };
+    </script>
+
+    <script>
+        window.shareInterop = {
+            share: async function (title, text, url) {
+                // 1. Cek apakah browser support Web Share API
+                if (navigator.share) {
+                    try {
+                        await navigator.share({
+                            title: title,
+                            text: text,
+                            url: url
+                        });
+                        console.log("Berhasil share native!");
+                    } catch (err) {
+                        console.error("Error sharing:", err);
+                    }
+                } else {
+                    // 2. FALLBACK: Jika di Laptop (Chrome Windows kadang gak support),
+                    // kita copy URL ke clipboard manual
+                    try {
+                        await navigator.clipboard.writeText(url);
+                        alert("Link berhasil disalin ke clipboard!\n" + url);
+                    } catch (err) {
+                        // Kalau copy juga gagal, tampilkan prompt manual
+                        prompt("Browser tidak support share otomatis. Silakan copy link ini:", url);
+                    }
+                }
+            }
+        };
+    </script>
 </body>
 
 </html>

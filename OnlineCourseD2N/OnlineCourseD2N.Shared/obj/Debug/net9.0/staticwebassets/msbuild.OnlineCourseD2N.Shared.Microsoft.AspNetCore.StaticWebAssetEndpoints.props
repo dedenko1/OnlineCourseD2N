@@ -40,13 +40,13 @@
       <AssetFile>$([System.IO.Path]::GetFullPath('$(MSBuildThisFileDirectory)..\staticwebassets\camera.js'))</AssetFile>
       <Selectors><![CDATA[[]]]></Selectors>
       <EndpointProperties><![CDATA[[{"Name":"fingerprint","Value":"6p04tedzx8"},{"Name":"integrity","Value":"sha256-iqF2KUk51\u002BsDosgbP6jvUCN3WjEDiyXtWHO1w4I0msc="},{"Name":"label","Value":"_content/OnlineCourseD2N.Shared/camera.js"}]]]></EndpointProperties>
-      <ResponseHeaders><![CDATA[[{"Name":"Accept-Ranges","Value":"bytes"},{"Name":"Cache-Control","Value":"max-age=31536000, immutable"},{"Name":"Content-Length","Value":"2292"},{"Name":"Content-Type","Value":"text/javascript"},{"Name":"ETag","Value":"\u0022iqF2KUk51\u002BsDosgbP6jvUCN3WjEDiyXtWHO1w4I0msc=\u0022"},{"Name":"Last-Modified","Value":"Thu, 27 Nov 2025 00:04:02 GMT"}]]]></ResponseHeaders>
+      <ResponseHeaders><![CDATA[[{"Name":"Accept-Ranges","Value":"bytes"},{"Name":"Cache-Control","Value":"max-age=31536000, immutable"},{"Name":"Content-Length","Value":"2292"},{"Name":"Content-Type","Value":"text/javascript"},{"Name":"ETag","Value":"\u0022iqF2KUk51\u002BsDosgbP6jvUCN3WjEDiyXtWHO1w4I0msc=\u0022"},{"Name":"Last-Modified","Value":"Sat, 06 Dec 2025 00:52:00 GMT"}]]]></ResponseHeaders>
     </StaticWebAssetEndpoint>
     <StaticWebAssetEndpoint Include="_content/OnlineCourseD2N.Shared/camera.js">
       <AssetFile>$([System.IO.Path]::GetFullPath('$(MSBuildThisFileDirectory)..\staticwebassets\camera.js'))</AssetFile>
       <Selectors><![CDATA[[]]]></Selectors>
       <EndpointProperties><![CDATA[[{"Name":"integrity","Value":"sha256-iqF2KUk51\u002BsDosgbP6jvUCN3WjEDiyXtWHO1w4I0msc="}]]]></EndpointProperties>
-      <ResponseHeaders><![CDATA[[{"Name":"Accept-Ranges","Value":"bytes"},{"Name":"Cache-Control","Value":"no-cache"},{"Name":"Content-Length","Value":"2292"},{"Name":"Content-Type","Value":"text/javascript"},{"Name":"ETag","Value":"\u0022iqF2KUk51\u002BsDosgbP6jvUCN3WjEDiyXtWHO1w4I0msc=\u0022"},{"Name":"Last-Modified","Value":"Thu, 27 Nov 2025 00:04:02 GMT"}]]]></ResponseHeaders>
+      <ResponseHeaders><![CDATA[[{"Name":"Accept-Ranges","Value":"bytes"},{"Name":"Cache-Control","Value":"no-cache"},{"Name":"Content-Length","Value":"2292"},{"Name":"Content-Type","Value":"text/javascript"},{"Name":"ETag","Value":"\u0022iqF2KUk51\u002BsDosgbP6jvUCN3WjEDiyXtWHO1w4I0msc=\u0022"},{"Name":"Last-Modified","Value":"Sat, 06 Dec 2025 00:52:00 GMT"}]]]></ResponseHeaders>
     </StaticWebAssetEndpoint>
     <StaticWebAssetEndpoint Include="_content/OnlineCourseD2N.Shared/favicon.ifv42okdf2.png">
       <AssetFile>$([System.IO.Path]::GetFullPath('$(MSBuildThisFileDirectory)..\staticwebassets\favicon.png'))</AssetFile>
