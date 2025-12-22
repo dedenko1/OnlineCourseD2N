@@ -1,0 +1,136 @@
+﻿@page "/users"
+@using Microsoft.AspNetCore.Authorization
+@using OnlineCourseD2N.Shared.Services
+@using OnlineCourseD2N.Shared.Models
+
+@attribute [Authorize(Roles = "Admin")]
+
+@inject NavigationManager Nav
+@inject IJSRuntime JS
+@inject UserService UserService
+
+<div class="d-flex justify-content-between align-items-center mb-4">
+    <div>
+        <h3 class="fw-bold text-primary mb-0">Manajemen Pengguna</h3>
+        <small class="text-muted">Kelola data Admin, Trainer, dan User</small>
+    </div>
+
+    <div class="input-group w-auto">
+        <span class="input-group-text bg-white border-end-0"><i class="bi bi-search"></i></span>
+        <input class="form-control border-start-0" placeholder="Cari user..." @bind="searchTerm" @bind:event="oninput" />
+    </div>
+</div>
+
+@if (isLoading)
+{
+    <div class="text-center py-5">
+        <div class="spinner-border text-primary" role="status"></div>
+        <p class="mt-2 text-muted">Mengambil data users...</p>
+    </div>
+}
+else
+{
+    <div class="card shadow-sm border-0">
+        <div class="card-body p-0">
+            <div class="table-responsive">
+                <table class="table table-hover align-middle mb-0">
+                    <thead class="bg-light text-secondary">
+                        <tr>
+                            <th class="ps-4">No</th>
+                            <th>Nama Lengkap</th>
+                            <th>Email</th>
+                            <th>Role</th>
+                            <th class="text-end pe-4">Aksi</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @if (FilteredUsers.Count > 0)
+                        {
+                            int no = 1;
+                            @foreach (var user in FilteredUsers)
+                            {
+                                <tr>
+                                    <td class="ps-4 text-muted">@(no++)</td>
+                                    <td>
+                                        <div class="fw-bold">@user.Name</div>
+                                    </td>
+                                    <td>@user.Email</td>
+                                    <td>
+                                        @if (user.Role == "Admin")
+                                        {
+                                            <span class="badge bg-danger bg-opacity-10 text-danger rounded-pill px-3">Admin</span>
+                                        }
+                                        else if (user.Role == "Trainer")
+                                        {
+                                            <span class="badge bg-primary bg-opacity-10 text-primary rounded-pill px-3">Trainer</span>
+                                        }
+                                        else
+                                        {
+                                            <span class="badge bg-secondary bg-opacity-10 text-secondary rounded-pill px-3">User</span>
+                                        }
+                                    </td>
+                                    <td class="text-end pe-4">
+                                        <button class="btn btn-sm btn-outline-danger" @onclick="() => DeleteUser(user)" title="Hapus User">
+                                            <i class="bi bi-trash-fill"></i>
+                                        </button>
+                                    </td>
+                                </tr>
+                            }
+                        }
+                        else
+                        {
+                            <tr>
+                                <td colspan="5" class="text-center py-4 text-muted">
+                                    Tidak ada user ditemukan.
+                                </td>
+                            </tr>
+                        }
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+}
+
+@code {
+    private List<UsersDTO> users = new();
+    private string searchTerm = "";
+    private bool isLoading = true;
+
+    protected override async Task OnInitializedAsync()
+    {
+        await LoadData();
+    }
+
+    private async Task LoadData()
+    {
+        isLoading = true;
+        users = await UserService.GetAllUsersAsync();
+        isLoading = false;
+    }
+
+    // Fitur Search Sederhana
+    private List<UsersDTO> FilteredUsers => string.IsNullOrWhiteSpace(searchTerm)
+        ? users
+        : users.Where(u => u.Name.Contains(searchTerm, StringComparison.OrdinalIgnoreCase) ||
+                           u.Email.Contains(searchTerm, StringComparison.OrdinalIgnoreCase)).ToList();
+
+    private async Task DeleteUser(UsersDTO user)
+    {
+        // Konfirmasi pakai JavaScript Alert sederhana
+        bool confirm = await JS.InvokeAsync<bool>("confirm", $"Yakin ingin menghapus user '{user.Name}'?");
+
+        if (confirm)
+        {
+            var success = await UserService.DeleteUserAsync(user.UserId);
+            if (success)
+            {
+                await LoadData(); // Refresh tabel
+            }
+            else
+            {
+                await JS.InvokeVoidAsync("alert", "Gagal menghapus user.");
+            }
+        }
+    }
+}

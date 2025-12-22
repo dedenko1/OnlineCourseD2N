@@ -7,6 +7,7 @@
     <base href="/" />
     <link rel="stylesheet" href="_content/OnlineCourseD2N.Shared/bootstrap/bootstrap.min.css" />
     <link rel="stylesheet" href="_content/OnlineCourseD2N.Shared/app.css" />
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
     <link rel="stylesheet" href="OnlineCourseD2N.Web.styles.css" />
     <link rel="icon" type="image/png" href="_content/OnlineCourseD2N.Shared/favicon.png" />
     <HeadOutlet @rendermode="InteractiveAuto" />
@@ -15,7 +16,24 @@
 <body>
     <Routes @rendermode="InteractiveAuto" />
     <script src="_framework/blazor.web.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
+    <script>
+        window.webScreenshot = {
+            takeAndDownload: function () {
+                // 1. Ambil elemen body
+                html2canvas(document.body).then(canvas => {
+                    // 2. Ubah ke format gambar (Base64)
+                    var image = canvas.toDataURL("image/png");
 
+                    // 3. Buat link palsu untuk trigger download
+                    var link = document.createElement('a');
+                    link.download = 'screenshot_' + new Date().toISOString().slice(0,19).replace(/[-T:]/g,"") + '.png';
+                    link.href = image;
+                    link.click();
+                });
+            }
+        };
+    </script>
     <script src="_content/OnlineCourseD2N.Shared/camera.js"></script>
     <script>
         window.geolocationInterop = {
@@ -111,6 +129,17 @@
                     }
                 }
             }
+        };
+    </script>
+
+    <script>
+        window.getBatteryLevel = async () => {
+            if (navigator.getBattery) {
+                // Hanya jalan di Chrome/Edge
+                const battery = await navigator.getBattery();
+                return battery.level; // Return 0.0 - 1.0
+            }
+            return 1.0; // Fallback untuk Firefox/Safari (Pura-pura 100%)
         };
     </script>
 </body>

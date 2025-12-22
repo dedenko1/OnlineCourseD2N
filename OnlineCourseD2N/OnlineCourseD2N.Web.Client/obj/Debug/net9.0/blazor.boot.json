@@ -1,10 +1,12 @@
 {
   "mainAssemblyName": "OnlineCourseD2N.Web.Client",
   "resources": {
-    "hash": "sha256-DmbyLxTEyEQAhUFibg4+znVLeSiDqfGTMRZb/BS2Uj8=",
+    "hash": "sha256-AXQf4neeX2j4b0HyXJHJLqE7APL+aicOPmXPCdqweFU=",
     "fingerprinting": {
+      "Blazored.LocalStorage.12n6dz54qr.wasm": "Blazored.LocalStorage.wasm",
       "Microsoft.AspNetCore.Authorization.tnyc7xpluy.wasm": "Microsoft.AspNetCore.Authorization.wasm",
       "Microsoft.AspNetCore.Components.t32damlu4o.wasm": "Microsoft.AspNetCore.Components.wasm",
+      "Microsoft.AspNetCore.Components.Authorization.59e3gw4tnq.wasm": "Microsoft.AspNetCore.Components.Authorization.wasm",
       "Microsoft.AspNetCore.Components.Forms.up1bcx14yi.wasm": "Microsoft.AspNetCore.Components.Forms.wasm",
       "Microsoft.AspNetCore.Components.Web.ip3tel2wdp.wasm": "Microsoft.AspNetCore.Components.Web.wasm",
       "Microsoft.AspNetCore.Components.WebAssembly.grj5cmg1s5.wasm": "Microsoft.AspNetCore.Components.WebAssembly.wasm",
@@ -23,8 +25,13 @@
       "Microsoft.Extensions.Logging.Abstractions.4svgpfnsk6.wasm": "Microsoft.Extensions.Logging.Abstractions.wasm",
       "Microsoft.Extensions.Options.wf856ft4x9.wasm": "Microsoft.Extensions.Options.wasm",
       "Microsoft.Extensions.Primitives.6ymn4wtgeh.wasm": "Microsoft.Extensions.Primitives.wasm",
+      "Microsoft.IdentityModel.Abstractions.0urlofobre.wasm": "Microsoft.IdentityModel.Abstractions.wasm",
+      "Microsoft.IdentityModel.JsonWebTokens.nwv2x1v2j4.wasm": "Microsoft.IdentityModel.JsonWebTokens.wasm",
+      "Microsoft.IdentityModel.Logging.7cdn7bjvei.wasm": "Microsoft.IdentityModel.Logging.wasm",
+      "Microsoft.IdentityModel.Tokens.rwcag7bch4.wasm": "Microsoft.IdentityModel.Tokens.wasm",
       "Microsoft.JSInterop.oafygsa2yv.wasm": "Microsoft.JSInterop.wasm",
       "Microsoft.JSInterop.WebAssembly.c5whsk6cyh.wasm": "Microsoft.JSInterop.WebAssembly.wasm",
+      "System.IdentityModel.Tokens.Jwt.56vvh56j2v.wasm": "System.IdentityModel.Tokens.Jwt.wasm",
       "Microsoft.CSharp.7sv91sqvhk.wasm": "Microsoft.CSharp.wasm",
       "Microsoft.VisualBasic.Core.996jw09otz.wasm": "Microsoft.VisualBasic.Core.wasm",
       "Microsoft.VisualBasic.60s7uue63g.wasm": "Microsoft.VisualBasic.wasm",
@@ -201,10 +208,10 @@
       "icudt_CJK.tjcz0u77k5.dat": "icudt_CJK.dat",
       "icudt_EFIGS.tptq2av103.dat": "icudt_EFIGS.dat",
       "icudt_no_CJK.lfu7j35m59.dat": "icudt_no_CJK.dat",
-      "OnlineCourseD2N.Shared.6ayafxed00.wasm": "OnlineCourseD2N.Shared.wasm",
-      "OnlineCourseD2N.Shared.xm83atnfti.pdb": "OnlineCourseD2N.Shared.pdb",
-      "OnlineCourseD2N.Web.Client.jiq6cfdkvf.wasm": "OnlineCourseD2N.Web.Client.wasm",
-      "OnlineCourseD2N.Web.Client.uy8suxgyd2.pdb": "OnlineCourseD2N.Web.Client.pdb"
+      "OnlineCourseD2N.Shared.wmwm3ydoc6.wasm": "OnlineCourseD2N.Shared.wasm",
+      "OnlineCourseD2N.Shared.odl3eccrnz.pdb": "OnlineCourseD2N.Shared.pdb",
+      "OnlineCourseD2N.Web.Client.5u1yzc8hkm.wasm": "OnlineCourseD2N.Web.Client.wasm",
+      "OnlineCourseD2N.Web.Client.henchghbq5.pdb": "OnlineCourseD2N.Web.Client.pdb"
     },
     "jsModuleNative": {
       "dotnet.native.l4ptthxatg.js": "sha256-ddUN4+taa/Qv7Mr8mLpunJO+0Xw3ViOqBvedhe57/hA="
@@ -225,8 +232,10 @@
       "System.Private.CoreLib.tn7ijpxcub.wasm": "sha256-Sf4jO0ZWIg9IPLgB2yr+IJinPiaj4VseqLyVCcHvrSE="
     },
     "assembly": {
+      "Blazored.LocalStorage.12n6dz54qr.wasm": "sha256-OaMAAd5n7ORfyur5e3QIyEVKJ76MKIvwbg7/icnnYcU=",
       "Microsoft.AspNetCore.Authorization.tnyc7xpluy.wasm": "sha256-h2pKkq57/vS3mbEFyiqoupHb66C30OMHzjlzDqfbD40=",
       "Microsoft.AspNetCore.Components.t32damlu4o.wasm": "sha256-6X0P9WizrWIhvvQG4Dceipzc7UdF1QjvXKoTLrIrvkQ=",
+      "Microsoft.AspNetCore.Components.Authorization.59e3gw4tnq.wasm": "sha256-6XrZ1W8Za6EljxQ285vEew8VxDJP4VAluHQxPyqb60A=",
       "Microsoft.AspNetCore.Components.Forms.up1bcx14yi.wasm": "sha256-cp3828JD1TdnmZ6g3GEfXKayNKd2ljfibH3wdg6t3n0=",
       "Microsoft.AspNetCore.Components.Web.ip3tel2wdp.wasm": "sha256-+uXtoXpMFQKIFs1SOag/WdIbA4G4Q4eGRRGFCiXIBdU=",
       "Microsoft.AspNetCore.Components.WebAssembly.grj5cmg1s5.wasm": "sha256-tChPBLUd3b2CpuaUBQ2hV/OoJbb5XPFpVtYTXo46Y+o=",
@@ -245,8 +254,13 @@
       "Microsoft.Extensions.Logging.Abstractions.4svgpfnsk6.wasm": "sha256-5MnhuLW3xfcFQsozdjut5urShGXYw6iwlOrJurBV+Y4=",
       "Microsoft.Extensions.Options.wf856ft4x9.wasm": "sha256-BBTw+Wjj2UjzIJocSmODJubcSeoE4u6tl7px+blJYuQ=",
       "Microsoft.Extensions.Primitives.6ymn4wtgeh.wasm": "sha256-Elg5wky4vBTrdLSaUEXuDf9cABTJVOMgNdzYRIjyBF8=",
+      "Microsoft.IdentityModel.Abstractions.0urlofobre.wasm": "sha256-KHQvHzDTRrdY7A4bKp7ofBhf3AHfM/K7/awo/3GoYkw=",
+      "Microsoft.IdentityModel.JsonWebTokens.nwv2x1v2j4.wasm": "sha256-B+M8ohLiqc0UoaBqSDFeQY2bc0YCH/KpMuBh4Mt7UxU=",
+      "Microsoft.IdentityModel.Logging.7cdn7bjvei.wasm": "sha256-RwbHvotorpw/YaHc8phN0dcOakrKUm2K/aZm8FQrks8=",
+      "Microsoft.IdentityModel.Tokens.rwcag7bch4.wasm": "sha256-25tdx0wnLQFA0Tz5OBCMFabyDGlSJe92veJNsMgBlZk=",
       "Microsoft.JSInterop.oafygsa2yv.wasm": "sha256-8KHde87s03YXh21jjvaLX0OAjPTeWpKn1jV7kf9GrvM=",
       "Microsoft.JSInterop.WebAssembly.c5whsk6cyh.wasm": "sha256-AHeFn5IBMJC1tI8hRNTBa4lyLko5J8AK64JFjeO/vVw=",
+      "System.IdentityModel.Tokens.Jwt.56vvh56j2v.wasm": "sha256-c0tJ99qOwM+boA4KhHTgekVS0+vaHgkKeKgW2pbkBLU=",
       "Microsoft.CSharp.7sv91sqvhk.wasm": "sha256-J/r8Qw38iNoEsSPY1QsvaxCiucJuyusro4SHXw2J+rI=",
       "Microsoft.VisualBasic.Core.996jw09otz.wasm": "sha256-bVYIXaF/repKqOYm6OXjBTWfClKF0iuR9LMHF3IlJl8=",
       "Microsoft.VisualBasic.60s7uue63g.wasm": "sha256-egCP5TA3ZnbStJdK3DN81zePXM4qZz7DMhSr1u5xFSM=",
@@ -414,12 +428,12 @@
       "WindowsBase.ahs9krftg4.wasm": "sha256-bgi2FHdT0ABsUP1yKQQ2AP8qfo1V/bS/4cJFE4OUHX8=",
       "mscorlib.k5iaovx9v7.wasm": "sha256-mEFLDERlY1HMNQHzh68xOPawXvI48O1fHW9PbfXugb4=",
       "netstandard.6sr1qvn64m.wasm": "sha256-Gpf+qEqCYaCB6zqI5sNPIurnfpwRtfcWksgf3CW6mHE=",
-      "OnlineCourseD2N.Shared.6ayafxed00.wasm": "sha256-8oC8N/PMq7brQOUwxzg24954rmm6K7t0ec02ONSvqQw=",
-      "OnlineCourseD2N.Web.Client.jiq6cfdkvf.wasm": "sha256-RTw8T0X1Xfvll1ZSduGeYsbEpYnNRKgZ6/VP8+ZmPpA="
+      "OnlineCourseD2N.Shared.wmwm3ydoc6.wasm": "sha256-SDYLIj6xUIr9lu3CNT784qzER9KlWcV2fulWo+u9558=",
+      "OnlineCourseD2N.Web.Client.5u1yzc8hkm.wasm": "sha256-M08w85Nh4C+M7fm+3CidHja3g2JBkgISDuMPsyYIrZE="
     },
     "pdb": {
-      "OnlineCourseD2N.Shared.xm83atnfti.pdb": "sha256-h6PjbLjDDO3JAGZPkE9Sic2P/nzwkQjIGWdmo2cN98M=",
-      "OnlineCourseD2N.Web.Client.uy8suxgyd2.pdb": "sha256-mmFB4g6WaIHlouAFaADZmz0chFeNO+HoV/tujQKhaRI="
+      "OnlineCourseD2N.Shared.odl3eccrnz.pdb": "sha256-BHMOYGaA2WDVBgd6FJf5TFs7X+z+YWq6GqvHN/nRBZc=",
+      "OnlineCourseD2N.Web.Client.henchghbq5.pdb": "sha256-hz2uRwuY0SPPqHjLRw7NksAX6vHS/h0KY4dZZfrGbiE="
     }
   },
   "cacheBootResources": true,

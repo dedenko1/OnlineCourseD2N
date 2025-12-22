@@ -72,4 +72,11 @@ C:\Users\Lenovo\Documents\SEMESTER 5\PM\OnlineCourseD2N\OnlineCourseD2N\OnlineCo
 C:\Users\Lenovo\Documents\SEMESTER 5\PM\OnlineCourseD2N\OnlineCourseD2N\OnlineCourseD2N.Web\obj\Debug\net9.0\ref\OnlineCourseD2N.Web.dll
 C:\Users\Lenovo\Documents\SEMESTER 5\PM\OnlineCourseD2N\OnlineCourseD2N\OnlineCourseD2N.Web\obj\Debug\net9.0\staticwebassets.upToDateCheck.txt
 C:\Users\Lenovo\Documents\SEMESTER 5\PM\OnlineCourseD2N\OnlineCourseD2N\OnlineCourseD2N.Web\obj\Debug\net9.0\OnlineCourseD2N.Web.sourcelink.json
-C:\Users\Lenovo\Documents\SEMESTER 5\PM\OnlineCourseD2N\OnlineCourseD2N\OnlineCourseD2N.Web\obj\Debug\net9.0\compressed\zxr6ok4uvm-ibt7721kfj.gz
+C:\Users\Lenovo\Documents\SEMESTER 5\PM\OnlineCourseD2N\OnlineCourseD2N\OnlineCourseD2N.Web\bin\Debug\net9.0\Blazored.LocalStorage.dll
+C:\Users\Lenovo\Documents\SEMESTER 5\PM\OnlineCourseD2N\OnlineCourseD2N\OnlineCourseD2N.Web\bin\Debug\net9.0\Microsoft.AspNetCore.Components.Authorization.dll
+C:\Users\Lenovo\Documents\SEMESTER 5\PM\OnlineCourseD2N\OnlineCourseD2N\OnlineCourseD2N.Web\bin\Debug\net9.0\Microsoft.IdentityModel.Abstractions.dll
+C:\Users\Lenovo\Documents\SEMESTER 5\PM\OnlineCourseD2N\OnlineCourseD2N\OnlineCourseD2N.Web\bin\Debug\net9.0\Microsoft.IdentityModel.JsonWebTokens.dll
+C:\Users\Lenovo\Documents\SEMESTER 5\PM\OnlineCourseD2N\OnlineCourseD2N\OnlineCourseD2N.Web\bin\Debug\net9.0\Microsoft.IdentityModel.Logging.dll
+C:\Users\Lenovo\Documents\SEMESTER 5\PM\OnlineCourseD2N\OnlineCourseD2N\OnlineCourseD2N.Web\bin\Debug\net9.0\Microsoft.IdentityModel.Tokens.dll
+C:\Users\Lenovo\Documents\SEMESTER 5\PM\OnlineCourseD2N\OnlineCourseD2N\OnlineCourseD2N.Web\bin\Debug\net9.0\System.IdentityModel.Tokens.Jwt.dll
+C:\Users\Lenovo\Documents\SEMESTER 5\PM\OnlineCourseD2N\OnlineCourseD2N\OnlineCourseD2N.Web\obj\Debug\net9.0\compressed\zxr6ok4uvm-xevwqfcrr2.gz

@@ -76,10 +76,6 @@ namespace OnlineCourseD2N.Backend.Migrations
                         .IsRequired()
                         .HasColumnType("TEXT");
 
-                    b.Property<string>("Email")
-                        .IsRequired()
-                        .HasColumnType("TEXT");
-
                     b.Property<string>("Expertise")
                         .IsRequired()
                         .HasMaxLength(100)
@@ -89,14 +85,44 @@ namespace OnlineCourseD2N.Backend.Migrations
                         .IsRequired()
                         .HasColumnType("TEXT");
 
+                    b.Property<int>("UserId")
+                        .HasColumnType("INTEGER");
+
+                    b.HasKey("TrainerId");
+
+                    b.HasIndex("UserId")
+                        .IsUnique();
+
+                    b.ToTable("Trainers");
+                });
+
+            modelBuilder.Entity("OnlineCourseD2N.Backend.Data.Users", b =>
+                {
+                    b.Property<int>("UserId")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("INTEGER");
+
+                    b.Property<string>("Email")
+                        .IsRequired()
+                        .HasMaxLength(100)
+                        .HasColumnType("TEXT");
+
                     b.Property<string>("Name")
                         .IsRequired()
                         .HasMaxLength(100)
                         .HasColumnType("TEXT");
 
-                    b.HasKey("TrainerId");
+                    b.Property<string>("Password")
+                        .IsRequired()
+                        .HasColumnType("TEXT");
 
-                    b.ToTable("Trainers");
+                    b.Property<string>("Role")
+                        .IsRequired()
+                        .HasColumnType("TEXT");
+
+                    b.HasKey("UserId");
+
+                    b.ToTable("Users");
                 });
 
             modelBuilder.Entity("OnlineCourseD2N.Backend.Data.Course", b =>
@@ -112,7 +138,23 @@ namespace OnlineCourseD2N.Backend.Migrations
 
             modelBuilder.Entity("OnlineCourseD2N.Backend.Data.Trainer", b =>
                 {
+                    b.HasOne("OnlineCourseD2N.Backend.Data.Users", "User")
+                        .WithOne("TrainerProfile")
+                        .HasForeignKey("OnlineCourseD2N.Backend.Data.Trainer", "UserId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("User");
+                });
+
+            modelBuilder.Entity("OnlineCourseD2N.Backend.Data.Trainer", b =>
+                {
                     b.Navigation("Courses");
+                });
+
+            modelBuilder.Entity("OnlineCourseD2N.Backend.Data.Users", b =>
+                {
+                    b.Navigation("TrainerProfile");
                 });
 #pragma warning restore 612, 618
         }

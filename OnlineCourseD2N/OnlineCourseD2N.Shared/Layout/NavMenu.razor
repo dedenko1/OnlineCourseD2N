@@ -1,6 +1,14 @@
-﻿<div class="top-row ps-3 navbar navbar-dark">
+﻿@using Microsoft.AspNetCore.Components.Authorization
+@using System.Security.Claims
+@using OnlineCourseD2N.Shared.Services
+@using OnlineCourseD2N.Shared.Models
+
+@inject AuthenticationStateProvider AuthStateProvider
+@inject TrainerService TrainerService
+
+<div class="top-row ps-3 navbar navbar-dark">
     <div class="container-fluid">
-        <a class="navbar-brand" href="">OnlineCourseD2N</a>
+        <a class="navbar-brand" href="">📚 RuangLes</a>
     </div>
 </div>
 
@@ -8,35 +16,83 @@
 
 <div class="nav-scrollable" onclick="document.querySelector('.navbar-toggler').click()">
     <nav class="flex-column">
+
+        @* 1. HOME (Semua Role Bisa Lihat) *@
         <div class="nav-item px-3">
-            <NavLink class="nav-link" href="" Match="NavLinkMatch.All">
-                <span class="bi bi-house-door-fill-nav-menu" aria-hidden="true"></span> Home
+            <NavLink class="nav-link" href="home">
+                <span class="bi bi-house-door-fill" aria-hidden="true"></span> Home
             </NavLink>
         </div>
 
-        <div class="nav-item px-3">
-            <NavLink class="nav-link" href="counter">
-                <span class="bi bi-plus-square-fill-nav-menu" aria-hidden="true"></span> Counter
-            </NavLink>
-        </div>
+        @* 2. MENU KHUSUS ADMIN *@
+        <AuthorizeView Roles="Admin">
+            <div class="nav-item px-3">
+                <NavLink class="nav-link" href="users">
+                    <span class="bi bi-person-badge-fill" aria-hidden="true"></span> Manage Users
+                </NavLink>
+            </div>
 
-        <div class="nav-item px-3">
-            <NavLink class="nav-link" href="weather">
-                <span class="bi bi-list-nested-nav-menu" aria-hidden="true"></span> Weather
-            </NavLink>
-        </div>
+            <div class="nav-item px-3">
+                <NavLink class="nav-link" href="trainers">
+                    <span class="bi bi-people-fill" aria-hidden="true"></span> Manage Trainers
+                </NavLink>
+            </div>
+        </AuthorizeView>
 
+        @* 3. MENU KHUSUS TRAINER (My Profile) *@
+        <AuthorizeView Roles="Trainer">
+            <div class="nav-item px-3">
+                <NavLink class="nav-link" href="@($"trainers/{myTrainerId}")">
+                    <span class="bi bi-person-circle" aria-hidden="true"></span> My Profile
+                </NavLink>
+            </div>
+        </AuthorizeView>
+
+        @* 4. COURSES (Semua Role Bisa Lihat, Teks Beda) *@
         <div class="nav-item px-3">
             <NavLink class="nav-link" href="courses">
-                <span class="bi bi-journal-bookmark-fill-nav-menu" aria-hidden="true"></span> Courses
+                <span class="bi bi-journal-text" aria-hidden="true"></span>
+                <AuthorizeView Roles="Admin">
+                    <Authorized>Manage Courses</Authorized>
+                </AuthorizeView>
+                <AuthorizeView Roles="Trainer">
+                    <Authorized>My Courses</Authorized>
+                </AuthorizeView>
+                <AuthorizeView Roles="User">
+                    <Authorized>Browse Courses</Authorized>
+                </AuthorizeView>
             </NavLink>
         </div>
 
-        <div class="nav-item px-3">
-            <NavLink class="nav-link" href="trainers">
-                <span class="bi bi-person-workspace-nav-menu" aria-hidden="true"></span> Trainers
-            </NavLink>
-        </div>
     </nav>
 </div>
 
+@code {
+    private int myTrainerId = 0;
+
+    protected override async Task OnInitializedAsync()
+    {
+        // Ambil State Login
+        var authState = await AuthStateProvider.GetAuthenticationStateAsync();
+        var user = authState.User;
+
+        // Jika dia Trainer, cari TrainerId-nya
+        if (user.IsInRole("Trainer"))
+        {
+            var userIdString = user.FindFirst(c => c.Type == ClaimTypes.NameIdentifier)?.Value;
+
+            if (int.TryParse(userIdString, out int userId))
+            {
+                // Cari data trainer berdasarkan UserId
+                // (Idealnya buat API khusus GetTrainerByUserId, tapi pakai GetAll sementara bisa)
+                var trainers = await TrainerService.GetAllAsync();
+                var me = trainers?.FirstOrDefault(t => t.UserId == userId);
+
+                if (me != null)
+                {
+                    myTrainerId = me.TrainerId;
+                }
+            }
+        }
+    }
+}

@@ -1,0 +1,66 @@
+﻿@page "/"
+@using OnlineCourseD2N.Shared.Models
+@using OnlineCourseD2N.Shared.Services
+@inject IAuthService AuthService
+@inject NavigationManager Nav
+
+<PageTitle>Login - RuangLes</PageTitle>
+
+<div class="container mt-5" style="max-width: 400px;">
+    <div class="card shadow">
+        <div class="card-header bg-primary text-white text-center">
+            <h3>Login RuangLes</h3>
+        </div>
+        <div class="card-body">
+            @if (!string.IsNullOrEmpty(errorMessage))
+            {
+                <div class="alert alert-danger">@errorMessage</div>
+            }
+
+            <EditForm Model="loginModel" OnValidSubmit="HandleLogin">
+                <div class="mb-3">
+                    <label>Email</label>
+                    <InputText @bind-Value="loginModel.Email" class="form-control" placeholder="user@example.com" />
+                </div>
+                <div class="mb-3">
+                    <label>Password</label>
+                    <InputText @bind-Value="loginModel.Password" type="password" class="form-control" placeholder="******" />
+                </div>
+                <button type="submit" class="btn btn-primary w-100">Masuk</button>
+            </EditForm>
+            <div class="mt-4 text-center border-top pt-3">
+                <small class="text-muted">Belum punya akun?</small>
+                <br />
+                <a href="register" class="text-decoration-none fw-bold text-primary">
+                    📝 Daftar Sekarang
+                </a>
+            </div>
+        </div>
+    </div>
+</div>
+
+@code {
+    private LoginDTO loginModel = new();
+    private string? errorMessage;
+
+    private async Task HandleLogin()
+    {
+        errorMessage = null;
+        try
+        {
+            var result = await AuthService.LoginAsync(loginModel);
+            if (result.Success)
+            {
+                Nav.NavigateTo("/home");
+            }
+            else
+            {
+                errorMessage = result.Message ?? "Login gagal.";
+            }
+        }
+        catch (Exception ex)
+        {
+            errorMessage = "Gagal terhubung ke server.";
+        }
+    }
+}

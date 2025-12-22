@@ -32,12 +32,12 @@
       <RelatedAsset></RelatedAsset>
       <AssetTraitName></AssetTraitName>
       <AssetTraitValue></AssetTraitValue>
-      <Fingerprint>3d2h1tyz0f</Fingerprint>
-      <Integrity>ycSWrq5VKVOg9mBm9ONL0M6e/oT2tkXNhvO3xBP4cOY=</Integrity>
+      <Fingerprint>o8thot4ifv</Fingerprint>
+      <Integrity>uOWveWJcjy/H0T9QPuLeXUq7MrWYaXBviVlnOoiTT+U=</Integrity>
       <CopyToOutputDirectory>Never</CopyToOutputDirectory>
       <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
-      <FileLength>867</FileLength>
-      <LastWriteTime>Sat, 22 Nov 2025 14:46:19 GMT</LastWriteTime>
+      <FileLength>984</FileLength>
+      <LastWriteTime>Sun, 14 Dec 2025 07:02:01 GMT</LastWriteTime>
       <OriginalItemSpec>$([System.IO.Path]::GetFullPath('$(MSBuildThisFileDirectory)..\staticwebassets\index.html'))</OriginalItemSpec>
     </StaticWebAsset>
     <StaticWebAsset Include="$([System.IO.Path]::GetFullPath('$(MSBuildThisFileDirectory)..\staticwebassets\OnlineCourseD2N.styles.css'))">
@@ -52,12 +52,12 @@
       <RelatedAsset></RelatedAsset>
       <AssetTraitName>ScopedCss</AssetTraitName>
       <AssetTraitValue>ApplicationBundle</AssetTraitValue>
-      <Fingerprint>ibt7721kfj</Fingerprint>
-      <Integrity>0rDqLHaekcilM+a4//wa5lW8j6iZ6HqLQnznBppQFaA=</Integrity>
+      <Fingerprint>xevwqfcrr2</Fingerprint>
+      <Integrity>9yLWgtvcjYfL153TlqxQFivR6n0YA3clS+P+uLWjaPg=</Integrity>
       <CopyToOutputDirectory>Never</CopyToOutputDirectory>
       <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
       <FileLength>95</FileLength>
-      <LastWriteTime>Wed, 22 Oct 2025 14:01:10 GMT</LastWriteTime>
+      <LastWriteTime>Thu, 18 Dec 2025 06:08:04 GMT</LastWriteTime>
       <OriginalItemSpec>$([System.IO.Path]::GetFullPath('$(MSBuildThisFileDirectory)..\staticwebassets\OnlineCourseD2N.styles.css'))</OriginalItemSpec>
     </StaticWebAsset>
   </ItemGroup>

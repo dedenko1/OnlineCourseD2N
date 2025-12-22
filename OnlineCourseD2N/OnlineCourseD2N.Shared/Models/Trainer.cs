@@ -1,9 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel.DataAnnotations;
-using System.Linq;
-using System.Text;
-using System.Text.Json.Serialization;
+﻿using System.ComponentModel.DataAnnotations;
 
 namespace OnlineCourseD2N.Shared.Models
 {
@@ -11,18 +6,19 @@ namespace OnlineCourseD2N.Shared.Models
     {
         public int TrainerId { get; set; }
 
-        [Required, MaxLength(100)]
-        public string Name { get; set; } = String.Empty;
+        public int UserId { get; set; }
 
-        [MaxLength(100)]
-        public string Expertise { get; set; } = String.Empty;
+        [Required(ErrorMessage = "Nama wajib diisi")]
+        public string Name { get; set; } = string.Empty;
 
-        public string Bio { get; set; } = String.Empty;
+        public string Email { get; set; } = string.Empty;
 
-        [EmailAddress]
-        public string Email { get; set; } = String.Empty;
-        public string FotoProfil { get; set; } = String.Empty;
+        [Required(ErrorMessage = "Keahlian wajib diisi")]
+        public string Expertise { get; set; } = string.Empty;
 
+        public string Bio { get; set; } = string.Empty;
+
+        public string FotoProfil { get; set; } = string.Empty;
 
         public List<Course>? Courses { get; set; }
     }

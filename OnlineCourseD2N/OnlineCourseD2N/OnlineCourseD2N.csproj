@@ -62,6 +62,7 @@
 
   <ItemGroup>
     <None Include="..\OnlineCourseD2N.Shared\Pages\Component.razor" Link="Component.razor" />
+    <None Include="..\OnlineCourseD2N.Shared\Pages\Component1.razor" Link="Component1.razor" />
   </ItemGroup>
 
   <ItemGroup>

@@ -1,82 +1,132 @@
 ﻿@page "/trainers"
+@* 🔒 KUNCI: Hanya Admin yang boleh masuk sini *@
+@attribute [Authorize(Roles = "Admin")]
+
 @inject TrainerService TrainerService
 @inject NavigationManager Nav
 @inject IJSRuntime JS
 
+@using Microsoft.AspNetCore.Authorization
+@using Microsoft.AspNetCore.Components.Authorization
 @using OnlineCourseD2N.Shared.Services
 @using OnlineCourseD2N.Shared.Models
 
 @inject ICameraService CameraService
 @inject IConnectivityService ConnectivityService
 
-<h3 class="mb-3">Manajemen Trainer</h3>
+<PageTitle>Trainer - RuangLes</PageTitle>
+
+<div class="d-flex justify-content-between align-items-center mb-4">
+    <div>
+        <h3 class="fw-bold text-primary mb-0">Manajemen Trainers</h3>
+        <small class="text-muted">Kelola data pengajar profesional</small>
+    </div>
+</div>
 
 @if (trainers == null)
 {
-    <p><em>Memuat data...</em></p>
+    <div class="text-center py-5">
+        <div class="spinner-border text-primary" role="status"></div>
+        <p class="mt-2 text-muted">Memuat data trainer...</p>
+    </div>
 }
 else
 {
     @if (!string.IsNullOrEmpty(alertMessage))
     {
-        <div class="alert alert-@alertType fade show position-fixed top-0 start-50 translate-middle-x mt-3 shadow"
-             role="alert" style="z-index: 9999; min-width: 300px;">
-            @alertMessage
+        <div class="alert alert-@alertType fade show position-fixed top-0 start-50 translate-middle-x mt-3 shadow-lg"
+             role="alert" style="z-index: 9999; min-width: 320px; border-radius: 50px;">
+            <div class="d-flex justify-content-between align-items-center px-2">
+                <span class="fw-medium">@alertMessage</span>
+                <button type="button" class="btn-close ms-2" @onclick="() => alertMessage = null"></button>
+            </div>
         </div>
     }
 
-    <div class="mb-3 d-flex justify-content-between align-items-center">
-        <input class="form-control w-50"
-               placeholder="Cari trainer..."
-               @bind="SearchTerm"
-               @bind:event="oninput" />
-
-        <button class="btn btn-primary mb-3" @onclick="ShowAddModal">+ Tambah Trainer</button>
+    <div class="row g-3 mb-4">
+        <div class="col-md-8">
+            <div class="input-group shadow-sm">
+                <span class="input-group-text bg-white border-end-0"><i class="bi bi-search"></i></span>
+                <input class="form-control border-start-0 ps-0"
+                       placeholder="Cari nama atau keahlian..."
+                       @bind="SearchTerm"
+                       @bind:event="oninput" />
+            </div>
+        </div>
+        <div class="col-md-4 text-end">
+            <button class="btn btn-primary w-100 shadow-sm fw-bold" @onclick="ShowAddModal">
+                + Tambah Trainer
+            </button>
+        </div>
     </div>
 
-    <table class="table table-striped">
-        <thead>
-            <tr>
-                <th>Foto Profil</th>
-                <th>Nama</th>
-                <th>Email</th>
-                <th>Expertise</th>
-                <th>Aksi</th>
-            </tr>
-        </thead>
-        <tbody>
-            @foreach (var t in filteredTrainers ?? [])
-            {
-                <tr>
-                    <td>
+    <div class="row row-cols-1 row-cols-md-2 row-cols-lg-3 g-4">
+        @foreach (var t in filteredTrainers ?? [])
+        {
+            <div class="col">
+                <div class="card h-100 shadow-sm border-0 hover-lift text-center">
+                    <div class="position-relative mt-3 mx-auto" style="width: 120px; height: 120px;">
                         @if (!string.IsNullOrEmpty(t.FotoProfil))
                         {
-                            <img src="@($"http://localhost:5034/uploads/{t.FotoProfil}")" alt="@t.FotoProfil" width="100" class="rounded shadow" />
+                            <img src="@($"http://localhost:5034/uploads/{t.FotoProfil}")"
+                                 class="rounded-circle shadow border border-3 border-white"
+                                 alt="@t.Name"
+                                 style="width: 120px; height: 120px; object-fit: cover;"
+                                 onerror="this.src='https://via.placeholder.com/150?text=User'" />
                         }
-                    </td>
-                    <td>@t.Name</td>
-                    <td>@t.Email</td>
-                    <td>@t.Expertise</td>
-                    <td>
-                        <button class="btn btn-sm btn-info me-2" @onclick="() => ViewDetail(t.TrainerId)">Detail</button>
-                        <button class="btn btn-sm btn-warning me-2" @onclick="() => ShowEditModal(t)">Edit</button>
-                        <button class="btn btn-sm btn-danger" @onclick="() => AskDeleteTrainer(t)">Hapus</button>
-                    </td>
-                </tr>
-            }
-        </tbody>
-    </table>
+                        else
+                        {
+                            <div class="rounded-circle bg-light d-flex align-items-center justify-content-center shadow border border-3 border-white"
+                                 style="width: 120px; height: 120px;">
+                                <i class="bi bi-person fs-1 text-muted"></i>
+                            </div>
+                        }
+                    </div>
 
+                    <div class="card-body">
+                        <h5 class="card-title fw-bold mb-1">@t.Name</h5>
+                        <span class="badge bg-info text-dark mb-3">@t.Expertise</span>
+
+                        <p class="card-text text-muted small fst-italic two-lines">
+                            "@(string.IsNullOrEmpty(t.Bio) ? "Tidak ada bio." : t.Bio)"
+                        </p>
+
+                        <div class="d-flex justify-content-center align-items-center text-muted small">
+                            <i class="bi bi-envelope me-1"></i> @t.Email
+                        </div>
+                    </div>
+
+                    <div class="card-footer bg-white border-top-0 pb-3">
+                        <button class="btn btn-outline-primary btn-sm rounded-pill px-3" @onclick="() => ViewDetail(t.TrainerId)">Detail</button>
+                        <div class="btn-group ms-1">
+                            <button class="btn btn-light btn-sm text-warning" @onclick="() => ShowEditModal(t)"><i class="bi bi-pencil-fill"></i></button>
+                            <button class="btn btn-light btn-sm text-danger" @onclick="() => AskDeleteTrainer(t)"><i class="bi bi-trash-fill"></i></button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        }
+    </div>
+
+    @if (filteredTrainers?.Count == 0)
+    {
+        <div class="text-center py-5 text-muted">
+            <i class="bi bi-person-x fs-1 d-block mb-3"></i>
+            <p>Tidak ada trainer yang ditemukan.</p>
+        </div>
+    }
+
+    @* --- MODAL FORM --- *@
     @if (isModalVisible)
     {
         <div class="modal fade show d-block" tabindex="-1" style="background-color: rgba(0,0,0,0.5);">
-            <div class="modal-dialog">
+            <div class="modal-dialog modal-dialog-centered">
                 <div class="modal-content">
                     <div class="modal-header bg-primary text-white">
-                        <h5 class="modal-title">
-                            @(currentTrainer.TrainerId == 0 ? "Tambah Trainer" : "Edit Trainer")
+                        <h5 class="modal-title fw-bold">
+                            @(currentTrainer.TrainerId == 0 ? "✨ Tambah Trainer Baru" : "✏️ Edit Trainer")
                         </h5>
-                        <button type="button" class="btn-close" @onclick="CloseModal"></button>
+                        <button type="button" class="btn-close btn-close-white" @onclick="CloseModal"></button>
                     </div>
 
                     <EditForm Model="currentTrainer" OnValidSubmit="HandleSubmit">
@@ -84,44 +134,56 @@ else
                         <ValidationSummary />
 
                         <div class="modal-body">
-                            <div class="mb-2">
-                                <label>Nama</label>
-                                <InputText class="form-control" @bind-Value="currentTrainer.Name" />
-                            </div>
 
-                            <div class="mb-2">
-                                <label>Expertise</label>
-                                <InputText class="form-control" @bind-Value="currentTrainer.Expertise" />
-                            </div>
+                            @if (currentTrainer.TrainerId == 0)
+                            {
+                                <div class="alert alert-info small">
+                                    <i class="bi bi-info-circle me-1"></i>
+                                    Password login default trainer baru adalah: <strong>123456</strong>
+                                </div>
+                            }
 
-                            <div class="mb-2">
-                                <label>Email</label>
-                                <InputText class="form-control" @bind-Value="currentTrainer.Email" />
-                            </div>
+                            <div class="row g-2">
+                                <div class="col-md-12 mb-2">
+                                    <label class="form-label fw-bold">Nama Lengkap</label>
+                                    <InputText class="form-control" @bind-Value="currentTrainer.Name" placeholder="Nama asli (sesuai KTP)" />
+                                </div>
+                                <div class="col-md-6 mb-2">
+                                    <label class="form-label fw-bold">Keahlian (Expertise)</label>
+                                    <InputText class="form-control" @bind-Value="currentTrainer.Expertise" placeholder="Misal: UI/UX" />
+                                </div>
+                                <div class="col-md-6 mb-2">
+                                    <label class="form-label fw-bold">Email Login</label>
+                                    <InputText class="form-control" @bind-Value="currentTrainer.Email" placeholder="email@contoh.com" />
+                                </div>
+                                <div class="col-md-12 mb-3">
+                                    <label class="form-label fw-bold">Bio Singkat</label>
+                                    <InputTextArea class="form-control" @bind-Value="currentTrainer.Bio" rows="2" placeholder="Deskripsi singkat pengalaman..." />
+                                </div>
 
-                            <div class="mb-2">
-                                <label>Bio</label>
-                                <InputTextArea class="form-control" @bind-Value="currentTrainer.Bio" />
-                            </div>
-
-                            <div class="col-md-12">
-                                <label>Foto Profil</label>
-                                <button type="button" class="btn btn-secondary me-2" @onclick="HandleCameraStart">Ambil Foto</button>
-                                <InputFile OnChange="HandleFileSelected" accept="image/*" />
-
-                                @if (!string.IsNullOrEmpty(currentTrainer.FotoProfil))
-                                {
-                                    <div class="mt-2">
-                                        <img src="@($"http://localhost:5034/uploads/{currentTrainer.FotoProfil}")" alt="cover" width="200" class="rounded shadow" />
+                                <div class="col-md-12">
+                                    <label class="form-label fw-bold">Foto Profil</label>
+                                    <div class="d-flex gap-2 align-items-center">
+                                        <button type="button" class="btn btn-secondary" @onclick="HandleCameraStart">
+                                            <i class="bi bi-camera"></i> Ambil
+                                        </button>
+                                        <InputFile OnChange="HandleFileSelected" class="form-control" accept="image/*" />
                                     </div>
-                                }
+                                    @if (!string.IsNullOrEmpty(currentTrainer.FotoProfil))
+                                    {
+                                        <div class="mt-2 text-center">
+                                            <img src="@($"http://localhost:5034/uploads/{currentTrainer.FotoProfil}")"
+                                                 width="100" height="100" class="rounded-circle shadow" style="object-fit: cover" />
+                                        </div>
+                                    }
+                                </div>
                             </div>
                         </div>
 
-                        <div class="modal-footer">
-                            <button class="btn btn-secondary" type="button" @onclick="CloseModal">Batal</button>
-                            <button class="btn btn-success" type="submit">
-                                @(currentTrainer.TrainerId == 0 ? "Tambah" : "Simpan")
+                        <div class="modal-footer border-0">
+                            <button class="btn btn-light" type="button" @onclick="CloseModal">Batal</button>
+                            <button class="btn btn-primary px-4 fw-bold" type="submit">
+                                @(currentTrainer.TrainerId == 0 ? "Simpan Data" : "Update Data")
                             </button>
                         </div>
                     </EditForm>
@@ -130,6 +192,7 @@ else
         </div>
     }
 
+    @* --- MODAL KONFIRMASI HAPUS --- *@
     @if (trainerToDelete != null)
     {
         <div class="modal fade show d-block" tabindex="-1" style="background-color: rgba(0,0,0,0.5);">
@@ -138,36 +201,37 @@ else
                     <div class="modal-header bg-danger text-white">
                         <h5 class="modal-title">Konfirmasi Hapus</h5>
                     </div>
-                    <div class="modal-body">
-                        <p>Apakah Anda yakin ingin menghapus <strong>@trainerToDelete.Name</strong>?</p>
+                    <div class="modal-body text-center py-4">
+                        <i class="bi bi-exclamation-triangle text-danger fs-1 mb-2"></i>
+                        <p>Yakin ingin menghapus trainer <strong>@trainerToDelete.Name</strong>?</p>
+                        <small class="text-muted d-block">Akun login trainer ini juga akan dihapus permanen.</small>
                     </div>
-                    <div class="modal-footer">
+                    <div class="modal-footer justify-content-center border-0">
                         <button class="btn btn-secondary" @onclick="CancelDelete">Batal</button>
-                        <button class="btn btn-danger" @onclick="ConfirmDelete">Hapus</button>
+                        <button class="btn btn-danger" @onclick="ConfirmDelete">Ya, Hapus</button>
                     </div>
                 </div>
             </div>
         </div>
     }
 
+    @* --- MODAL KAMERA --- *@
     @if (isCameraOpen)
     {
-        <div class="modal fade show d-block" style="background-color: rgba(0,0,0,0.8); z-index: 1060;">
+        <div class="modal fade show d-block" style="background-color: rgba(0,0,0,0.9); z-index: 1060;">
             <div class="modal-dialog modal-dialog-centered">
-                <div class="modal-content">
-                    <div class="modal-header">
-                        <h5 class="modal-title">Ambil Foto</h5>
-                        <button class="btn-close" @onclick="CancelCamera"></button>
+                <div class="modal-content bg-black">
+                    <div class="modal-header border-0">
+                        <h5 class="modal-title text-white">Ambil Foto Profil</h5>
+                        <button class="btn-close btn-close-white" @onclick="CancelCamera"></button>
                     </div>
-                    <div class="modal-body text-center">
-
-                        <video id="cameraVideoElement" autoplay playsinline style="width: 100%; max-height: 300px; background: black;"></video>
-
+                    <div class="modal-body p-0 text-center">
+                        <video id="cameraVideoElement" autoplay playsinline style="width: 100%; max-height: 400px;"></video>
                     </div>
-                    <div class="modal-footer justify-content-center">
-                        <button class="btn btn-primary btn-lg rounded-circle"
+                    <div class="modal-footer border-0 justify-content-center">
+                        <button class="btn btn-light rounded-circle p-3 shadow" style="width: 60px; height: 60px;"
                                 onclick="window.cameraInterop.capturePhoto()">
-                            📸
+                            <div class="bg-primary rounded-circle w-100 h-100"></div>
                         </button>
                     </div>
                 </div>
@@ -210,40 +274,32 @@ else
             filteredTrainers = trainers;
         else
             filteredTrainers = trainers?
-                .Where(t => t.Name.Contains(searchTerm, StringComparison.OrdinalIgnoreCase)
-                          || t.Expertise.Contains(searchTerm, StringComparison.OrdinalIgnoreCase))
+                .Where(t => (t.Name?.Contains(searchTerm, StringComparison.OrdinalIgnoreCase) ?? false)
+                         || (t.Expertise?.Contains(searchTerm, StringComparison.OrdinalIgnoreCase) ?? false))
                 .ToList();
     }
 
-    private void ShowAddModal()
-    {
-        currentTrainer = new Trainer();
-        isModalVisible = true;
-    }
+    private void ShowAddModal() { currentTrainer = new Trainer(); isModalVisible = true; }
 
     private void ShowEditModal(Trainer t)
     {
         currentTrainer = new Trainer
         {
             TrainerId = t.TrainerId,
+            UserId = t.UserId, // Penting untuk dibawa saat update
             Name = t.Name,
             Expertise = t.Expertise,
             Email = t.Email,
             Bio = t.Bio,
-            FotoProfil = t.FotoProfil,
+            FotoProfil = t.FotoProfil
         };
         isModalVisible = true;
     }
 
-    private void CloseModal()
-    {
-        isModalVisible = false;
-        currentTrainer = new Trainer();
-    }
+    private void CloseModal() { isModalVisible = false; currentTrainer = new Trainer(); }
 
     private async Task HandleSubmit()
     {
-        // Cek Koneksi (Optional tapi bagus)
         if (!ConnectivityService.IsConnected())
         {
             ShowAlert("Offline! Periksa koneksi internet.", "danger");
@@ -256,9 +312,7 @@ else
 
         if (success)
         {
-            ShowAlert(currentTrainer.TrainerId == 0
-                ? "Trainer berhasil ditambahkan!"
-                : "Trainer berhasil diperbarui!", "success");
+            ShowAlert(currentTrainer.TrainerId == 0 ? "Trainer berhasil ditambahkan!" : "Trainer berhasil diperbarui!", "success");
             await LoadData();
             CloseModal();
         }
@@ -270,26 +324,16 @@ else
 
     private async Task HandleFileSelected(InputFileChangeEventArgs e)
     {
-        var file = e.File;
-        var oldFileName = currentTrainer.FotoProfil;
-        var fileName = await TrainerService.UploadCoverAsync(file, oldFileName);
-        if (!string.IsNullOrEmpty(fileName))
-        {
-            currentTrainer.FotoProfil = fileName;
-        }
+        var fileName = await TrainerService.UploadCoverAsync(e.File, currentTrainer.FotoProfil);
+        if (!string.IsNullOrEmpty(fileName)) currentTrainer.FotoProfil = fileName;
     }
 
     private void AskDeleteTrainer(Trainer t) => trainerToDelete = t;
-
     private void CancelDelete() => trainerToDelete = null;
 
     private async Task ConfirmDelete()
     {
-        if (!ConnectivityService.IsConnected())
-        {
-            ShowAlert("Offline! Gagal menghapus.", "danger");
-            return;
-        }
+        if (!ConnectivityService.IsConnected()) { ShowAlert("Offline! Gagal menghapus.", "danger"); return; }
 
         if (trainerToDelete != null)
         {
@@ -311,65 +355,35 @@ else
 
     private async Task HandleCameraStart()
     {
-        isCameraOpen = true;
-        StateHasChanged();
-
-        await Task.Delay(100);
+        isCameraOpen = true; StateHasChanged(); await Task.Delay(100);
 
         var stream = await CameraService.TakePhotoAsync();
 
         if (stream != null)
         {
-            // Upload
             var fileName = await TrainerService.UploadStreamAsync(stream, currentTrainer.FotoProfil);
             currentTrainer.FotoProfil = fileName;
-
             ShowAlert("Foto berhasil diambil!", "success");
         }
-        else
-        {
-            ShowAlert("Pengambilan foto dibatalkan.", "warning");
-        }
 
-        isCameraOpen = false;
-        StateHasChanged();
+        isCameraOpen = false; StateHasChanged();
     }
 
     private async Task CancelCamera()
     {
-        try
-        {
-            await JS.InvokeVoidAsync("cameraInterop.stopCamera");
-        }
-        catch (Exception ex)
-        {
-            Console.WriteLine($"Warning stop camera: {ex.Message}");
-        }
-        isCameraOpen = false;
-        StateHasChanged();
+        try { await JS.InvokeVoidAsync("cameraInterop.stopCamera"); } catch { }
+        isCameraOpen = false; StateHasChanged();
     }
-    // -----------------------------------------------
 
     private void ShowAlert(string message, string type = "success", int durationMs = 3000)
     {
-        alertMessage = message;
-        alertType = type;
-
+        alertMessage = message; alertType = type;
         alertTimer?.Stop();
         alertTimer = new System.Timers.Timer(durationMs);
-        alertTimer.Elapsed += (s, e) =>
-        {
-            alertMessage = null;
-            alertTimer?.Stop();
-            InvokeAsync(StateHasChanged);
-        };
+        alertTimer.Elapsed += (s, e) => { alertMessage = null; alertTimer?.Stop(); InvokeAsync(StateHasChanged); };
         alertTimer.Start();
-
         StateHasChanged();
     }
 
-    public void Dispose()
-    {
-        alertTimer?.Dispose();
-    }
+    public void Dispose() => alertTimer?.Dispose();
 }

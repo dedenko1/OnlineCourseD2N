@@ -1,0 +1,122 @@
+﻿@page "/register"
+@using OnlineCourseD2N.Shared.Models
+@using OnlineCourseD2N.Shared.Services
+@inject IAuthService AuthService
+@inject NavigationManager Nav
+
+<div class="container py-5 h-100">
+    <div class="row d-flex justify-content-center align-items-center h-100">
+        <div class="col-12 col-md-8 col-lg-6 col-xl-5">
+            <div class="card shadow-lg" style="border-radius: 1rem;">
+                <div class="card-body p-5 text-center">
+
+                    <h2 class="fw-bold mb-2 text-primary">Daftar Akun</h2>
+                    <p class="text-muted mb-4">Buat akun untuk mulai belajar!</p>
+
+                    @if (!string.IsNullOrEmpty(errorMessage))
+                    {
+                        <div class="alert alert-danger" role="alert">
+                            @errorMessage
+                        </div>
+                    }
+
+                    @if (showSuccess)
+                    {
+                        <div class="alert alert-success" role="alert">
+                            ✅ Registrasi Berhasil! Mengalihkan ke login...
+                        </div>
+                    }
+
+                    <EditForm Model="registerModel" OnValidSubmit="HandleRegister">
+                        <DataAnnotationsValidator />
+
+                        <div class="form-floating mb-3">
+                            <InputText id="name" class="form-control" @bind-Value="registerModel.Name" placeholder="Nama Lengkap" />
+                            <label for="name">Nama Lengkap</label>
+                            <ValidationMessage For="@(() => registerModel.Name)" class="text-danger small" />
+                        </div>
+
+                        <div class="form-floating mb-3">
+                            <InputText id="email" type="email" class="form-control" @bind-Value="registerModel.Email" placeholder="name@example.com" />
+                            <label for="email">Email address</label>
+                            <ValidationMessage For="@(() => registerModel.Email)" class="text-danger small" />
+                        </div>
+
+                        <div class="form-floating mb-3">
+                            <InputText id="password" type="password" class="form-control" @bind-Value="registerModel.Password" placeholder="Password" />
+                            <label for="password">Password</label>
+                            <ValidationMessage For="@(() => registerModel.Password)" class="text-danger small" />
+                        </div>
+
+                        <div class="form-floating mb-4">
+                            <InputText id="confirmPassword" type="password" class="form-control" @bind-Value="registerModel.ConfirmPassword" placeholder="Ulangi Password" />
+                            <label for="confirmPassword">Konfirmasi Password</label>
+                            <ValidationMessage For="@(() => registerModel.ConfirmPassword)" class="text-danger small" />
+                        </div>
+
+                        <button class="btn btn-primary btn-lg w-100 mb-3" type="submit" disabled="@isLoading">
+                            @if (isLoading)
+                            {
+                                <span class="spinner-border spinner-border-sm me-2"></span>
+                                <span>Loading...</span>
+                            }
+                            else
+                            {
+                                <span>Daftar Sekarang</span>
+                            }
+                        </button>
+                    </EditForm>
+
+                    <hr class="my-4">
+
+                    <div>
+                        <p class="mb-0">
+                            Sudah punya akun?
+                            <a href="/" class="text-primary fw-bold text-decoration-none">Login di sini</a>
+                        </p>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+@code {
+    private RegisterDTO registerModel = new();
+    private string? errorMessage;
+    private bool showSuccess = false;
+    private bool isLoading = false;
+
+    private async Task HandleRegister()
+    {
+        isLoading = true;
+        errorMessage = null;
+
+        try
+        {
+            var result = await AuthService.RegisterAsync(registerModel);
+
+            if (result.Success)
+            {
+                showSuccess = true;
+                StateHasChanged();
+                await Task.Delay(2000); // Tahan sebentar biar user baca pesan sukses
+                Nav.NavigateTo("/"); // Lempar ke halaman Login
+            }
+            else
+            {
+                errorMessage = result.Message;
+            }
+        }
+        catch (Exception ex)
+        {
+            errorMessage = "Terjadi kesalahan koneksi.";
+            Console.WriteLine(ex.Message);
+        }
+        finally
+        {
+            isLoading = false;
+        }
+    }
+}

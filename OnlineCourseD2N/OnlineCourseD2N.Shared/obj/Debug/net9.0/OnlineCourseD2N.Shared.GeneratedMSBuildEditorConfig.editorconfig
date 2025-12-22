@@ -28,6 +28,10 @@ build_metadata.AdditionalFiles.CssScope =
 build_metadata.AdditionalFiles.TargetPath = UGFnZXNcQ29tcG9uZW50LnJhem9y
 build_metadata.AdditionalFiles.CssScope = 
 
+[C:/Users/Lenovo/Documents/SEMESTER 5/PM/OnlineCourseD2N/OnlineCourseD2N/OnlineCourseD2N.Shared/Pages/Component1.razor]
+build_metadata.AdditionalFiles.TargetPath = UGFnZXNcQ29tcG9uZW50MS5yYXpvcg==
+build_metadata.AdditionalFiles.CssScope = 
+
 [C:/Users/Lenovo/Documents/SEMESTER 5/PM/OnlineCourseD2N/OnlineCourseD2N/OnlineCourseD2N.Shared/Pages/Counter.razor]
 build_metadata.AdditionalFiles.TargetPath = UGFnZXNcQ291bnRlci5yYXpvcg==
 build_metadata.AdditionalFiles.CssScope = 
@@ -44,12 +48,24 @@ build_metadata.AdditionalFiles.CssScope =
 build_metadata.AdditionalFiles.TargetPath = UGFnZXNcSG9tZS5yYXpvcg==
 build_metadata.AdditionalFiles.CssScope = 
 
+[C:/Users/Lenovo/Documents/SEMESTER 5/PM/OnlineCourseD2N/OnlineCourseD2N/OnlineCourseD2N.Shared/Pages/Login.razor]
+build_metadata.AdditionalFiles.TargetPath = UGFnZXNcTG9naW4ucmF6b3I=
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/Lenovo/Documents/SEMESTER 5/PM/OnlineCourseD2N/OnlineCourseD2N/OnlineCourseD2N.Shared/Pages/Register.razor]
+build_metadata.AdditionalFiles.TargetPath = UGFnZXNcUmVnaXN0ZXIucmF6b3I=
+build_metadata.AdditionalFiles.CssScope = 
+
 [C:/Users/Lenovo/Documents/SEMESTER 5/PM/OnlineCourseD2N/OnlineCourseD2N/OnlineCourseD2N.Shared/Pages/TrainerDetail.razor]
 build_metadata.AdditionalFiles.TargetPath = UGFnZXNcVHJhaW5lckRldGFpbC5yYXpvcg==
 build_metadata.AdditionalFiles.CssScope = 
 
 [C:/Users/Lenovo/Documents/SEMESTER 5/PM/OnlineCourseD2N/OnlineCourseD2N/OnlineCourseD2N.Shared/Pages/Trainers.razor]
 build_metadata.AdditionalFiles.TargetPath = UGFnZXNcVHJhaW5lcnMucmF6b3I=
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/Lenovo/Documents/SEMESTER 5/PM/OnlineCourseD2N/OnlineCourseD2N/OnlineCourseD2N.Shared/Pages/Users.razor]
+build_metadata.AdditionalFiles.TargetPath = UGFnZXNcVXNlcnMucmF6b3I=
 build_metadata.AdditionalFiles.CssScope = 
 
 [C:/Users/Lenovo/Documents/SEMESTER 5/PM/OnlineCourseD2N/OnlineCourseD2N/OnlineCourseD2N.Shared/Pages/Weather.razor]

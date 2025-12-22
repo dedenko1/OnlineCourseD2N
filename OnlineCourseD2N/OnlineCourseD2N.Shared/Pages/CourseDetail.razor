@@ -1,55 +1,311 @@
 ﻿@page "/courses/{id:int}"
 @inject CourseService CourseService
 @inject NavigationManager Nav
+@inject IJSRuntime JS
+@inject AuthenticationStateProvider AuthStateProvider
+
 @using OnlineCourseD2N.Shared.Models
 @using OnlineCourseD2N.Shared.Services
+@using System.Security.Claims
+@using Microsoft.AspNetCore.Components.Authorization
 
+@* Inject Service Native *@
+@inject ITextToSpeechService TTSService
+@inject IMapService MapService
+@inject IShareService ShareService
+@inject IConnectivityService ConnectivityService
 
-<button class="btn btn-secondary mb-3" @onclick="GoBack">← Kembali</button>
+<PageTitle>@(course?.Title ?? "Detail Course") - RuangLes</PageTitle>
 
-<h3>Detail Course</h3>
+<div class="container-fluid px-0 pb-5">
 
-@if (course == null)
-{
-    <p><em>Memuat data...</em></p>
-}
-else
-{
-    <div class="card mb-3">
-        <div class="card-body">
-            <h4>@course.Title</h4>
-            <p><strong>Description:</strong> @course.Description</p>
-            <p><strong>Category:</strong> @course.Category</p>
-            <p><strong>Duration:</strong> @course.Duration jam</p>
-            <p><strong>Level:</strong> @course.Level</p>
-
-            @if (course.Trainer != null)
+    @* --- HEADER NAVIGASI --- *@
+    <div class="d-flex align-items-center mb-4">
+        <button class="btn btn-outline-secondary rounded-circle me-3 shadow-sm" style="width: 40px; height: 40px;" @onclick="GoBack">
+            <i class="bi bi-arrow-left"></i>
+        </button>
+        <div>
+            <h5 class="text-muted mb-0 small text-uppercase ls-1">Detail Course</h5>
+            @if (course != null)
             {
-                <hr />
-                <h5>Trainer</h5>
-                <p><strong>Nama:</strong> @course.Trainer.Name</p>
-                <p><strong>Email:</strong> @course.Trainer.Email</p>
-                <p><strong>Expertise:</strong> @course.Trainer.Expertise</p>
-                <p><strong>Bio:</strong> @course.Trainer.Bio</p>
+                <h2 class="fw-bold text-primary mb-0 text-truncate" style="max-width: 80vw;">@course.Title</h2>
             }
             else
             {
-                <p><em>Tidak ada trainer yang terkait.</em></p>
+                <div class="placeholder-glow"><span class="placeholder col-6"></span></div>
             }
         </div>
     </div>
-}
+
+    @if (isLoading)
+    {
+        <div class="text-center py-5">
+            <div class="spinner-border text-primary" role="status"></div>
+            <p class="mt-2 text-muted">Sedang mengambil data...</p>
+        </div>
+    }
+    else if (course == null)
+    {
+        <div class="text-center py-5">
+            <i class="bi bi-search fs-1 text-muted mb-3 d-block"></i>
+            <h4 class="fw-bold">Course Tidak Ditemukan</h4>
+            <p class="text-muted">Mungkin course ini sudah dihapus atau link salah.</p>
+            <button class="btn btn-primary mt-3" @onclick="GoBack">Kembali</button>
+        </div>
+    }
+    else
+    {
+        <div class="row g-4">
+            @* --- KOLOM KIRI: KONTEN UTAMA --- *@
+            <div class="col-lg-8">
+                <div class="card shadow-sm border-0 rounded-3 overflow-hidden mb-4">
+                    <div class="position-relative bg-light" style="min-height: 300px;">
+                        @if (!string.IsNullOrEmpty(course.CoverImage))
+                        {
+                            <img src="@($"http://localhost:5034/uploads/{course.CoverImage}")"
+                                 class="w-100 h-100 object-fit-cover"
+                                 style="max-height: 400px;"
+                                 alt="@course.Title"
+                                 onerror="this.src='https://via.placeholder.com/800x400?text=No+Preview'" />
+                        }
+                        else
+                        {
+                            <div class="d-flex align-items-center justify-content-center h-100 bg-secondary bg-opacity-10" style="min-height: 300px;">
+                                <div class="text-center text-muted">
+                                    <i class="bi bi-image fs-1"></i>
+                                    <p>Tidak ada gambar</p>
+                                </div>
+                            </div>
+                        }
+
+                        <div class="position-absolute bottom-0 start-0 p-3 w-100"
+                             style="background: linear-gradient(to top, rgba(0,0,0,0.8), transparent);">
+                            <span class="badge bg-primary me-1">@course.Category</span>
+                            <span class="badge bg-warning text-dark me-1">@course.Level</span>
+                            <span class="badge bg-light text-dark"><i class="bi bi-clock"></i> @course.Duration Jam</span>
+                        </div>
+                    </div>
+
+                    <div class="card-body p-4">
+                        <div class="d-flex justify-content-between align-items-center mb-3">
+                            <h4 class="fw-bold mb-0">Deskripsi Materi</h4>
+                            <div class="btn-group">
+                                <button class="btn btn-outline-primary btn-sm rounded-pill px-3 me-1" @onclick="ReadDescription" title="Dengarkan">
+                                    <i class="bi bi-volume-up-fill"></i> Baca
+                                </button>
+                                <button class="btn btn-outline-success btn-sm rounded-pill px-3" @onclick="ShareCourse" title="Bagikan">
+                                    <i class="bi bi-share-fill"></i> Share
+                                </button>
+                            </div>
+                        </div>
+
+                        <p class="text-muted lead" style="font-size: 1rem; line-height: 1.8; text-align: justify;">
+                            @course.Description
+                        </p>
+
+                        @if (course.Latitude != null && course.Longitude != null)
+                        {
+                            <hr class="my-4">
+                            <h5 class="fw-bold mb-3"><i class="bi bi-geo-alt-fill text-danger"></i> Lokasi Belajar Offline</h5>
+
+                            <div class="bg-light p-3 rounded border d-flex justify-content-between align-items-center hover-shadow transition-all"
+                                 style="cursor: pointer;" @onclick="OpenMap">
+                                <div>
+                                    <strong>@(string.IsNullOrEmpty(course.LocationAddress) ? "Lokasi Terpin" : course.LocationAddress)</strong>
+                                    <div class="text-muted small">Ketuk untuk membuka peta</div>
+                                </div>
+                                <button class="btn btn-primary btn-sm rounded-circle">
+                                    <i class="bi bi-map-fill"></i>
+                                </button>
+                            </div>
+                        }
+                    </div>
+                </div>
+            </div>
+
+            @* --- KOLOM KANAN: SIDEBAR (Sticky) --- *@
+            <div class="col-lg-4">
+                <div class="sticky-top" style="top: 20px; z-index: 1;">
+
+                    @* Kartu Action *@
+                    <div class="card shadow-sm border-0 rounded-3 p-4 mb-3 text-center">
+
+                        @if (canManage)
+                        {
+                            @* 👑 TAMPILAN UNTUK ADMIN / TRAINER PEMILIK *@
+                            <h4 class="fw-bold text-dark mb-1">Mode Pengelola</h4>
+                            <small class="text-muted mb-3 d-block">Anda memiliki akses edit</small>
+
+                            <button class="btn btn-warning w-100 fw-bold py-2 mb-2" @onclick="EditCourse">
+                                <i class="bi bi-pencil-square me-2"></i> Edit Course Ini
+                            </button>
+                            <small class="text-muted fst-italic">Perubahan akan langsung aktif</small>
+                        }
+                        else
+                        {
+                            @* 🎓 TAMPILAN UNTUK USER / PENGUNJUNG *@
+                            <h4 class="fw-bold text-primary mb-1">Gratis</h4>
+                            <small class="text-muted mb-3 d-block">Akses selamanya</small>
+                            <button class="btn btn-primary w-100 fw-bold py-2 mb-2" @onclick="EnrollCourse">
+                                Mulai Belajar Sekarang
+                            </button>
+                            <small class="text-muted fst-italic">300+ Siswa sudah mendaftar</small>
+                        }
+                    </div>
+
+                    @* Kartu Trainer *@
+                    <div class="card shadow-sm border-0 rounded-3 p-3">
+                        <h6 class="text-muted text-uppercase small fw-bold mb-3 border-bottom pb-2">Instruktur</h6>
+
+                        @if (course.Trainer != null)
+                        {
+                            <div class="text-center mb-3">
+                                @if (!string.IsNullOrEmpty(course.Trainer.FotoProfil))
+                                {
+                                    <img src="@($"http://localhost:5034/uploads/{course.Trainer.FotoProfil}")"
+                                         class="rounded-circle shadow-sm border border-3 border-white mb-2"
+                                         style="width: 100px; height: 100px; object-fit: cover;"
+                                         onerror="this.src='https://via.placeholder.com/100?text=User'" />
+                                }
+                                else
+                                {
+                                    <div class="rounded-circle bg-light d-flex align-items-center justify-content-center mx-auto mb-2"
+                                         style="width: 100px; height: 100px;">
+                                        <i class="bi bi-person fs-1 text-secondary"></i>
+                                    </div>
+                                }
+                                <h5 class="fw-bold mb-0">@course.Trainer.Name</h5>
+                                <span class="badge bg-info text-dark mt-1">@course.Trainer.Expertise</span>
+                            </div>
+
+                            <ul class="list-group list-group-flush small mb-3">
+                                <li class="list-group-item px-0 d-flex align-items-center bg-transparent">
+                                    <i class="bi bi-envelope me-2 text-primary"></i> @course.Trainer.Email
+                                </li>
+                                <li class="list-group-item px-0 bg-transparent">
+                                    <span class="fw-bold d-block mb-1">Bio:</span>
+                                    <span class="text-muted fst-italic">"@(string.IsNullOrEmpty(course.Trainer.Bio) ? "-" : course.Trainer.Bio)"</span>
+                                </li>
+                            </ul>
+
+                            <button class="btn btn-outline-primary w-100 btn-sm" @onclick='() => Nav.NavigateTo($"/trainers/{course.Trainer.TrainerId}")'>
+                                Lihat Profil Lengkap
+                            </button>
+                        }
+                        else
+                        {
+                            <div class="alert alert-warning text-center small mb-0">
+                                <i class="bi bi-exclamation-triangle me-1"></i> Belum ada trainer.
+                            </div>
+                        }
+                    </div>
+
+                    @* Status Info *@
+                    <div class="card shadow-sm border-0 rounded-3 p-3 mt-3 bg-success text-white">
+                        <div class="d-flex align-items-center">
+                            <i class="bi bi-check-circle-fill fs-2 me-3"></i>
+                            <div>
+                                <small class="d-block opacity-75">Status Course</small>
+                                <span class="fw-bold">Aktif & Tersedia</span>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+    }
+</div>
 
 @code {
     [Parameter] public int id { get; set; }
     private Course? course;
+    private bool isLoading = true;
+    private bool canManage = false; // Logic untuk Admin/Trainer Pemilik
 
     protected override async Task OnInitializedAsync()
     {
-        course = await CourseService.GetByIdAsync(id);
+        isLoading = true;
+        try
+        {
+            course = await CourseService.GetByIdAsync(id);
+
+            // 🔥 LOGIC CEK ROLE
+            var authState = await AuthStateProvider.GetAuthenticationStateAsync();
+            var user = authState.User;
+
+            if (user.Identity != null && user.Identity.IsAuthenticated)
+            {
+                if (user.IsInRole("Admin"))
+                {
+                    canManage = true; // Admin boleh apa saja
+                }
+                else if (user.IsInRole("Trainer") && course?.Trainer != null)
+                {
+                    // Cek apakah Trainer yang login == Trainer pemilik course ini
+                    var userIdString = user.FindFirst(c => c.Type == ClaimTypes.NameIdentifier)?.Value;
+                    if (int.TryParse(userIdString, out int currentUserId))
+                    {
+                        if (course.Trainer.UserId == currentUserId)
+                        {
+                            canManage = true; // Trainer pemilik boleh edit
+                        }
+                    }
+                }
+            }
+        }
+        catch (Exception)
+        {
+            // Handle error silently
+        }
+        finally
+        {
+            isLoading = false;
+        }
     }
 
-    private void GoBack()
+    private async Task GoBack()
+    {
+        await JS.InvokeVoidAsync("history.back");
+    }
+
+    private async Task ReadDescription()
+    {
+        if (course != null)
+            await TTSService.SpeakAsync(course.Description ?? "Tidak ada deskripsi.");
+    }
+
+    private async Task ShareCourse()
+    {
+        if (course != null)
+        {
+            await ShareService.ShareTextAsync(
+                $"Course: {course.Title}",
+                $"Belajar {course.Title} bersama {course.Trainer?.Name}. {course.Description}",
+                $"https://ruangles.com/courses/{id}"
+            );
+        }
+    }
+
+    private async Task OpenMap()
+    {
+        if (course?.Latitude != null && course.Longitude != null)
+        {
+            await MapService.OpenMapAsync(course.Latitude.Value, course.Longitude.Value, course.Title);
+        }
+    }
+
+    private async Task EnrollCourse()
+    {
+        if (!ConnectivityService.IsConnected())
+        {
+            await JS.InvokeVoidAsync("alert", "Anda sedang Offline!");
+            return;
+        }
+        await JS.InvokeVoidAsync("alert", $"Selamat! Anda berhasil mendaftar di course: {course?.Title}.");
+    }
+
+    private void EditCourse()
     {
         Nav.NavigateTo("/courses");
     }

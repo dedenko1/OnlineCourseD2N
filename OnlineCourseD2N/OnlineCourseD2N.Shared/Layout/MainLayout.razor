@@ -1,23 +1,66 @@
-﻿@inherits LayoutComponentBase
+﻿@using OnlineCourseD2N.Shared.Services
+@using Microsoft.AspNetCore.Components.Authorization
+@inherits LayoutComponentBase
+@inject NavigationManager Nav
+@inject IAuthService AuthService
 
 <div class="page">
-    <div class="sidebar">
-        <NavMenu />
-    </div>
+    <AuthorizeView>
+        <Authorized>
+            <div class="sidebar">
+                <NavMenu />
+            </div>
+        </Authorized>
+    </AuthorizeView>
 
     <main>
-        <div class="top-row px-4">
-            <a href="https://learn.microsoft.com/aspnet/core/" target="_blank">About</a>
+        <div class="top-row p-4 auth shadow-sm bg-white d-flex justify-content-between align-items-center">
+            
+            <div class="brand-text">
+                <span class="fs-5 fw-bold text-primary">📚 RuangLes</span>
+                <span class="text-muted ms-2 small d-none d-md-inline">| Sistem Manajemen Kursus</span>
+            </div>
+
+            <div class="user-area">
+                <AuthorizeView>
+                    <Authorized>
+                        <span class="me-3 text-dark fw-bold">
+                            👋 Halo, @context.User.Identity?.Name
+                        </span>
+                        <button class="btn btn-outline-danger btn-sm" @onclick="Logout">
+                            🚪 Logout
+                        </button>
+                    </Authorized>
+                    <NotAuthorized>
+                        <a href="" class="btn btn-primary btn-sm">
+                            🔐 Masuk Akun
+                        </a>
+                    </NotAuthorized>
+                </AuthorizeView>
+            </div>
         </div>
 
-        <article class="content px-4">
+        <article class="content px-4 py-4">
             @Body
         </article>
+        
+        <footer class="text-center py-3 text-muted small mt-auto">
+            &copy; 2025 RuangLes - Learning Management System
+        </footer>
     </main>
 </div>
 
-<div id="blazor-error-ui" data-nosnippet>
+<div id="blazor-error-ui">
     An unhandled error has occurred.
-    <a href="." class="reload">Reload</a>
-    <span class="dismiss">🗙</span>
+    <a href="" class="reload">Reload</a>
+    <a class="dismiss">🗙</a>
 </div>
+
+@code {
+    private async Task Logout()
+    {
+        await AuthService.LogoutAsync();
+
+        Nav.NavigateTo("/");
+    }
+}

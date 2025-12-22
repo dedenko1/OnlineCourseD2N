@@ -1,14 +1,195 @@
-﻿@page "/"
+﻿@page "/home"
+@attribute [Authorize]
+@using Microsoft.AspNetCore.Authorization
+@using Microsoft.AspNetCore.Components.Authorization
 @using OnlineCourseD2N.Shared.Services
+@using System.Security.Claims
+
 @inject IFormFactor FormFactor
+@inject CourseService CourseService
+@inject TrainerService TrainerService
+@inject NavigationManager Nav
+@inject AuthenticationStateProvider AuthStateProvider
 
-<PageTitle>Home</PageTitle>
+<PageTitle>Dashboard - RuangLes</PageTitle>
 
-<h1>Hello, world!</h1>
+<div class="p-5 mb-4 bg-light rounded-3 shadow-sm border-start border-5 border-primary"
+     style="background: linear-gradient(120deg, #fdfbfb 0%, #ebedee 100%);">
+    <div class="container-fluid py-2">
+        <h1 class="display-5 fw-bold text-primary">
+            📚 Halo, @(userName ?? "Pengguna")!
+        </h1>
+        <p class="col-md-8 fs-5 text-muted">
+            Selamat datang di RuangLes.
+            @if (userRole == "Admin")
+            {
+                <span>Anda login sebagai <strong>Admin</strong>. Kelola seluruh sistem dari sini.</span>
+            }
+            else if (userRole == "Trainer")
+            {
+                <span>Anda login sebagai <strong>Trainer</strong>. Kelola materi ajar dan profil Anda.</span>
+            }
+            else
+            {
+                <span>Jelajahi kursus menarik untuk meningkatkan skill Anda.</span>
+            }
+        </p>
 
-Welcome to your new app running on <em>@factor</em> using <em>@platform</em>.
+        <button class="btn btn-primary btn-lg mt-2" @onclick='() => Nav.NavigateTo("courses")'>
+            @(userRole == "Admin" || userRole == "Trainer" ? "Kelola Course" : "Lihat Course")
+        </button>
+    </div>
+</div>
+
+<div class="row g-4 mb-4">
+    @* KARTU 1: TOTAL COURSE *@
+    <div class="col-md-6 col-lg-4">
+        <div class="card h-100 border-0 shadow-sm hover-card">
+            <div class="card-body d-flex align-items-center">
+                <div class="icon-shape bg-primary text-white rounded-3 p-3 me-3">
+                    <i class="bi bi-journal-text fs-3"></i>
+                </div>
+                <div>
+                    <h6 class="text-muted mb-1">Total Course</h6>
+                    @if (isLoading)
+                    {
+                        <div class="spinner-border spinner-border-sm text-primary" role="status"></div>
+                    }
+                    else
+                    {
+                        <h3 class="fw-bold mb-0">@courseCount</h3>
+                    }
+                </div>
+            </div>
+            <div class="card-footer bg-white border-0">
+                <a href="courses" class="text-primary text-decoration-none small">Lihat Detail &rarr;</a>
+            </div>
+        </div>
+    </div>
+
+    @* KARTU 2: TOTAL TRAINER (Hanya Relevan Buat Admin/User) *@
+    <div class="col-md-6 col-lg-4">
+        <div class="card h-100 border-0 shadow-sm hover-card">
+            <div class="card-body d-flex align-items-center">
+                <div class="icon-shape bg-success text-white rounded-3 p-3 me-3">
+                    <i class="bi bi-people-fill fs-3"></i>
+                </div>
+                <div>
+                    <h6 class="text-muted mb-1">Total Trainer</h6>
+                    @if (isLoading)
+                    {
+                        <div class="spinner-border spinner-border-sm text-success" role="status"></div>
+                    }
+                    else
+                    {
+                        <h3 class="fw-bold mb-0">@trainerCount</h3>
+                    }
+                </div>
+            </div>
+            <div class="card-footer bg-white border-0">
+                @if (userRole == "Admin")
+                {
+                    <a href="trainers" class="text-success text-decoration-none small">Kelola Trainer &rarr;</a>
+                }
+                else
+                {
+                    <span class="text-muted small">Profesional Pengajar</span>
+                }
+            </div>
+        </div>
+    </div>
+
+    @* KARTU 3: SYSTEM INFO *@
+    <div class="col-md-6 col-lg-4">
+        <div class="card h-100 border-0 shadow-sm hover-card">
+            <div class="card-body d-flex align-items-center">
+                <div class="icon-shape bg-warning text-white rounded-3 p-3 me-3">
+                    <i class="bi bi-laptop fs-3"></i>
+                </div>
+                <div>
+                    <h6 class="text-muted mb-1">System Info</h6>
+                    <div class="d-flex flex-column">
+                        <span class="badge bg-info text-dark mb-1 w-auto align-self-start">@factor</span>
+                        <span class="small text-muted">@platform</span>
+                    </div>
+                </div>
+            </div>
+            <div class="card-footer bg-white border-0">
+                <span class="text-muted small">Status: Online 🟢</span>
+            </div>
+        </div>
+    </div>
+</div>
+
+@* 🔥 TOMBOL AKSI CEPAT (Hanya Admin) *@
+@if (userRole == "Admin")
+{
+    <div class="row">
+        <div class="col-12">
+            <h5 class="mb-3 text-secondary">Aksi Cepat (Admin)</h5>
+        </div>
+        <div class="col-md-3 col-6 mb-3">
+            <button class="btn btn-outline-primary w-100 py-3 border-2 fw-bold" @onclick='() => Nav.NavigateTo("courses")'>
+                + Tambah Course
+            </button>
+        </div>
+        <div class="col-md-3 col-6 mb-3">
+            <button class="btn btn-outline-success w-100 py-3 border-2 fw-bold" @onclick='() => Nav.NavigateTo("trainers")'>
+                + Tambah Trainer
+            </button>
+        </div>
+    </div>
+}
 
 @code {
     private string factor => FormFactor.GetFormFactor();
     private string platform => FormFactor.GetPlatform();
+
+    // Data Stats
+    private int courseCount = 0;
+    private int trainerCount = 0;
+    private bool isLoading = true;
+
+    // User Info
+    private string userName = "";
+    private string userRole = "";
+
+    protected override async Task OnInitializedAsync()
+    {
+        // 1. Ambil Info User
+        var authState = await AuthStateProvider.GetAuthenticationStateAsync();
+        var user = authState.User;
+
+        if (user.Identity != null && user.Identity.IsAuthenticated)
+        {
+            userName = user.FindFirst(ClaimTypes.Name)?.Value ?? "Pengguna";
+            userRole = user.FindFirst(ClaimTypes.Role)?.Value ?? "";
+        }
+
+        try
+        {
+            // 2. Ambil Data
+            var tasks = new Task[]
+            {
+                Task.Run(async () => {
+                    var courses = await CourseService.GetAllAsync();
+                    courseCount = courses?.Count ?? 0;
+                }),
+                Task.Run(async () => {
+                    var trainers = await TrainerService.GetAllAsync();
+                    trainerCount = trainers?.Count ?? 0;
+                })
+            };
+
+            await Task.WhenAll(tasks);
+        }
+        catch (Exception ex)
+        {
+            Console.WriteLine($"Error loading dashboard: {ex.Message}");
+        }
+        finally
+        {
+            isLoading = false;
+        }
+    }
 }

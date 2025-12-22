@@ -1,4 +1,6 @@
-﻿using Microsoft.Extensions.Logging;
+﻿using Blazored.LocalStorage;
+using Microsoft.AspNetCore.Components.Authorization;
+using Microsoft.Extensions.Logging;
 using OnlineCourseD2N.Services;
 using OnlineCourseD2N.Shared.Services;
 
@@ -15,6 +17,10 @@ namespace OnlineCourseD2N
                 {
                     fonts.AddFont("OpenSans-Regular.ttf", "OpenSansRegular");
                 });
+            builder.Services.AddBlazoredLocalStorage();
+            builder.Services.AddAuthorizationCore();
+            builder.Services.AddScoped<AuthenticationStateProvider, CustomAuthStateProvider>();
+            builder.Services.AddScoped<IAuthService, AuthService>();
 
             builder.Services.AddSingleton<IFormFactor, FormFactor>();
             builder.Services.AddMauiBlazorWebView();
@@ -24,12 +30,16 @@ namespace OnlineCourseD2N
             builder.Services.AddSingleton<ITextToSpeechService, TextToSpeechService>();
             builder.Services.AddSingleton<IMapService, MapService>();
             builder.Services.AddSingleton<IShareService, ShareService>();
+            builder.Services.AddSingleton<IBatteryService, BatteryService>();
+            builder.Services.AddSingleton<IGeocodingService, GeocodingService>();
+            builder.Services.AddSingleton<IScreenshotService, ScreenshorService>();
 #if DEBUG
             builder.Services.AddBlazorWebViewDeveloperTools();
             builder.Logging.AddDebug();
 #endif
             builder.Services.AddScoped<CourseService>();
             builder.Services.AddScoped<TrainerService>();
+            builder.Services.AddScoped<UserService>();
             builder.Services.AddScoped(sp => new HttpClient { BaseAddress = new Uri("http://localhost:5034/") });
             return builder.Build();
         }
